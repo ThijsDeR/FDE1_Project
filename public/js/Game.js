@@ -1,28 +1,28 @@
-var Game = /** @class */ (function () {
+export default class Game {
     /**
      * The constructor of Game
      *
      * @param canvas the playing field
      */
-    function Game(canvas) {
+    constructor(canvas) {
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
     }
     /**
      * Method that starts the game.
      */
-    Game.prototype.start = function () {
+    start() {
         this.ctx.fillStyle = 'red';
         this.ctx.fillRect(0, 0, 100, 100);
-    };
+    }
     /**
      * Method that returns the canvas
      *
      * @returns The canvas
      */
-    Game.prototype.getCanvas = function () {
+    getCanvas() {
         return this.canvas;
-    };
+    }
     /**
      * Method that loads a new image
      *
@@ -31,17 +31,15 @@ var Game = /** @class */ (function () {
      * @param height Height of the image
      * @returns The new image
      */
-    Game.loadNewImage = function (src, width, height) {
-        if (width === void 0) { width = undefined; }
-        if (height === void 0) { height = undefined; }
-        var img = new Image();
+    static loadNewImage(src, width = undefined, height = undefined) {
+        const img = new Image();
         img.src = src;
         if (width)
             img.width = width;
         if (height)
             img.height = height;
         return img;
-    };
+    }
     /**
      * Generates a random integer number between min and max
      *
@@ -52,9 +50,7 @@ var Game = /** @class */ (function () {
      * @param max - maximal time
      * @returns a random integer number between min and max
      */
-    Game.randomNumber = function (min, max) {
+    static randomNumber(min, max) {
         return Math.round(Math.random() * (max - min) + min);
-    };
-    return Game;
-}());
-export default Game;
+    }
+}

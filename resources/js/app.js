@@ -1,4 +1,4 @@
-import Game from "./Game";
+import Game from "public/js/Game.js";
 require('./bootstrap');
-var game = new Game(document.getElementById('game-canvas'));
+const game = new Game(document.getElementById('game-canvas'));
 game.start();

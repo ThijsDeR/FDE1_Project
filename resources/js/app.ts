@@ -1,4 +1,4 @@
-import Game from "./Game";
+import Game from "public/js/Game.js";
 
 require('./bootstrap');
 
