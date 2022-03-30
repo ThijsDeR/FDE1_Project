@@ -5,6 +5,7 @@ import LightningBolt from './LightningBolt.js';
 import RedCross from './RedCross.js';
 import SilverTrophy from './SilverTrophy.js';
 import ScoringObject from './ScoringObject.js';
+import Healthbar from './Healthbar.js';
 
 /**
  * Main class of this Game.
@@ -30,6 +31,8 @@ export default class Game {
   // Score
   private totalScore: number;
 
+  private healthbar: Healthbar;
+
   /**
    * Construct a new Game
    *
@@ -50,6 +53,8 @@ export default class Game {
 
     // Score is zero at start
     this.totalScore = 0;
+
+    this.healthbar = new Healthbar(this.canvas);
 
     // Start the animation
     console.log('start animation');
@@ -100,15 +105,18 @@ export default class Game {
   public render(): void {
     // Render the items on the canvas
     // Get the canvas rendering context
-    const ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d')!;
     // Clear the entire canvas
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left | RIGHT arrow = right', this.canvas.width / 2, 40, 14);
+    this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 40, 14);
+
 
     this.drawScore();
 
     this.player.draw(ctx);
+
+    this.healthbar.healthbar(ctx);
 
     // Could also be a regular for loop
     this.scoringObjects.forEach((scoringObject) => {
@@ -175,7 +183,7 @@ export default class Game {
     color: string = 'red',
     alignment: CanvasTextAlign = 'center',
   ): void {
-    const ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d')!;
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;

@@ -16,6 +16,8 @@ export default class Player {
 
   private positionX: number;
 
+  private value: number;
+
   /**
    * Construct a new Player instance
    *

@@ -2156,96 +2156,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/Game.ts":
-/*!******************************!*\
-  !*** ./resources/js/Game.ts ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-var Game =
-/** @class */
-function () {
-  /**
-   * The constructor of Game
-   *
-   * @param canvas the playing field
-   */
-  function Game(canvas) {
-    this.canvas = canvas;
-    this.ctx = this.canvas.getContext('2d');
-  }
-  /**
-   * Method that starts the game.
-   */
-
-
-  Game.prototype.start = function () {
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(0, 0, 100, 100);
-  };
-  /**
-   * Method that returns the canvas
-   *
-   * @returns The canvas
-   */
-
-
-  Game.prototype.getCanvas = function () {
-    return this.canvas;
-  };
-  /**
-   * Method that loads a new image
-   *
-   * @param src Source of the image
-   * @param width Width of the image
-   * @param height Height of the image
-   * @returns The new image
-   */
-
-
-  Game.loadNewImage = function (src, width, height) {
-    if (width === void 0) {
-      width = undefined;
-    }
-
-    if (height === void 0) {
-      height = undefined;
-    }
-
-    var img = new Image();
-    img.src = src;
-    if (width) img.width = width;
-    if (height) img.height = height;
-    return img;
-  };
-  /**
-   * Generates a random integer number between min and max
-   *
-   * NOTE: this is a 'static' method. This means that this method must be called like
-   * `Game.randomInteger()` instead of `this.randomInteger()`.
-   *
-   * @param min - minimal time
-   * @param max - maximal time
-   * @returns a random integer number between min and max
-   */
-
-
-  Game.randomNumber = function (min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-  };
-
-  return Game;
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Game);
-
-/***/ }),
-
 /***/ "./resources/js/app.ts":
 /*!*****************************!*\
   !*** ./resources/js/app.ts ***!
@@ -2254,12 +2164,12 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Game */ "./resources/js/Game.ts");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module 'public/js/Game.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var game = new _Game__WEBPACK_IMPORTED_MODULE_0__["default"](document.getElementById('game-canvas'));
+var game = new Object(function webpackMissingModule() { var e = new Error("Cannot find module 'public/js/Game.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(document.getElementById('game-canvas'));
 game.start();
 
 /***/ }),
@@ -19776,18 +19686,6 @@ process.umask = function() { return 0; };
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
 /******/ 		};
 /******/ 	})();
 /******/ 	
