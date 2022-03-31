@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game</title>
 </head>
-<body>
+<body style="overflow: hidden">
     <canvas id="game-canvas"></canvas>
 
     <script type="module" src="./js/main.js"></script>
