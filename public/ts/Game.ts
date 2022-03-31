@@ -1,11 +1,6 @@
 import GameLoop from './GameLoop.js';
 import Player from './Player.js';
-import GoldTrophy from './GoldTrophy.js';
-import LightningBolt from './LightningBolt.js';
-import RedCross from './RedCross.js';
-import SilverTrophy from './SilverTrophy.js';
-import ScoringObject from './ScoringObject.js';
-import Healthbar from './Healthbar.js';
+import Staminabar from './Staminabar.js';
 
 /**
  * Main class of this Game.
@@ -19,19 +14,10 @@ export default class Game {
   // The player on the canvas
   private player: Player;
 
-  // The objects on the canvas
-  private scoringObjects: ScoringObject[];
-
-  private silverTrophy: SilverTrophy;
-
-  private redCross: RedCross;
-
-  private lightningBolt: LightningBolt;
-
   // Score
   private totalScore: number;
 
-  private healthbar: Healthbar;
+  private staminabar: Staminabar;
 
   /**
    * Construct a new Game
@@ -42,11 +28,8 @@ export default class Game {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
-    this.canvas.width = window.innerWidth / 3;
+    this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-
-    this.scoringObjects = [];
-    this.createRandomScoringObject();
 
     // Set the player at the center
     this.player = new Player(this.canvas);
@@ -54,10 +37,9 @@ export default class Game {
     // Score is zero at start
     this.totalScore = 0;
 
-    this.healthbar = new Healthbar(this.canvas);
+    this.staminabar = new Staminabar(this.canvas, 100, 500, 200, 100);
 
     // Start the animation
-    console.log('start animation');
     this.gameloop = new GameLoop(this);
     this.gameloop.start();
   }
@@ -80,22 +62,7 @@ export default class Game {
    */
   public update(elapsed: number): boolean {
     // Spawn a new scoring object every 45 frames
-    if (this.gameloop.frameCount % 45 === 0) {
-      this.createRandomScoringObject();
-    }
 
-    // Move objects
-    // Could also be a regular for loop
-    this.scoringObjects.forEach((scoringObject) => {
-      scoringObject.move(elapsed);
-
-      if (this.player.collidesWith(scoringObject)) {
-        this.totalScore += scoringObject.getPoints();
-        this.removeItemFromScoringObjects(scoringObject);
-      } else if (scoringObject.collidesWithCanvasBottom()) {
-        this.removeItemFromScoringObjects(scoringObject);
-      }
-    });
     return false;
   }
 
@@ -116,12 +83,7 @@ export default class Game {
 
     this.player.draw(ctx);
 
-    this.healthbar.healthbar(ctx);
-
-    // Could also be a regular for loop
-    this.scoringObjects.forEach((scoringObject) => {
-      scoringObject.draw(ctx);
-    });
+    this.staminabar.draw(ctx, 100);
   }
 
   /**
@@ -129,40 +91,6 @@ export default class Game {
    */
   private drawScore(): void {
     this.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 80, 16);
-  }
-
-  /**
-   * Create a random scoring object and clear the other scoring objects by setting them to `null`.
-   */
-  private createRandomScoringObject(): void {
-    const random = Game.randomInteger(1, 4);
-
-    if (random === 1) {
-      this.scoringObjects.push(new GoldTrophy(this.canvas));
-    }
-
-    if (random === 2) {
-      this.scoringObjects.push(new SilverTrophy(this.canvas));
-    }
-
-    if (random === 3) {
-      this.scoringObjects.push(new RedCross(this.canvas));
-    }
-
-    if (random === 4) {
-      this.scoringObjects.push(new LightningBolt(this.canvas));
-    }
-  }
-
-  /**
-   * Removes an item from the this.scoringObjects array.
-   * Could also be written using a filter
-   *
-   * @param item To be removed
-   */
-  private removeItemFromScoringObjects(item: ScoringObject): void {
-    const index = this.scoringObjects.indexOf(item);
-    this.scoringObjects.splice(index, 1);
   }
 
   /**

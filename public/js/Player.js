@@ -39,23 +39,6 @@ export default class Player {
         this.positionX - this.image.width / 2, this.canvas.height - 150);
     }
     /**
-     * Collision detection of any scoring object and player
-     * Use bounding box detection method: https://computersciencewiki.org/index.php/Bounding_boxes
-     *
-     * @param scoringObject the specified ScoringObject
-     * @returns `true` if the player collides with the GoldTrophy
-     */
-    collidesWith(scoringObject) {
-        if (this.positionX < scoringObject.getPositionX() + scoringObject.getImageWidth()
-            && this.positionX + this.image.width > scoringObject.getPositionX()
-            && this.canvas.height - 150 < scoringObject.getPositionY()
-                + scoringObject.getImageHeight()
-            && this.canvas.height - 150 + this.image.height > scoringObject.getPositionY()) {
-            return true;
-        }
-        return false;
-    }
-    /**
      * Loads an image in such a way that the screen doesn't constantly flicker
      *
      *
