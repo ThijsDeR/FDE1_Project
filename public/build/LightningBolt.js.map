@@ -1,0 +1,1 @@
+{"version":3,"file":"LightningBolt.js","sourceRoot":"","sources":["../src/LightningBolt.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,oBAAoB,CAAC;AAE/C,MAAM,CAAC,OAAO,OAAO,aAAc,SAAQ,aAAa;IAMtD,YAAmB,MAAyB;QAC1C,KAAK,CAAC,MAAM,CAAC,CAAC;QACd,IAAI,CAAC,KAAK,GAAG,aAAa,CAAC,YAAY,CAAC,iDAAiD,CAAC,CAAC;QAE3F,IAAI,CAAC,MAAM,GAAG,CAAC,EAAE,CAAC;IACpB,CAAC;CACF"}
