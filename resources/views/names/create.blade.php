@@ -51,7 +51,7 @@
                                         <button type="reset" class="button is-warning">Reset</button>
                                     </div>
                                     <div class="control">
-                                        <a type="button" href="/foo" class="button is-light">Cancel</a>
+                                        <a type="button" href="/names" class="button is-light">Cancel</a>
                                     </div>
                                 </div>
                             </div>
