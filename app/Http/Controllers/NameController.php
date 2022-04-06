@@ -37,7 +37,6 @@ class NameController extends Controller
     public function store(Request $request)
     {
         Name::create($request->validate([
-            "id" => "required",
             "name" => "required",
         ]));
 

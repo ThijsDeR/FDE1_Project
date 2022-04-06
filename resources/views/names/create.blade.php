@@ -18,16 +18,16 @@
                                 <div class="content">
 
                                     {{-- Here are all the form fields --}}
-                                    <div class="field">
-                                        <label class="label">id</label>
-                                        <div class="control">
-                                            <textarea name="id" class="textarea @error('id') is-danger @enderror"
-                                                      type="text" placeholder="id"></textarea>
-                                        </div>
-                                        @error('id')
-                                        <p class="help is-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
+{{--                                    <div class="field">--}}
+{{--                                        <label class="label">id</label>--}}
+{{--                                        <div class="control">--}}
+{{--                                            <textarea name="id" class="textarea @error('id') is-danger @enderror"--}}
+{{--                                                      type="text" placeholder="id"></textarea>--}}
+{{--                                        </div>--}}
+{{--                                        @error('id')--}}
+{{--                                        <p class="help is-danger">{{ $message }}</p>--}}
+{{--                                        @enderror--}}
+{{--                                    </div>--}}
 
                                     <div class="field">
                                         <label class="label">name</label>

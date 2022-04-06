@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameController;
-use App\Http\Controllers\NameHighscoreController;
+use App\Http\Controllers\NameController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get('/game', [GameController::class, 'game']);
-Route::get('/names', [NameController::class]);
+Route::resource('/names', NameController::class);

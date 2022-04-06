@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('names', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->integer('highscore');
+            $table->integer('highscore')->default(0);
             $table->timestamps();
         });
     }
