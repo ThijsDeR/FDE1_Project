@@ -44,7 +44,7 @@ body {
 
 
 /* CSS */
-.start-button {
+.start-button, .add-player {
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -118,7 +118,13 @@ body {
 thead {
     color: green;
     font-size: 30px;
+
 }
+
+
+
+
+
 
 .table.is-fullwidth.is-striped {
   padding:5rem;
