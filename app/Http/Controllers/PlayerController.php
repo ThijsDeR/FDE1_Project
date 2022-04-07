@@ -37,7 +37,7 @@ class PlayerController extends Controller
     public function store(Request $request)
     {
         Player::create($request->validate([
-            "player" => "required",
+            "name" => "required",
         ]));
 
         return redirect(route('players.index'));
