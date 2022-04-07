@@ -117,6 +117,7 @@ body {
 
 thead {
     color: green;
+    font-size: 30px;
 }
 
 .table.is-fullwidth.is-striped {
