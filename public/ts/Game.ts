@@ -32,6 +32,8 @@ export default class Game {
 
   private scrollSpeed: number;
 
+  private checker: boolean;
+
   /**
    * Construct a new Game
    *
@@ -69,6 +71,8 @@ export default class Game {
     // an important thing to ensure here is that can.height
     // is divisible by scrollSpeed
     this.scrollSpeed = 6;
+
+    this.checker = false;
 
   }
 
@@ -122,13 +126,19 @@ export default class Game {
 
     // this.writeTextToCanvas(`Click A`, this.canvas.width / 2, 500, 60)
 
-    if(this.counter === 500) {
-        for(let i = 0; i < 200; i++) {
-            if (this.keyListener.isKeyDown(KeyListener.KEY_A)) {
-             console.log('well done');
-            }
+    if(this.counter > 500 && this.counter < 600) {
+        console.log('mom');
+        this.writeTextToCanvas(`Click A`, this.canvas.width / 2, 500, 60)
+
+        if (this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
+            this.checker = true
+            console.log('trots joe');
         }
-    }
+      }
+      
+      else {
+        this.checker = false;
+      }
   }
 
   /**
@@ -178,12 +188,6 @@ export default class Game {
   }
 
   private scrollBackground(){
-    // The 2D Context for the HTML canvas element. It
-    // provides objects, methods, and properties to draw and
-    // manipulate graphics on a canvas drawing surface.
-    // var ctx = this.canvas.getContext('2d');
-
-
     // create an image element
     const img = new Image();
 
