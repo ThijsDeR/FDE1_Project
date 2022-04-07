@@ -17,6 +17,8 @@ export default class Player {
 
   private value: number;
 
+  private stamina: number;
+
   /**
    * Construct a new Player instance
    *
@@ -33,6 +35,34 @@ export default class Player {
 
     this.image = Player.loadNewImage('./assets/img/players/character_robot_walk0.png');
     this.positionX = this.canvas.width / 2;
+    this.stamina = 100;
+  }
+
+  /**
+   * Stamina getter
+   *
+   * @returns stamina
+   */
+  public getStamina(): number{
+    return this.stamina;
+  }
+
+  /**
+   * Stamina substracter
+   *
+   * @param stamina stamina number input
+   */
+  public staminaSubstract(stamina: number): void{
+      this.stamina = this.stamina - stamina;
+  }
+
+  /**
+   * Sets stamina
+   *
+   * @param stamina stamina number input
+   */
+  public setStamina(stamina: number): void{
+      this.stamina = stamina;
   }
 
   /**

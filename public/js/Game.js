@@ -26,7 +26,7 @@ export default class Game {
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
         console.log('werkt!!');
-        this.arrayAlfabet = ['a', 'b', 'c', 'd', 'e'];
+        this.arrayAlfabet = ['A', 'S', 'D', 'W'];
         this.counter = 0;
         // the initial image height
         this.imgHeight = 0;
@@ -35,6 +35,8 @@ export default class Game {
         // is divisible by scrollSpeed
         this.scrollSpeed = 6;
         this.checker = false;
+        this.timeChecker = false;
+        this.randomNumber = 0;
     }
     /**
      * Handles any user input that has happened since the last call
@@ -66,26 +68,64 @@ export default class Game {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.scrollBackground();
         this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 300, 60);
+        this.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 200, 60);
+        if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
+            this.totalScore = this.totalScore + 1;
+        }
         this.drawScore();
         this.player.draw(ctx);
-        this.staminabar.draw(ctx, 100);
+        if (this.player.getStamina() >= 0) {
+            this.player.staminaSubstract(0.05);
+            this.staminabar.draw(ctx, this.player.getStamina());
+        }
+        else {
+            this.writeTextToCanvas('Game Over!', this.canvas.width / 2, this.canvas.height / 2, 100);
+        }
         this.counter = this.counter + 1;
-        // if(this.counter === 1000) {
-        //     console.log('10 seconden');
-        // }
-        // this.writeTextToCanvas(`Click A`, this.canvas.width / 2, 500, 60)
-        if (this.counter > 500 && this.counter < 600) {
-            console.log('mom');
-            this.writeTextToCanvas(`Click A`, this.canvas.width / 2, 500, 60);
-            if (this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
+        if (this.counter % 100 === 1 && this.timeChecker === true) {
+            this.timeChecker = false;
+        }
+        if (Game.randomInteger(0, 500) === 20 && this.player.getStamina() >= 0) {
+            this.timeChecker = true;
+        }
+        if (this.timeChecker === true && this.player.getStamina() >= 0) {
+            this.writeTextToCanvas(`Click ${this.arrayAlfabet[this.randomNumber]}`, this.canvas.width / 2, 500, 60);
+            if (this.randomNumber === 0 && this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
                 this.checker = true;
-                console.log('trots joe');
+                console.log('trots joe A');
+                if (this.player.getStamina() >= 0) {
+                    this.player.staminaSubstract(-20);
+                }
+            }
+            else if (this.randomNumber === 1 && this.keyListener.isKeyDown(KeyListener.KEY_S) && this.checker === false) {
+                this.checker = true;
+                console.log('trots joe S');
+                if (this.player.getStamina() >= 0) {
+                    this.player.staminaSubstract(-20);
+                }
+            }
+            else if (this.randomNumber === 2 && this.keyListener.isKeyDown(KeyListener.KEY_D) && this.checker === false) {
+                this.checker = true;
+                console.log('trots joe D');
+                if (this.player.getStamina() >= 0) {
+                    this.player.staminaSubstract(-20);
+                }
+            }
+            else if (this.randomNumber === 3 && this.keyListener.isKeyDown(KeyListener.KEY_W) && this.checker === false) {
+                this.checker = true;
+                console.log('trots joe W');
+                if (this.player.getStamina() >= 0) {
+                    this.player.staminaSubstract(-20);
+                }
             }
         }
         else {
             this.checker = false;
+            this.randomNumber = Game.randomInteger(0, 3);
         }
     }
+    //   private randomButtonClicker(): void {
+    //   }
     /**
      * Draw the score on a canvas
      */

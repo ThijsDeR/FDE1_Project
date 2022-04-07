@@ -13,6 +13,31 @@ export default class Player {
         this.keyListener = new KeyListener();
         this.image = Player.loadNewImage('./assets/img/players/character_robot_walk0.png');
         this.positionX = this.canvas.width / 2;
+        this.stamina = 100;
+    }
+    /**
+     * Stamina getter
+     *
+     * @returns stamina
+     */
+    getStamina() {
+        return this.stamina;
+    }
+    /**
+     * Stamina substracter
+     *
+     * @param stamina stamina number input
+     */
+    staminaSubstract(stamina) {
+        this.stamina = this.stamina - stamina;
+    }
+    /**
+     * Sets stamina
+     *
+     * @param stamina stamina number input
+     */
+    setStamina(stamina) {
+        this.stamina = stamina;
     }
     /**
      * Moves the player
