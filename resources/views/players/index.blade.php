@@ -16,7 +16,7 @@
             <div class="columns">
                 <div class="column is-full">
                     <div class="has-text-right">
-                        <a href="{{route('players.create')}}" class="button is-primary">Add your player...</a>
+                        <a href="{{route('players.create')}}"  id="start-button" class="start-button" role="button">add your name</a>
                     </div>
                     <table class="table is-fullwidth is-striped">
                         <thead>
