@@ -16,7 +16,7 @@
             <div class="columns">
                 <div class="column is-full">
                     <div class="has-text-right">
-                        <a href="/names/create" class="button is-primary">Add your name...</a>
+                        <a href="{{route('players.create')}}" class="button is-primary">Add your player...</a>
                     </div>
                     <table class="table is-fullwidth is-striped">
                         <thead>
@@ -26,10 +26,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($names  as $name)
+                        @foreach($players as $player)
                             <tr>
-                                <td><strong>{{ $name->name}}</strong></td>
-                                <td><strong>{{ $name->highscore }}</strong></td>
+                                <td><strong>{{ $player->name}}</strong></td>
+                                <td><strong>{{ $player->highscore }}</strong></td>
                             </tr>
                         @endforeach
                         </tbody>

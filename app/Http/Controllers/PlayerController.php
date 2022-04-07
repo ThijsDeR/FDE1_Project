@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Name;
+use App\Models\Player;
 use Illuminate\Http\Request;
 
-class NameController extends Controller
+class PlayerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class NameController extends Controller
      */
     public function index()
     {
-        $names = Name::paginate(15);
-        return view('names.index', compact('names'));
+        $players = Player::paginate(15);
+        return view('players.index', compact('players'));
     }
 
     /**
@@ -25,7 +25,7 @@ class NameController extends Controller
      */
     public function create()
     {
-        return view('names.create');
+        return view('players.create');
     }
 
     /**
@@ -36,20 +36,20 @@ class NameController extends Controller
      */
     public function store(Request $request)
     {
-        Name::create($request->validate([
-            "name" => "required",
+        Player::create($request->validate([
+            "player" => "required",
         ]));
 
-        return redirect(route('names.index'));
+        return redirect(route('players.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Name  $name
+     * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function show(Name $name)
+    public function show(Player $player)
     {
         //
     }
@@ -57,10 +57,10 @@ class NameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Name  $name
+     * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function edit(Name $name)
+    public function edit(Player $player)
     {
         //
     }
@@ -69,10 +69,10 @@ class NameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Name  $name
+     * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Name $name)
+    public function update(Request $request, Player $player)
     {
         //
     }
@@ -80,10 +80,10 @@ class NameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Name  $name
+     * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Name $name)
+    public function destroy(Player $player)
     {
         //
     }

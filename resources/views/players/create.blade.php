@@ -5,7 +5,7 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-12"> {{-- These divs are needed for proper layout --}}
-                    <form method="POST" action="{{ route('names.store') }}">
+                    <form method="POST" action="{{ route('players.store') }}">
                         @csrf
                         <div class="card"> {{-- The form is placed inside a Bulma Card component --}}
                             <header class="card-header">
@@ -30,7 +30,7 @@
 {{--                                    </div>--}}
 
                                     <div class="field">
-                                        <label class="label">name</label>
+                                        <label class="label">player</label>
                                         <div class="control">
                                             <input name="name" class="input @error('name') is-danger @enderror"
                                                    type="text" placeholder="Your name here...">
@@ -51,7 +51,7 @@
                                         <button type="reset" class="button is-warning">Reset</button>
                                     </div>
                                     <div class="control">
-                                        <a type="button" href="/names" class="button is-light">Cancel</a>
+                                        <a type="button" href="{{route('players.index')}}" class="button is-light">Cancel</a>
                                     </div>
                                 </div>
                             </div>

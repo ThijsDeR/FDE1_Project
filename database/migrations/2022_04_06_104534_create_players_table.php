@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('names', function (Blueprint $table) {
+        Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('token', 50)->unique();
+            $table->string('name');
             $table->integer('highscore')->default(0);
+            $table->string('upgrades', 10000);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('names');
+        Schema::dropIfExists('players');
     }
 };
