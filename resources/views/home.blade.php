@@ -16,10 +16,8 @@
             <h2 class="title"><span class="green">Green</span> <span class="blue">Wave</span></h2>
         </div>
         <a href="./game" id="start-button" class="start-button" role="button">Start</a>
+        <a href="{{route('players.index')}}" id="start-button" class="start-button" role="button">See your highscore</a>
     </div>
-    <a href="./game" id="start-button" class="start-button" role="button">Start</a>
-
-    <a href="{{route('players.index')}}" id="start-button" class="start-button" role="button">See your highscore</a>
   </div>
 </body>
 

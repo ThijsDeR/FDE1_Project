@@ -57,6 +57,7 @@ export default class Game {
      */
     update(elapsed) {
         this.button.createButton(elapsed);
+        this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
         return false;
     }
