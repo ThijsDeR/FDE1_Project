@@ -38,6 +38,10 @@ export default class Player {
     this.stamina = 100;
   }
 
+  public getKeyListener() {
+    return this.keyListener;
+  }
+
   /**
    * Stamina getter
    *

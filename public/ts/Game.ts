@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Player from './Player.js';
 import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
+import Button from './Button.js';
 
 /**
  * Main class of this Game.
@@ -15,6 +16,8 @@ export default class Game {
   private keyListener: KeyListener;
 
   private ctx: CanvasRenderingContext2D;
+
+  private button: Button;
 
   // The player on the canvas
   private player: Player;
@@ -65,8 +68,6 @@ export default class Game {
     this.gameloop.start();
     console.log('werkt!!');
 
-    this.arrayAlfabet = ['A','S','D','W'];
-
     this.counter = 0;
     // the initial image height
     this.imgHeight = 0;
@@ -80,6 +81,10 @@ export default class Game {
     this.timeChecker = false;
 
     this.randomNumber = 0;
+
+    this.button = new Button(this.canvas, this.player, this.keyListener, this.counter)
+
+
   }
 
   /**
@@ -88,6 +93,7 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.player.move();
+    this.button.checkButton();
   }
 
   /**
@@ -99,6 +105,7 @@ export default class Game {
    * @returns `true` if the game should stop animation
    */
   public update(elapsed: number): boolean {
+    this.button.createButton(elapsed)
     // Spawn a new scoring object every 45 frames
 
     return false;
@@ -116,9 +123,9 @@ export default class Game {
 
     this.scrollBackground()
 
-    this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 300, 60);
+    Game.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 300, this.canvas, 60);
 
-    this.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 200, 60);
+    Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 200, this.canvas, 60);
 
     if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
     this.totalScore = this.totalScore + 1;
@@ -128,59 +135,62 @@ export default class Game {
 
     this.player.draw(ctx);
 
+    this.counter = this.counter + 1;
+
     if(this.player.getStamina() >= 0) {
     this.player.staminaSubstract(0.05);
 
     this.staminabar.draw(ctx, this.player.getStamina());
     } else {
-        this.writeTextToCanvas('Game Over!', this.canvas.width / 2, this.canvas.height / 2, 100);
+        Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, this.canvas.height / 2, this.canvas, 100);
     }
 
 
 
-    this.counter = this.counter + 1;
+    // this.counter = this.counter + 1;
 
-    if(this.counter % 100 === 1 && this.timeChecker === true) {
-        this.timeChecker = false;
-    }
+    // if(this.counter % 100 === 1 && this.timeChecker === true) {
+    //     this.timeChecker = false;
+    // }
 
-    if(Game.randomInteger(0,500) === 20 && this.player.getStamina() >= 0) {
-        this.timeChecker = true;
-    }
+    // if(Game.randomInteger(0,500) === 20 && this.player.getStamina() >= 0) {
+    //     this.timeChecker = true;
+    // }
 
-    if(this.timeChecker === true && this.player.getStamina() >= 0) {
-        this.writeTextToCanvas(`Click ${this.arrayAlfabet[this.randomNumber]}`, this.canvas.width / 2, 500, 60)
+    // if(this.timeChecker === true && this.player.getStamina() >= 0) {
+    //     Game.writeTextToCanvas(`Click ${this.arrayAlfabet[this.randomNumber]}`, this.canvas.width / 2, 500, 60)
 
-        if (this.randomNumber === 0 && this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
-            this.checker = true
-            console.log('trots joe A');
-            if (this.player.getStamina() >= 0) {
-                this.player.staminaSubstract(-20);
-            }
-        } else if (this.randomNumber === 1 && this.keyListener.isKeyDown(KeyListener.KEY_S) && this.checker === false) {
-            this.checker = true
-            console.log('trots joe S');
-            if (this.player.getStamina() >= 0) {
-                this.player.staminaSubstract(-20);
-            }
-        } else if (this.randomNumber === 2 && this.keyListener.isKeyDown(KeyListener.KEY_D) && this.checker === false) {
-            this.checker = true
-            console.log('trots joe D');
-            if (this.player.getStamina() >= 0) {
-                this.player.staminaSubstract(-20);
-            }
-        } else if (this.randomNumber === 3 && this.keyListener.isKeyDown(KeyListener.KEY_W) && this.checker === false) {
-            this.checker = true
-            console.log('trots joe W');
-            if (this.player.getStamina() >= 0) {
-                this.player.staminaSubstract(-20);
-            }
-        }
-    }
-    else {
-        this.checker = false;
-        this.randomNumber = Game.randomInteger(0,3);
-      }
+    //     if (this.randomNumber === 0 && this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
+    //         this.checker = true
+    //         console.log('trots joe A');
+    //         if (this.player.getStamina() >= 0) {
+    //             this.player.staminaSubstract(-20);
+    //         }
+    //     } else if (this.randomNumber === 1 && this.keyListener.isKeyDown(KeyListener.KEY_S) && this.checker === false) {
+    //         this.checker = true
+    //         console.log('trots joe S');
+    //         if (this.player.getStamina() >= 0) {
+    //             this.player.staminaSubstract(-20);
+    //         }
+    //     } else if (this.randomNumber === 2 && this.keyListener.isKeyDown(KeyListener.KEY_D) && this.checker === false) {
+    //         this.checker = true
+    //         console.log('trots joe D');
+    //         if (this.player.getStamina() >= 0) {
+    //             this.player.staminaSubstract(-20);
+    //         }
+    //     } else if (this.randomNumber === 3 && this.keyListener.isKeyDown(KeyListener.KEY_W) && this.checker === false) {
+    //         this.checker = true
+    //         console.log('trots joe W');
+    //         if (this.player.getStamina() >= 0) {
+    //             this.player.staminaSubstract(-20);
+    //         }
+    //     }
+    // }
+    // else {
+    //     this.checker = false;
+    //     this.randomNumber = Game.randomInteger(0,3);
+    //   }
+    this.button.drawButton();
 
   }
 
@@ -192,7 +202,7 @@ export default class Game {
    * Draw the score on a canvas
    */
   private drawScore(): void {
-    this.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 400, 60);
+    Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 400, this.canvas, 60);
   }
 
   /**
@@ -205,15 +215,16 @@ export default class Game {
    * @param color - The color of the text
    * @param alignment - Where to align the text
    */
-  public writeTextToCanvas(
+  public static writeTextToCanvas(
     text: string,
     xCoordinate: number,
     yCoordinate: number,
+    canvas: HTMLCanvasElement,
     fontSize: number = 20,
     color: string = 'white',
     alignment: CanvasTextAlign = 'center',
   ): void {
-    const ctx = this.canvas.getContext('2d')!;
+    const ctx = canvas.getContext('2d')!;
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;

@@ -15,6 +15,9 @@ export default class Player {
         this.positionX = this.canvas.width / 2;
         this.stamina = 100;
     }
+    getKeyListener() {
+        return this.keyListener;
+    }
     /**
      * Stamina getter
      *
