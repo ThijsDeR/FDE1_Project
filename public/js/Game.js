@@ -54,6 +54,7 @@ export default class Game {
      * @returns `true` if the game should stop animation
      */
     update(elapsed) {
+        this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
         return false;
     }

@@ -1,3 +1,4 @@
+import Animator from './Animator.js';
 import KeyListener from './KeyListener.js';
 
 export default class Player {
@@ -11,13 +12,17 @@ export default class Player {
 
   private keyListener: KeyListener;
 
-  private image: HTMLImageElement;
-
   private positionX: number;
 
   private value: number;
 
   private stamina: number;
+
+  private animator: Animator;
+
+  private width: number;
+
+  private height: number;
 
   /**
    * Construct a new Player instance
@@ -33,9 +38,15 @@ export default class Player {
 
     this.keyListener = new KeyListener();
 
-    this.image = Player.loadNewImage('./assets/img/players/character_robot_walk0.png');
+    this.animator = new Animator([
+      {image: Player.loadNewImage('./assets/img/players/character_robot_walk0.png'), duration: 1000},
+      {image: Player.loadNewImage('./assets/img/players/character_maleAdventurer_walk0.png'), duration: 1000},
+    ])
     this.positionX = this.canvas.width / 2;
     this.stamina = 100;
+
+    this.width = 100;
+    this.height = 100;
   }
 
   /**
@@ -87,11 +98,15 @@ export default class Player {
    */
   public draw(ctx: CanvasRenderingContext2D): void {
     ctx.drawImage(
-      this.image,
+      this.animator.getImage(),
       // Center the image in the lane with the x coordinates
-      this.positionX - this.image.width / 2,
+      this.positionX - this.animator.getImage().width / 2,
       this.canvas.height - 150,
     );
+  }
+
+  public update(elapsed: number) {
+    this.animator.advance(elapsed);
   }
 
   /**
