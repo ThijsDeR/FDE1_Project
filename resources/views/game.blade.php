@@ -11,7 +11,7 @@
 <body style="overflow: hidden">
     <canvas id="game-canvas"></canvas>
 
-    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
 

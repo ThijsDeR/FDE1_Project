@@ -127,6 +127,7 @@ div.mute-button.active {
 .start-button:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
+
 .add-player, .button.is-primary {
     color: green;
     border: 2px solid green;
@@ -161,9 +162,4 @@ thead {
   width: 50%;
   border: 2px solid green;
 };
-
-
-
-
-
 
