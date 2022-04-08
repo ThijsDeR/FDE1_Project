@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
-  background-image:url('/assets/city-8bit.gif');
-  background-repeat: repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0%;
-  bottom:0%;
-  left: 0%;
-  right: 0%;
-  font-family: 'Poppins', sans-serif;
-}
+    background-image: url('/assets/city-8bit.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    top: 0%;
+    bottom:0%;
+    left: 0%;
+    right: 0%;
+    font-family: 'Poppins', sans-serif;
 
 div.mute-button {
   position: absolute;
@@ -58,7 +57,7 @@ div.mute-button.active {
 
 
 /* CSS */
-.start-button {
+.start-button, .add-player {
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -91,6 +90,7 @@ div.mute-button.active {
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
+  margin-bottom: 1rem;
 }
 
 .start-button:hover {
@@ -127,3 +127,43 @@ div.mute-button.active {
 .start-button:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
+.add-player, .button.is-primary {
+    color: green;
+    border: 2px solid green;
+
+}
+
+.button.is-primary, .button.is-warning, button.is-light  {
+    color: green;
+    border: 2px solid green;
+    border-radius: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    padding:1rem;
+    width: 10%;
+}
+
+thead {
+    color: green;
+    font-size: 30px;
+
+}
+
+
+.table.is-fullwidth.is-striped {
+  padding:5rem;
+  text-align: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border: 2px solid green;
+};
+
+
+
+
+
+

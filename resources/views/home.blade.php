@@ -17,5 +17,10 @@
         </div>
         <a href="./game" id="start-button" class="start-button" role="button">Start</a>
     </div>
-  </body>
+    <a href="./game" id="start-button" class="start-button" role="button">Start</a>
+
+    <a href="{{route('players.index')}}" id="start-button" class="start-button" role="button">See your highscore</a>
+  </div>
+</body>
+
 </html>
