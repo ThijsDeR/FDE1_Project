@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
-class PlayerSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +15,10 @@ class PlayerSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Player::create([
-            'user_id' => '1',
-            'token' => 'NhHHHuWJBGxkuQ2tD1qA1MfV1TZDYUyz2l0IZOKVfTTa3xv8',
+        \App\Models\User::create([
             'name' => 'TeaEyes',
-            'upgrades' => '{}'
+            'email' => 'thijsderechter@gmail.com',
+            'password' => Hash::make('test')
         ]);
-
     }
 }
