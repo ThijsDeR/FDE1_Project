@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('upgrades', 10000)->default('{}');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
