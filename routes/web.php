@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    $user = auth()->user();
+    return view('home', compact('user'));
 })->name('home');
 
 Route::get('/game', [GameController::class, 'game']);
+
+Route::get('/login', [AuthController::class, 'show']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::resource('/players', PlayerController::class);

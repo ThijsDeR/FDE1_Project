@@ -13,8 +13,8 @@
 <form action="{{route('login')}}" method="POST">
     @csrf
 
-    <label for="email">email</label>
-    <input type="text" id="email" name="email">
+    <label for="username">username</label>
+    <input type="text" id="username" name="username">
 
     <label for="password">password</label>
     <input type="text" id="password" name="password">

@@ -12,15 +12,15 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         validator($request->all(), [
-            'email' => ['required', 'email'],
+            'username' => ['required'],
             'password' => ['required'],
         ])->validate();
 
-        if(auth()->attempt($request->only(['email', 'password']))) {
+        if(auth()->attempt($request->only(['username', 'password']))) {
             return redirect()->route('home');
         }
 
-        return redirect()->back()->withErrors(['email' => 'Invalid Credentials']);
+        return redirect()->back()->withErrors(['username' => 'Invalid Credentials']);
     }
 
     public function logout() {
