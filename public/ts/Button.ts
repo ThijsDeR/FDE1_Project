@@ -43,10 +43,10 @@ export default class Button {
         this.player = player;
         this.keyListener = keyListener;
         this.arrayAlfabet = [
-            {letter: 'A', keycode: KeyListener.KEY_A, image: Button.loadNewImage('./assets/img/players/character_femaleAdventurer_walk0.png')},
-            {letter: 'W', keycode: KeyListener.KEY_W, image: Button.loadNewImage('./assets/img/players/character_femalePerson_walk0.png')},
-            {letter: 'S', keycode: KeyListener.KEY_S, image: Button.loadNewImage('./assets/img/players/character_maleAdventurer_walk0.png')},
-            {letter: 'D', keycode: KeyListener.KEY_D, image: Button.loadNewImage('./assets/img/players/character_malePerson_walk0.png')},
+            {letter: 'A', keycode: KeyListener.KEY_A, image: Button.loadNewImage('./assets/img/objects/a_button.png')},
+            {letter: 'W', keycode: KeyListener.KEY_W, image: Button.loadNewImage('./assets/img/objects/w_button.png')},
+            {letter: 'S', keycode: KeyListener.KEY_S, image: Button.loadNewImage('./assets/img/objects/s_button.png')},
+            {letter: 'D', keycode: KeyListener.KEY_D, image: Button.loadNewImage('./assets/img/objects/d_button.png')},
         ]
         this.randomNumber = 0;
         this.checker = false;
@@ -56,7 +56,7 @@ export default class Button {
         this.timeSinceLastbutton = 0;
         this.xPos = (this.canvas.width / 4) * 3;
         this.width = 100;
-        this.yPos = -150;
+        this.yPos = -100;
         this.speed = 0.3;
     }
 
