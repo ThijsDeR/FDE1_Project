@@ -12,53 +12,8 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-div.mute-button {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  width: 100px;
-  height: 100px;
-  background-image: url('/assets/volume-on.png');
-  background-size: 100px 100px;
-}
-
-div.mute-button.active {
-  background-image: url('/assets/volume-off.png');
-}
-
-.menu-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-}
-
-.title-container {
-    width: auto;
-    padding: 10%;
-    background-color: whitesmoke;
-    box-shadow: 0px 0px 50px rgba(249,255,27, 0.4);
-    border-radius: 20%;
-    margin-bottom: 20%;
-}
-
-.title-container .title {
-    font-size: 250%;
-}
-
-.title-container .title .green{
-    color: green;
-}
-
-.title-container .title .blue{
-    color: rgba(0, 0, 0, 0.8);
-}
-
-
 /* CSS */
-.start-button, .add-player {
+.nice-button, .add-player {
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -91,42 +46,16 @@ div.mute-button.active {
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
-  margin-bottom: 1rem;
 }
 
-.start-button:hover {
+.nice-button:hover {
   background: #F6F9FE;
   color: green;
 }
 
-.start-button:active {
+.nice-button:active {
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
   outline: none;
-}
-
-.start-button:focus {
-  outline: none;
-  border: 2px solid green;
-}
-
-.start-button:not(:disabled) {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-}
-
-.start-button:not(:disabled):hover {
-  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
-}
-
-.start-button:not(:disabled):focus {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
-}
-
-.start-button:not(:disabled):active {
-  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
-}
-
-.start-button:disabled {
-  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
 
 .add-player, .button.is-primary {

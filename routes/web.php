@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
-Route::get('/game', [GameController::class, 'game']);
-Route::resource('/players', PlayerController::class);
+Route::get('/game', [GameController::class, 'game'])->name('game');
+Route::get('/highscores', [PlayerController::class, 'index'])->name('highscores');

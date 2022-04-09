@@ -1,0 +1,13 @@
+div.mute-button {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100px;
+    height: 100px;
+    background-image: url('/assets/volume-on.png');
+    background-size: 100px 100px;
+}
+  
+div.mute-button.active {
+background-image: url('/assets/volume-off.png');
+}
