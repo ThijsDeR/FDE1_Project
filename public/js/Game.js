@@ -15,14 +15,14 @@ export default class Game {
     constructor(canvas) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
-        this.canvas.width = 1440;
-        this.canvas.height = 1440;
+        this.canvas.width = window.innerHeight;
+        this.canvas.height = window.innerHeight;
         // Set the player at the center
         this.player = new Player(this.canvas);
         // Score is zero at start
         this.totalScore = 0;
         this.keyListener = new KeyListener();
-        this.staminabar = new Staminabar(this.canvas, 700, 100, 500, 20);
+        this.staminabar = new Staminabar(this.canvas, window.innerWidth / 4, 100, 500, 20);
         // Start the animation
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
@@ -71,8 +71,8 @@ export default class Game {
         // Clear the entire canvas
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.scrollBackground();
-        Game.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 300, this.canvas, 60);
-        Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 200, this.canvas, 60);
+        Game.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 225, this.canvas, 30);
+        Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 175, this.canvas, 30);
         if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
             this.totalScore = this.totalScore + 1;
         }
@@ -84,7 +84,7 @@ export default class Game {
             this.staminabar.draw(ctx, this.player.getStamina());
         }
         else {
-            Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, this.canvas.height / 2, this.canvas, 100);
+            Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
         }
         // this.counter = this.counter + 1;
         // if(this.counter % 100 === 1 && this.timeChecker === true) {
@@ -133,7 +133,7 @@ export default class Game {
      * Draw the score on a canvas
      */
     drawScore() {
-        Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 400, this.canvas, 60);
+        Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 325, this.canvas, 40);
     }
     /**
      * Writes text to the canvas
@@ -167,22 +167,23 @@ export default class Game {
     }
     scrollBackground() {
         // create an image element
-        const img = new Image();
+        const img = new Image(this.canvas.width, this.canvas.height);
         // specify the image source relative to the html or js file
         // when the image is in the same directory as the file
         // only the file name is required:
         img.src = "./assets/img/weg_game_2.png";
+        img.classList.add("backgroundImage");
         // this is the primary animation loop that is called 60 times
         // per second
         const ctx = this.canvas.getContext('2d');
         // draw image 1
-        ctx.drawImage(img, 0, this.imgHeight);
+        ctx.drawImage(img, 0, this.imgHeight, this.canvas.width, this.canvas.height);
         // draw image 2
-        ctx.drawImage(img, 0, this.imgHeight - this.canvas.height);
+        ctx.drawImage(img, 0, this.imgHeight - this.canvas.height, this.canvas.width, this.canvas.height);
         // update image height
         this.imgHeight += this.scrollSpeed;
         // reseting the images when the first image entirely exits the screen
-        if (this.imgHeight == this.canvas.height) {
+        if (this.imgHeight > this.canvas.height) {
             this.imgHeight = 0;
         }
     }
