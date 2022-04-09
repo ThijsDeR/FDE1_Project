@@ -16,6 +16,9 @@ export default class UserData {
         this.token = this.makeToken(48);
         return this.createPlayer({ token: this.token, name: name });
     }
+    getToken() {
+        return this.token;
+    }
     makeToken(length) {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -21,6 +21,10 @@ export default class UserData {
     return this.createPlayer({token: this.token, name: name})
   }
 
+  public getToken(): string | null {
+    return this.token;
+  }
+
 
   private makeToken(length: number) {
     let result = '';

@@ -7,13 +7,16 @@
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/navStyles.css') }}" rel="stylesheet">
+    <script type="module" src="{{ asset('js/PageScripts/Navbar.js') }}" defer></script>
     @yield('head-content')
 </head>
 
 <body>
     @include('common.nav')
 
-    @yield('content')
+    <main>
+        @yield('content')
+    </main>
 
 
 </body>

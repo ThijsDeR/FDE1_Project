@@ -12,6 +12,13 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+main {
+  position: fixed;
+  top: 10%;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+}
 /* CSS */
 .nice-button, .add-player {
   align-items: center;
