@@ -2,6 +2,6 @@
 
 @section('content')
     <div>
-        {{$user->player}}
+        {{$player->highscore}}
     </div>
 @endsection

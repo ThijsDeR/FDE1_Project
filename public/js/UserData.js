@@ -16,6 +16,10 @@ export default class UserData {
         this.token = this.makeToken(48);
         return this.createPlayer({ token: this.token, name: name });
     }
+    setToken(token) {
+        this.token = token;
+        localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
+    }
     makeToken(length) {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -15,9 +15,6 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-full">
-                    <div class="has-text-right">
-                        <a href="{{route('players.create')}}"  id="add-player" class="add-player" role="button">Add your name!!</a>
-                    </div>
                     <table class="table is-fullwidth is-striped">
                         <thead>
                         <tr>

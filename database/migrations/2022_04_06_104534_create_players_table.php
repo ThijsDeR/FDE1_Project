@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('token', 50)->unique();
-            $table->string('name');
             $table->integer('highscore')->default(0);
-            $table->string('upgrades', 10000);
+            $table->string('upgrades', 10000)->default('{}');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

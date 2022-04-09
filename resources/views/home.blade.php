@@ -14,11 +14,15 @@
     <div class="menu-container">
         <div class="title-container">
             <h2 class="title"><span class="green">Green</span> <span class="blue">Wave</span></h2>
-            <h2>{{$user ? $user->username : 'Guest'}}</h2>
         </div>
-        <a href="./game" id="start-button" class="start-button" role="button">Start</a>
-        <a href="./logout" id="start-button" class="start-button" role="button">logout</a>
-        <a href="{{route('players.index')}}" id="start-button" class="start-button" role="button">See your highscore</a>
+        @if (auth()->user())
+          <a href="./localstorage?token={{auth()->user()->player->token}}" id="start-button" class="start-button" role="button">Start</a>
+          <a href="{{route('logout')}}" id="start-button" class="start-button" role="button">logout</a>
+        @else
+          <a href="{{route('loginView')}}" id="start-button" class="start-button" role="button">login</a>
+          <a href="{{route('registerView')}}" id="start-button" class="start-button" role="button">Register</a>
+        @endif
+        <a href="{{route('highscores')}}" id="start-button" class="start-button" role="button">See your highscore</a>
     </div>
   </div>
 </body>
