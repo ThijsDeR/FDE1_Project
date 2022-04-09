@@ -59,6 +59,8 @@ export default class Game {
         this.button.createButton(elapsed);
         this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
+        this.button.moveButton(elapsed);
+        this.button.collidesWithCanvasBottom();
         return false;
     }
     /**
@@ -76,11 +78,12 @@ export default class Game {
         if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
             this.totalScore = this.totalScore + 1;
         }
+        this.counter = this.counter + 1;
         this.drawScore();
         this.player.draw(ctx);
-        this.counter = this.counter + 1;
+        this.button.drawButton(ctx);
         if (this.player.getStamina() >= 0) {
-            this.player.staminaSubstract(0.05);
+            this.player.staminaSubstract(0.025);
             this.staminabar.draw(ctx, this.player.getStamina());
         }
         else {
@@ -125,10 +128,7 @@ export default class Game {
         //     this.checker = false;
         //     this.randomNumber = Game.randomInteger(0,3);
         //   }
-        this.button.drawButton();
     }
-    //   private randomButtonClicker(): void {
-    //   }
     /**
      * Draw the score on a canvas
      */
