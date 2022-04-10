@@ -6,7 +6,7 @@
     <title>Traffic Jam</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    @yield('head-content')
 </head>
 
 <body>

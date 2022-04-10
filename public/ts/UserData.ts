@@ -21,6 +21,10 @@ export default class UserData {
     return this.createPlayer({token: this.token, name: name})
   }
 
+  public setToken(token: string) {
+    this.token = token;
+    localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
+  }
 
   private makeToken(length: number) {
     let result = '';
