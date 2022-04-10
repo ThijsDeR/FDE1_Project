@@ -6,16 +6,18 @@
 
 @section('content')
     <div id="form-container">
-        <ul>
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            @endif
-        </ul>
-
         <form method="POST" action="{{route('login')}}">
             @csrf
+
+            @if($errors->any())
+                <div id="input-container">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
             <div id="input-container">
                 <label for="username">Gebruikernaam</label>

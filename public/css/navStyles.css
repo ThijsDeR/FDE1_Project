@@ -18,17 +18,17 @@ nav h2 {
     font-size: calc(1vw + 1vh);
 }
 
-#container {
+nav #container {
     display: grid;
     grid-template-columns: 20% 50% 30%;
     height: 80%;
 }
 
-#text-container {
+nav #text-container {
     position: relative;
 }
 
-#text-container h2{
+nav #text-container h2{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -38,11 +38,11 @@ nav h2 {
     margin-left: 5%;
 }
 
-#link-container {
+nav #link-container {
     position: relative;
 }
 
-ul {
+nav ul {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -55,26 +55,26 @@ ul {
 
 }
 
-li {
+nav ul li {
     padding: 0px 2%;
     display: inline;
 }
 
-a {
+nav a {
     text-decoration: none;
     color: black;
 }
 
-#user-container {
+nav #user-container {
     display: grid;
     grid-template-columns: 50% 50%;
 }
 
-#button-container {
+nav #button-container {
     position: relative;
 }
 
-#button-container a{
+nav #button-container a{
     position: absolute;
     top: 50%;
     left: 50%;

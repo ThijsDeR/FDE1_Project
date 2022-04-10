@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Player;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -44,10 +45,14 @@ class AuthController extends Controller
             'password' => ['required'],
         ])->validate();
 
-        $user = User::create([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = User::create([
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+            ]);
+        } catch (Exception $e){
+            return redirect()->back()->withErrors(['username' => 'Already In Use']);
+        }
 
         Player::create([
             'user_id' => $user->id,
