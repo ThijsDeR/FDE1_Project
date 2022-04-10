@@ -1,12 +1,29 @@
 <nav>
-    <div id="text-container">
-        <a href="{{route('home')}}"><h2 class="title"><span class="green">Green</span> <span class="blue">Wave</span></h2></a>
-        <ul id="links">
-            <li><button class="nice-button" id="profile-button">Profile</button></li>
-            <li><a href="{{route('highscores')}}"><button class="nice-button">High Scores</button></a></li>
-            <li><a href="{{route('game')}}"><button class="nice-button">Play</button></a></li>
-        </ul>
-        <div class="mute-button active">
+    <div id="container">
+        <div id="text-container">
+            <a href="{{route('home')}}"><h2 class="title"><span class="green">Green</span> <span class="blue">Wave</span></h2></a>
+        </div>
+        <div id="link-container">
+            <ul id="links">
+                <li><a href="{{route('profile')}}" class="nice-button">Profiel</a></li>
+                <li><a href="{{route('highscores')}}" class="nice-button">High Scores</a></li>
+            </ul>
+        </div>
+
+        <div id="user-container">
+            @if (auth()->user())
+                <div id="text-container">
+                    <h2>{{auth()->user()->username}}</h2>
+                </div>
+
+                <div id="button-container">
+                    <a href="{{route('logout')}}" class="nice-button">logout</a>
+                </div>
+            @else
+                <div id="button-container">
+                    <a href="{{route('loginView')}}" class="nice-button" role="button">login</a>
+                </div>
+            @endif
 
         </div>
     </div>

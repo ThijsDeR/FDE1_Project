@@ -28,12 +28,6 @@ canvas {
   display: block;
 }
 
-div.mute-button {
-  position: absolute;
-  top: 0%;
-  left: 0%;
-}
-
 main {
   position: fixed;
   top: 10%;
@@ -43,8 +37,7 @@ main {
 }
 
 /* CSS */
-.nice-button,
-.add-player {
+.nice-button {
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -57,7 +50,7 @@ main {
   display: inline-flex;
   fill: currentcolor;
   font-family: "Google Sans", Roboto, Arial, sans-serif;
-  font-size: 14px;
+  font-size: calc(0.8vw + 0.8vh);
   font-weight: 500;
   height: 48px;
   justify-content: center;
@@ -89,7 +82,6 @@ main {
   outline: none;
 }
 
-.add-player,
 .button.is-primary {
   color: green;
   border: 2px solid green;
