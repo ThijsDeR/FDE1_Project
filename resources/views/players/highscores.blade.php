@@ -1,16 +1,10 @@
 @extends('common.master')
 
+@section('head-content')
+    
+@endsection
+
 @section('content')
-    <section class="hero is-small is-primary">
-        <div class="hero-body">
-            <div class="container">
-{{--                <p class="title is-2">Project</p>--}}
-{{--                <p class="subtitle is-3">Manage the project</p>--}}
-
-            </div>
-        </div>
-    </section>
-
     <section class="section">
         <div class="container">
             <div class="columns">

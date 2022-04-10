@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Green Wave</title>
-    <link rel="stylesheet" href="css/app.css">
-    <script src="./js/Mainscreen.js" defer></script>
-  </head>
-  <body>
-    <div class="mute-button active">
+@extends('common.master')
 
     </div>
     <div class="menu-container">
@@ -25,6 +15,11 @@
         <a href="{{route('highscores')}}" id="start-button" class="start-button" role="button">See your highscore</a>
     </div>
   </div>
-</body>
 
-</html>
+@section('head-content')
+  <script src="./js/Mainscreen.js" defer></script>
+@endsection
+
+@section('content')
+
+@endsection

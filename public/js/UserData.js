@@ -20,6 +20,9 @@ export default class UserData {
         this.token = token;
         localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
     }
+    getToken() {
+        return this.token;
+    }
     makeToken(length) {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

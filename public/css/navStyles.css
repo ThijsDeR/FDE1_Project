@@ -1,0 +1,44 @@
+nav {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 10%;
+    border-bottom-right-radius: 10%;
+    border-bottom-left-radius: 10%;
+    vertical-align: center;
+    line-height: -100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#text-container h2{
+    display: inline;
+    margin-left: 5%;
+}
+
+ul {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+    margin-left: 5%;
+    padding: 0;
+}
+
+li {
+    padding: 0px 2%;
+    display: inline;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.green {
+    color: green;
+}

@@ -25,6 +25,11 @@ export default class UserData {
     this.token = token;
     localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
   }
+  
+  public getToken(): string | null {
+    return this.token;
+  }
+
 
   private makeToken(length: number) {
     let result = '';
