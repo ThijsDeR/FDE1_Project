@@ -30,4 +30,4 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
-Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highscores')->middleware('auth');
+Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highscores');
