@@ -4,6 +4,7 @@ import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
+import ButtonCheckLine from './ButtonCheckLine.js';
 
 /**
  * Main class of this Game.
@@ -25,6 +26,8 @@ export default class Game {
   private totalScore: number;
 
   private staminabar: Staminabar;
+
+  private buttonCheckLine: ButtonCheckLine;
 
   private counter: number;
 
@@ -53,7 +56,8 @@ export default class Game {
     // Score is zero at start
     this.totalScore = 0;
 
-    this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
+    this.staminabar = new Staminabar(this.canvas, this.canvas.width / 3 + 50, this.canvas.height / 8, this.canvas.width / 3 -100, 20);
+    this.buttonCheckLine = new ButtonCheckLine(this.canvas, this.canvas.width / 3 *2, this.canvas.height / 2, this.canvas.width / 3, 10);
 
     // Start the animation
     this.gameloop = new GameLoop(this);
@@ -84,7 +88,7 @@ export default class Game {
     // Move player
     this.player.move();
     this.buttons.forEach((button, buttonIndex) => {
-      if(button.checkButton(this.player)) {
+      if(button.checkButton(this.player, this.buttonCheckLine)) {
         this.buttons.splice(buttonIndex, 1)
       }
     });
@@ -113,7 +117,7 @@ export default class Game {
     if (this.counter % 500 === 1) {
       this.buttons.push(new Button(
         (this.canvas.width / 4 ) * 3,
-        0,
+        -100,
         0,
         0.5,
         100,
@@ -138,7 +142,8 @@ export default class Game {
     this.scrollBackground()
 
 
-    Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
+    Game.writeTextToCanvas('Klik op A, S, W of D', this.canvas.width / 2, 175, this.canvas, 30);
+    Game.writeTextToCanvas('Op het goede moment!', this.canvas.width / 2, 225, this.canvas, 30)
 
     if (this.counter % 5 === 1) {
       this.totalScore = this.totalScore + 1;
@@ -153,6 +158,8 @@ export default class Game {
     this.buttons.forEach((button) => {
       button.draw(ctx)
     });
+
+    this.buttonCheckLine.draw(ctx);
 
     if(this.player.getStamina() >= 0) {
       this.player.changeStamina(-0.025);
@@ -228,9 +235,9 @@ export default class Game {
     const ctx = this.canvas.getContext('2d')!;
 
    // draw image 1
-    ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
+    ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
     // draw image 2
-    ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
+    ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
     // update image height
     this.imgHeight += this.scrollSpeed;
 

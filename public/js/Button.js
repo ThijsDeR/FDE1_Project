@@ -13,16 +13,28 @@ export default class Button extends ImageProp {
             return true;
         return false;
     }
-    checkButton(player) {
+    checkButton(player, buttonCheckLine) {
         const buttonCheck = this.checkClickButton(player);
         if (buttonCheck === Button.NO_PRESS)
             return false;
         if (buttonCheck === Button.INCORRECT_PRESS) {
-            player.changeStamina(-5);
+            player.changeStamina(-10);
+            console.log('Uhm! -10');
             return true;
         }
-        if (buttonCheck === Button.CORRECT_PRESS) {
+        if (buttonCheck === Button.CORRECT_PRESS && this.yPos <= buttonCheckLine.getYPos() + 50 && this.yPos >= buttonCheckLine.getYPos() - 50) {
             player.changeStamina(20);
+            console.log('Perfect! +20');
+            return true;
+        }
+        else if (buttonCheck === Button.CORRECT_PRESS && this.yPos <= buttonCheckLine.getYPos() + 100 && this.yPos >= buttonCheckLine.getYPos() - 100) {
+            player.changeStamina(10);
+            console.log('Great! +10');
+            return true;
+        }
+        else {
+            player.changeStamina(-10);
+            console.log('Ok! -10');
             return true;
         }
     }
