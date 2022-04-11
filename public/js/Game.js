@@ -1,7 +1,6 @@
 import GameLoop from './GameLoop.js';
 import Player from './Player.js';
 import Staminabar from './Staminabar.js';
-import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
 /**
@@ -19,12 +18,11 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         // Set the player at the center
-        this.player = new Player(this.canvas);
+        this.player = new Player(this.canvas.width / 2 + 25, this.canvas.height * (3 / 4), 0, 0, this.canvas.width / 8, this.canvas.height / 4);
         this.userData = new UserData();
         // Score is zero at start
         this.totalScore = 0;
-        this.keyListener = new KeyListener();
-        this.staminabar = new Staminabar(this.canvas, this.canvas.height / 2, 100, 500, 20);
+        this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
         // Start the animation
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
@@ -36,7 +34,6 @@ export default class Game {
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
         this.scrollSpeed = 6;
-        this.checker = false;
         this.gameOver = false;
         this.buttons = [];
     }
@@ -88,7 +85,7 @@ export default class Game {
         ctx.fillStyle = `black`;
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.scrollBackground();
-        Game.writeTextToCanvas('Klik op A, S, W or D wh', this.canvas.width / 2, 175, this.canvas, 30);
+        Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
         if (this.counter % 5 === 1) {
             this.totalScore = this.totalScore + 1;
         }
