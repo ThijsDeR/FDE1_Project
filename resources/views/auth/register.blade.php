@@ -27,7 +27,7 @@
 
             <div id="input-container">
                 <label for="password">Wachtwoord</label>
-                <input type="text" id="password" name="password">
+                <input type="password" id="password" name="password">
             </div>
 
             <hr/>
