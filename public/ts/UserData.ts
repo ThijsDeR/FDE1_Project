@@ -15,31 +15,14 @@ export default class UserData {
     return this.token ? true : false;
   }
 
-  public makeNewPlayer(name: string): Promise<unknown> {
-    this.token = this.makeToken(48);
-
-    return this.createPlayer({token: this.token, name: name})
-  }
 
   public setToken(token: string) {
     this.token = token;
     localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
   }
-  
+
   public getToken(): string | null {
     return this.token;
-  }
-
-
-  private makeToken(length: number) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-    for (let i = 0; i < length; i++) {
-      result += characters[Math.floor(Math.random() * characters.length)];
-    }
-    localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${result}`);
-    return result;
   }
 
   public getPlayerData(): Promise<unknown> {
@@ -54,7 +37,7 @@ export default class UserData {
           reject(error)
         }
       })
-    })   
+    })
   }
 
   private setPlayerData(data: {highscore: number, upgrades: {}}): Promise<unknown> {
@@ -74,31 +57,17 @@ export default class UserData {
           reject(error)
         }
       })
-    })  
+    })
   }
 
-  private createPlayer(data: {token: string, name: string}): Promise<unknown> {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: './players',
-        type: 'POST',
-        data: data,
-        dataType: "text",
-        success: function (data) {
-          resolve(data)
-        },
-        error: function (error) {
-          reject(error)
-        }
-      })
-    })  
-  }
-
-  public changeHighScore(highscore: number): Promise<unknown> {
-    return this.setPlayerData({highscore: highscore, upgrades: {}})
+  public changeHighScore(highscore: number) {
+    this.getPlayerData().then((data: any) => {
+      if (highscore > data.highscore) {
+        this.setPlayerData({highscore: highscore, upgrades: {}}).then((data) => {
+          console.log(data)
+        });
+      }
+    })
   }
 
 }

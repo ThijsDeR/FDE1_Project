@@ -25,4 +25,13 @@ class PlayerController extends Controller
 
         return view('players.profile', compact('user'));
     }
+
+    public function update(Request $request, $token) {
+        Player::where('token', $token)->update($request->only(['highscore', 'upgrades']));
+        return response('Succesfull update', 204);
+    }
+
+    public function info($token) {
+        return Player::where('token', $token)->first();
+    }
 }

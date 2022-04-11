@@ -1,11 +1,11 @@
 export default class Prop {
-    constructor() {
-        this.xPos = this.xPos;
-        this.yPos = this.yPos;
-        this.yVel = 0;
-        this.xVel = 0;
-        this.width = this.width;
-        this.height = this.height;
+    constructor(xPos, yPos, xVel, yVel, width, height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xVel = xVel;
+        this.yVel = yVel;
+        this.width = width;
+        this.height = height;
     }
     getXPos() {
         return this.xPos;
@@ -24,5 +24,9 @@ export default class Prop {
     }
     getHeight() {
         return this.height;
+    }
+    move(elapsed) {
+        this.xPos += this.xVel * elapsed;
+        this.yPos += this.yVel * elapsed;
     }
 }

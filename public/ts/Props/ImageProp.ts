@@ -1,11 +1,12 @@
+import Game from "../Game.js";
 import Prop from "./Prop.js";
 
 export default class ImageProp extends Prop {
-    private image: HTMLImageElement;
+    protected image: HTMLImageElement;
 
-    public constructor(){
-        super();
-        this.image = this.image;
+    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, imageUrl: string){
+        super(xPos, yPos, xVel, yVel, width, height);
+        this.image = Game.loadNewImage(imageUrl);
     }
 
 
@@ -13,4 +14,14 @@ export default class ImageProp extends Prop {
         return this.image;
     }
 
+    public draw(ctx: CanvasRenderingContext2D) {
+        ctx.drawImage(
+            this.image,
+            // Center the image in the lane with the x coordinates
+            this.xPos + (this.width / 2),
+            this.yPos + (this.height / 2),
+            this.width,
+            this.height
+          );
+    }
 }

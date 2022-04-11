@@ -1,8 +1,8 @@
 import GameLoop from './GameLoop.js';
 import Player from './Player.js';
 import Staminabar from './Staminabar.js';
-import KeyListener from './KeyListener.js';
 import Button from './Button.js';
+import UserData from './UserData.js';
 /**
  * Main class of this Game.
  */
@@ -15,14 +15,14 @@ export default class Game {
     constructor(canvas) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
-        this.canvas.width = window.innerHeight;
+        this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         // Set the player at the center
-        this.player = new Player(this.canvas);
+        this.player = new Player(this.canvas.width / 2 + 25, this.canvas.height * (3 / 4), 0, 0, this.canvas.width / 8, this.canvas.height / 4);
+        this.userData = new UserData();
         // Score is zero at start
         this.totalScore = 0;
-        this.keyListener = new KeyListener();
-        this.staminabar = new Staminabar(this.canvas, window.innerWidth / 4, 100, 500, 20);
+        this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
         // Start the animation
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
@@ -34,10 +34,8 @@ export default class Game {
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
         this.scrollSpeed = 6;
-        this.checker = false;
-        this.timeChecker = false;
-        this.randomNumber = 0;
-        this.button = new Button(this.canvas, this.player, this.keyListener, this.counter);
+        this.gameOver = false;
+        this.buttons = [];
     }
     /**
      * Handles any user input that has happened since the last call
@@ -45,7 +43,11 @@ export default class Game {
     processInput() {
         // Move player
         this.player.move();
-        this.button.checkButton();
+        this.buttons.forEach((button, buttonIndex) => {
+            if (button.checkButton(this.player)) {
+                this.buttons.splice(buttonIndex, 1);
+            }
+        });
     }
     /**
      * Advances the game simulation one step. It may run AI and physics (usually
@@ -56,84 +58,58 @@ export default class Game {
      * @returns `true` if the game should stop animation
      */
     update(elapsed) {
-        this.button.createButton(elapsed);
         this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
-        this.button.moveButton(elapsed);
-        this.button.collidesWithCanvasBottom();
+        this.buttons.forEach((button, buttonIndex) => {
+            button.move(elapsed);
+            if (button.collidesWithCanvasBottom(this.canvas)) {
+                this.buttons.splice(buttonIndex, 1);
+                this.player.changeStamina(-10);
+            }
+        });
+        if (this.counter % 500 === 1) {
+            this.buttons.push(new Button((this.canvas.width / 4) * 3, 0, 0, 0.5, 100, 100));
+        }
         return false;
     }
     /**
      * Draw the game so the player can see what happened
      */
     render() {
+        if (this.gameOver)
+            return;
         // Render the items on the canvas
         // Get the canvas rendering context
         const ctx = this.canvas.getContext('2d');
         // Clear the entire canvas
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.fillStyle = `black`;
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.scrollBackground();
-        Game.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 225, this.canvas, 30);
-        Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 175, this.canvas, 30);
-        if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
+        Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
+        if (this.counter % 5 === 1) {
             this.totalScore = this.totalScore + 1;
         }
-        this.counter = this.counter + 1;
+        this.counter += 1;
         this.drawScore();
         this.player.draw(ctx);
-        this.button.drawButton(ctx);
+        this.buttons.forEach((button) => {
+            button.draw(ctx);
+        });
         if (this.player.getStamina() >= 0) {
-            this.player.staminaSubstract(0.025);
+            this.player.changeStamina(-0.025);
             this.staminabar.draw(ctx, this.player.getStamina());
         }
         else {
             Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
+            this.userData.changeHighScore(this.totalScore);
+            this.gameOver = true;
         }
-        // this.counter = this.counter + 1;
-        // if(this.counter % 100 === 1 && this.timeChecker === true) {
-        //     this.timeChecker = false;
-        // }
-        // if(Game.randomInteger(0,500) === 20 && this.player.getStamina() >= 0) {
-        //     this.timeChecker = true;
-        // }
-        // if(this.timeChecker === true && this.player.getStamina() >= 0) {
-        //     Game.writeTextToCanvas(`Click ${this.arrayAlfabet[this.randomNumber]}`, this.canvas.width / 2, 500, 60)
-        //     if (this.randomNumber === 0 && this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
-        //         this.checker = true
-        //         console.log('trots joe A');
-        //         if (this.player.getStamina() >= 0) {
-        //             this.player.staminaSubstract(-20);
-        //         }
-        //     } else if (this.randomNumber === 1 && this.keyListener.isKeyDown(KeyListener.KEY_S) && this.checker === false) {
-        //         this.checker = true
-        //         console.log('trots joe S');
-        //         if (this.player.getStamina() >= 0) {
-        //             this.player.staminaSubstract(-20);
-        //         }
-        //     } else if (this.randomNumber === 2 && this.keyListener.isKeyDown(KeyListener.KEY_D) && this.checker === false) {
-        //         this.checker = true
-        //         console.log('trots joe D');
-        //         if (this.player.getStamina() >= 0) {
-        //             this.player.staminaSubstract(-20);
-        //         }
-        //     } else if (this.randomNumber === 3 && this.keyListener.isKeyDown(KeyListener.KEY_W) && this.checker === false) {
-        //         this.checker = true
-        //         console.log('trots joe W');
-        //         if (this.player.getStamina() >= 0) {
-        //             this.player.staminaSubstract(-20);
-        //         }
-        //     }
-        // }
-        // else {
-        //     this.checker = false;
-        //     this.randomNumber = Game.randomInteger(0,3);
-        //   }
     }
     /**
      * Draw the score on a canvas
      */
     drawScore() {
-        Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 325, this.canvas, 40);
+        Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 6, 200, this.canvas, 30);
     }
     /**
      * Writes text to the canvas
@@ -167,7 +143,7 @@ export default class Game {
     }
     scrollBackground() {
         // create an image element
-        const img = new Image(this.canvas.width, this.canvas.height);
+        const img = new Image(this.canvas.height, this.canvas.height);
         // specify the image source relative to the html or js file
         // when the image is in the same directory as the file
         // only the file name is required:
@@ -177,9 +153,9 @@ export default class Game {
         // per second
         const ctx = this.canvas.getContext('2d');
         // draw image 1
-        ctx.drawImage(img, 0, this.imgHeight, this.canvas.width, this.canvas.height);
+        ctx.drawImage(img, 530, this.imgHeight, this.canvas.width / 3, this.canvas.height);
         // draw image 2
-        ctx.drawImage(img, 0, this.imgHeight - this.canvas.height, this.canvas.width, this.canvas.height);
+        ctx.drawImage(img, 530, this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
         // update image height
         this.imgHeight += this.scrollSpeed;
         // reseting the images when the first image entirely exits the screen
@@ -187,4 +163,20 @@ export default class Game {
             this.imgHeight = 0;
         }
     }
+    /**
+     * Loads an image in such a way that the screen doesn't constantly flicker
+     *
+     *
+     * NOTE: this is a 'static' method. This means that this method must be called like
+     * `Game.loadNewImage()` instead of `this.loadNewImage()`.
+     *
+     * @param source The address or URL of the a media resource that is to be loaded
+     * @returns an HTMLImageElement with the source as its src attribute
+     */
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
+    }
 }
+;

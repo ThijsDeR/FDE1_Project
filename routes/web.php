@@ -31,3 +31,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middle
 
 Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highscores');
+
+Route::get('/players/{token}', [PlayerController::class, 'info'])->name('playerInfo');
+Route::put('/players/{token}', [PlayerController::class, 'update'])->name('update');

@@ -1,20 +1,20 @@
 export default class Prop {
-private yPos: number
-private xPos: number
-private xVel: number
-private yVel: number
-private width: number
-private height:number
+protected yPos: number;
+protected xPos: number;
+protected xVel: number;
+protected yVel: number;
+protected width: number;
+protected height:number;
 
 
 
-public constructor() {
-    this.xPos = this.xPos
-    this.yPos = this.yPos
-    this.yVel = 0;
-    this.xVel = 0;
-    this.width = this.width
-    this.height = this.height
+public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.xVel = xVel;
+    this.yVel = yVel;
+    this.width = width;
+    this.height = height;
 
   }
 
@@ -40,5 +40,10 @@ public constructor() {
 
   public getHeight() {
     return this.height
+  }
+
+  public move(elapsed: number) {
+    this.xPos += this.xVel * elapsed;
+    this.yPos += this.yVel * elapsed;
   }
 }
