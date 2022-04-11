@@ -21,8 +21,8 @@ class PlayerController extends Controller
 
     public function profile()
     {
-        $player = auth()->user()->player;
+        $user = auth()->user();
 
-        return view('player.profile', compact('player'));
+        return view('players.profile', compact('user'));
     }
 }
