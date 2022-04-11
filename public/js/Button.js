@@ -27,20 +27,21 @@ export default class Button extends ImageProp {
         }
     }
     checkClickButton(player) {
-        if (player.getKeyListener().isKeyDown(this.currentButton.keycode))
-            return Button.CORRECT_PRESS;
         let incorrect_press = false;
         Button.ALPHABET_ARRAY.filter((letter) => letter.letter != this.currentButton.letter).forEach((letter) => {
             if (player.getKeyListener().isKeyDown(letter.keycode))
                 incorrect_press = true;
         });
-        return incorrect_press ? Button.INCORRECT_PRESS : Button.NO_PRESS;
+        if (incorrect_press)
+            return Button.INCORRECT_PRESS;
+        if (player.getKeyListener().isKeyDown(this.currentButton.keycode))
+            return Button.CORRECT_PRESS;
+        return Button.NO_PRESS;
     }
 }
 Button.INCORRECT_PRESS = 0;
 Button.CORRECT_PRESS = 1;
 Button.NO_PRESS = 2;
-Button.NO_BUTTON = 3;
 Button.ALPHABET_ARRAY = [
     { letter: 'A', keycode: KeyListener.KEY_A, imageUrl: './assets/img/objects/a_button.png' },
     { letter: 'W', keycode: KeyListener.KEY_W, imageUrl: './assets/img/objects/w_button.png' },

@@ -31,3 +31,8 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+#highscore-container nav {
+    display: grid;
+    grid-template-columns: 20% 20%;
+}

@@ -1,4 +1,4 @@
-<nav>
+<nav id="navbar">
     <div id="container">
         <div id="text-container">
             <a href="{{route('home')}}"><h2 class="title"><span class="green">Green</span> <span class="blue">Wave</span></h2></a>
