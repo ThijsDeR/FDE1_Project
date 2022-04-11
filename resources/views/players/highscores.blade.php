@@ -1,31 +1,24 @@
 @extends('common.master')
 
 @section('head-content')
-    
+    <link href="{{ asset('css/highscoreStyles.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-full">
-                    <table class="table is-fullwidth is-striped">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Highscore</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($players as $player)
-                            <tr>
-                                <td><strong>{{ $player->name}}</strong></td>
-                                <td><strong>{{ $player->highscore }}</strong></td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-    </section>
+    <div id="highscore-container">
+        <h2 id="title">Highscores</h2>
+        <hr/>
+
+        @foreach($players as $player)
+        <div id="highscore-player-container">
+            <div id="text-container"><h2 id="place">{{$loop->iteration}}e</h2></div>
+            <div id="text-container"><p id="name">{{ $player->user->username}}</p></div>
+            <div id="text-container"><p id="highscore">{{ $player->highscore}}</p></div>
+        </div>
+
+        <hr/>
+            
+        @endforeach
+    </div>
+
 @endsection

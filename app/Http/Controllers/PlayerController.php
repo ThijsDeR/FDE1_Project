@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Player;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -14,7 +15,7 @@ class PlayerController extends Controller
      */
     public function highscores()
     {
-        $players = Player::paginate(15);
+        $players = Player::orderBy('highscore', 'desc')->paginate(15);
         return view('players.highscores', compact('players'));
     }
 
