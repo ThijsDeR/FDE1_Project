@@ -12,7 +12,7 @@ export default class Staminabar {
         //   drawEllipse(10, 10, 100, 60);
         //   drawEllipseByCenter(60,40,20,10);
         ctx.beginPath();
-        ctx.rect(this.xPos - this.width / 2, this.yPos, this.width * (stamina / 100), this.height);
+        ctx.rect(this.xPos, this.yPos, this.width * (stamina / 100), this.height);
         if (stamina > 63) {
             ctx.fillStyle = "green";
         }

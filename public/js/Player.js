@@ -13,8 +13,8 @@ export default class Player {
         this.rightLane = (this.canvas.width / 4) * 3;
         this.keyListener = new KeyListener();
         this.animator = new Animator([
-            { image: Player.loadNewImage('./assets/img/players/character_robot_walk0.png'), duration: 1000 },
-            { image: Player.loadNewImage('./assets/img/players/character_maleAdventurer_walk0.png'), duration: 1000 },
+            { image: Player.loadNewImage('./assets/img/players/fiets1.png'), duration: 1000 },
+            { image: Player.loadNewImage('./assets/img/players/fiets2.png'), duration: 1000 },
         ]);
         this.positionX = this.canvas.width / 2;
         this.stamina = 100;
@@ -37,8 +37,8 @@ export default class Player {
      *
      * @param stamina stamina number input
      */
-    staminaSubstract(stamina) {
-        this.stamina = this.stamina - stamina;
+    changeStamina(stamina) {
+        this.stamina += stamina;
     }
     /**
      * Sets stamina
@@ -70,7 +70,7 @@ export default class Player {
     draw(ctx) {
         ctx.drawImage(this.animator.getImage(), 
         // Center the image in the lane with the x coordinates
-        this.positionX - this.animator.getImage().width / 2, this.canvas.height - 150);
+        this.positionX - this.animator.getImage().width / 2, this.canvas.height - 300);
     }
     update(elapsed) {
         this.animator.advance(elapsed);

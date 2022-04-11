@@ -3,6 +3,8 @@ import Player from './Player.js';
 import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
 import Button from './Button.js';
+import UserData from './UserData.js';
+import ImageProp from './ImageProp.js';
 
 /**
  * Main class of this Game.
@@ -11,13 +13,15 @@ export default class Game {
   // The canvas
   private canvas: HTMLCanvasElement;
 
+  private userData: UserData;
+
   private gameloop: GameLoop;
 
   private keyListener: KeyListener;
 
   private ctx: CanvasRenderingContext2D;
 
-  private button: Button;
+  private buttons: Button[];
 
   // The player on the canvas
   private player: Player;
@@ -37,9 +41,7 @@ export default class Game {
 
   private checker: boolean;
 
-  private timeChecker: boolean;
-
-  private randomNumber: number;
+  private gameOver: boolean;
 
   /**
    * Construct a new Game
@@ -50,18 +52,19 @@ export default class Game {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
-    this.canvas.width = window.innerHeight;
+    this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
     // Set the player at the center
     this.player = new Player(this.canvas);
 
+    this.userData = new UserData()
     // Score is zero at start
     this.totalScore = 0;
 
     this.keyListener = new KeyListener();
 
-    this.staminabar = new Staminabar(this.canvas, window.innerWidth / 4, 100, 500, 20);
+    this.staminabar = new Staminabar(this.canvas, this.canvas.height / 2, 100, 500, 20);
 
     // Start the animation
     this.gameloop = new GameLoop(this);
@@ -78,11 +81,10 @@ export default class Game {
     this.scrollSpeed = 6;
 
     this.checker = false;
-    this.timeChecker = false;
 
-    this.randomNumber = 0;
+    this.gameOver = false;
 
-    this.button = new Button(this.canvas, this.player, this.keyListener, this.counter)
+    this.buttons = []
 
 
 
@@ -94,7 +96,9 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.player.move();
-    this.button.checkButton();
+    this.buttons.forEach((button) => {
+      button.checkButton(this.player)
+    });
   }
 
   /**
@@ -106,13 +110,28 @@ export default class Game {
    * @returns `true` if the game should stop animation
    */
   public update(elapsed: number): boolean {
-    this.button.createButton(elapsed);
     this.player.update(elapsed);
     // Spawn a new scoring object every 45 frames
 
-    this.button.moveButton(elapsed);
-    this.button.collidesWithCanvasBottom();
+    this.buttons.forEach((button, buttonIndex) => {
+      button.move(elapsed)
+      if (button.collidesWithCanvasBottom(this.canvas)) {
+        this.buttons.splice(buttonIndex, 1)
+        this.player.changeStamina(-10)
+        continue;
+      }
+    });
 
+    if (this.counter % 500 === 1) {
+      this.buttons.push(new Button(
+        (this.canvas.width / 4 ) * 3,
+        0,
+        0,
+        10,
+        100,
+        100,
+      ))
+    }
     return false;
   }
 
@@ -120,88 +139,48 @@ export default class Game {
    * Draw the game so the player can see what happened
    */
   public render(): void {
+    if (this.gameOver) return;
     // Render the items on the canvas
     // Get the canvas rendering context
     const ctx = this.canvas.getContext('2d')!;
     // Clear the entire canvas
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.fillStyle = `black`;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.scrollBackground()
 
-    Game.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 225, this.canvas, 30);
 
     Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 175, this.canvas, 30);
 
-    if (this.counter % 5 === 1 && this.player.getStamina() >= 0) {
-    this.totalScore = this.totalScore + 1;
+    if (this.counter % 5 === 1) {
+      this.totalScore = this.totalScore + 1;
     }
 
-    this.counter = this.counter + 1;
+    this.counter += 1;
 
     this.drawScore();
 
     this.player.draw(ctx);
 
-    this.button.drawButton(ctx);
+    this.buttons.forEach((button) => {
+      button.draw(ctx)
+    });
 
     if(this.player.getStamina() >= 0) {
-    this.player.staminaSubstract(0.025);
-
-    this.staminabar.draw(ctx, this.player.getStamina());
+      this.player.changeStamina(-0.025);
+      this.staminabar.draw(ctx, this.player.getStamina());
     } else {
         Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
+        this.userData.changeHighScore(this.totalScore);
+        this.gameOver = true
     }
-
-    // this.counter = this.counter + 1;
-
-    // if(this.counter % 100 === 1 && this.timeChecker === true) {
-    //     this.timeChecker = false;
-    // }
-
-    // if(Game.randomInteger(0,500) === 20 && this.player.getStamina() >= 0) {
-    //     this.timeChecker = true;
-    // }
-
-    // if(this.timeChecker === true && this.player.getStamina() >= 0) {
-    //     Game.writeTextToCanvas(`Click ${this.arrayAlfabet[this.randomNumber]}`, this.canvas.width / 2, 500, 60)
-
-    //     if (this.randomNumber === 0 && this.keyListener.isKeyDown(KeyListener.KEY_A) && this.checker === false) {
-    //         this.checker = true
-    //         console.log('trots joe A');
-    //         if (this.player.getStamina() >= 0) {
-    //             this.player.staminaSubstract(-20);
-    //         }
-    //     } else if (this.randomNumber === 1 && this.keyListener.isKeyDown(KeyListener.KEY_S) && this.checker === false) {
-    //         this.checker = true
-    //         console.log('trots joe S');
-    //         if (this.player.getStamina() >= 0) {
-    //             this.player.staminaSubstract(-20);
-    //         }
-    //     } else if (this.randomNumber === 2 && this.keyListener.isKeyDown(KeyListener.KEY_D) && this.checker === false) {
-    //         this.checker = true
-    //         console.log('trots joe D');
-    //         if (this.player.getStamina() >= 0) {
-    //             this.player.staminaSubstract(-20);
-    //         }
-    //     } else if (this.randomNumber === 3 && this.keyListener.isKeyDown(KeyListener.KEY_W) && this.checker === false) {
-    //         this.checker = true
-    //         console.log('trots joe W');
-    //         if (this.player.getStamina() >= 0) {
-    //             this.player.staminaSubstract(-20);
-    //         }
-    //     }
-    // }
-    // else {
-    //     this.checker = false;
-    //     this.randomNumber = Game.randomInteger(0,3);
-    //   }
   }
 
   /**
    * Draw the score on a canvas
    */
   private drawScore(): void {
-    Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 325, this.canvas, 40);
+    Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 6, 200, this.canvas, 30);
   }
 
   /**
@@ -246,7 +225,7 @@ export default class Game {
 
   private scrollBackground(){
     // create an image element
-    const img = new Image(this.canvas.width, this.canvas.height);
+    const img = new Image(this.canvas.height, this.canvas.height);
 
     // specify the image source relative to the html or js file
     // when the image is in the same directory as the file
@@ -261,9 +240,9 @@ export default class Game {
     const ctx = this.canvas.getContext('2d')!;
 
    // draw image 1
-    ctx.drawImage(img, 0, this.imgHeight, this.canvas.width, this.canvas.height);
+    ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
     // draw image 2
-    ctx.drawImage(img, 0, this.imgHeight - this.canvas.height, this.canvas.width, this.canvas.height);
+    ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
     // update image height
     this.imgHeight += this.scrollSpeed;
 
@@ -272,4 +251,21 @@ export default class Game {
       this.imgHeight = 0;
     }
   }
+
+  /**
+   * Loads an image in such a way that the screen doesn't constantly flicker
+   *
+   *
+   * NOTE: this is a 'static' method. This means that this method must be called like
+   * `Game.loadNewImage()` instead of `this.loadNewImage()`.
+   *
+   * @param source The address or URL of the a media resource that is to be loaded
+   * @returns an HTMLImageElement with the source as its src attribute
+   */
+   public static loadNewImage(source: string): HTMLImageElement {
+    const img = new Image();
+    img.src = source;
+    return img;
+  }
 }
+;

@@ -12,25 +12,12 @@ export default class UserData {
     isValidPlayer() {
         return this.token ? true : false;
     }
-    makeNewPlayer(name) {
-        this.token = this.makeToken(48);
-        return this.createPlayer({ token: this.token, name: name });
-    }
     setToken(token) {
         this.token = token;
         localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${this.token}`);
     }
     getToken() {
         return this.token;
-    }
-    makeToken(length) {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < length; i++) {
-            result += characters[Math.floor(Math.random() * characters.length)];
-        }
-        localStorage.setItem(UserData.TOKEN_OBJECT_NAME, `${result}`);
-        return result;
     }
     getPlayerData() {
         return new Promise((resolve, reject) => {
@@ -65,27 +52,14 @@ export default class UserData {
             });
         });
     }
-    createPlayer(data) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: './players',
-                type: 'POST',
-                data: data,
-                dataType: "text",
-                success: function (data) {
-                    resolve(data);
-                },
-                error: function (error) {
-                    reject(error);
-                }
-            });
-        });
-    }
     changeHighScore(highscore) {
-        return this.setPlayerData({ highscore: highscore, upgrades: {} });
+        this.getPlayerData().then((data) => {
+            if (highscore > data.highscore) {
+                this.setPlayerData({ highscore: highscore, upgrades: {} }).then((data) => {
+                    console.log(data);
+                });
+            }
+        });
     }
 }
 UserData.TOKEN_OBJECT_NAME = 'token';
