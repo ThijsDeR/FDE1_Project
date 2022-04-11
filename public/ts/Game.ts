@@ -150,7 +150,7 @@ export default class Game {
     this.scrollBackground()
 
 
-    Game.writeTextToCanvas('Klik op A, S, W or D wh', this.canvas.width / 2, 175, this.canvas, 30);
+    Game.writeTextToCanvas('Klik op A, S, W of D waneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
 
     if (this.counter % 5 === 1) {
       this.totalScore = this.totalScore + 1;
