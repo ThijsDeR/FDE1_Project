@@ -1,1 +1,5 @@
-export default class imageprop from Props
+import Props from "./Props";
+
+export default class imageprop extends Props {
+
+}
