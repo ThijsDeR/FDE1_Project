@@ -4,7 +4,6 @@ import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
-import ImageProp from './ImageProp.js';
 
 /**
  * Main class of this Game.
@@ -96,8 +95,10 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.player.move();
-    this.buttons.forEach((button) => {
-      button.checkButton(this.player)
+    this.buttons.forEach((button, buttonIndex) => {
+      if(button.checkButton(this.player)) {
+        this.buttons.splice(buttonIndex, 1)
+      }
     });
   }
 
@@ -118,7 +119,6 @@ export default class Game {
       if (button.collidesWithCanvasBottom(this.canvas)) {
         this.buttons.splice(buttonIndex, 1)
         this.player.changeStamina(-10)
-        continue;
       }
     });
 
@@ -127,7 +127,7 @@ export default class Game {
         (this.canvas.width / 4 ) * 3,
         0,
         0,
-        10,
+        0.5,
         100,
         100,
       ))
@@ -150,7 +150,7 @@ export default class Game {
     this.scrollBackground()
 
 
-    Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 175, this.canvas, 30);
+    Game.writeTextToCanvas('Klik op A, S, W or D wh', this.canvas.width / 2, 175, this.canvas, 30);
 
     if (this.counter % 5 === 1) {
       this.totalScore = this.totalScore + 1;

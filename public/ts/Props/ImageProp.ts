@@ -1,11 +1,12 @@
+import Game from "../Game.js";
 import Prop from "./Prop.js";
 
 export default class ImageProp extends Prop {
     protected image: HTMLImageElement;
 
-    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, image: HTMLImageElement){
+    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, imageUrl: string){
         super(xPos, yPos, xVel, yVel, width, height);
-        this.image = image;
+        this.image = Game.loadNewImage(imageUrl);
     }
 
 

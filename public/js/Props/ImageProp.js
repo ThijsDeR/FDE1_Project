@@ -1,8 +1,9 @@
+import Game from "../Game.js";
 import Prop from "./Prop.js";
 export default class ImageProp extends Prop {
-    constructor(xPos, yPos, xVel, yVel, width, height, image) {
+    constructor(xPos, yPos, xVel, yVel, width, height, imageUrl) {
         super(xPos, yPos, xVel, yVel, width, height);
-        this.image = image;
+        this.image = Game.loadNewImage(imageUrl);
     }
     getImage() {
         return this.image;

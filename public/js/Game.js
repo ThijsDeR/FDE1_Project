@@ -4,7 +4,6 @@ import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
-import ImageProp from './ImageProp.js';
 /**
  * Main class of this Game.
  */
@@ -26,7 +25,6 @@ export default class Game {
         this.totalScore = 0;
         this.keyListener = new KeyListener();
         this.staminabar = new Staminabar(this.canvas, this.canvas.height / 2, 100, 500, 20);
-        this.imageProp = new ImageProp(Player.loadNewImage());
         // Start the animation
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
@@ -48,8 +46,10 @@ export default class Game {
     processInput() {
         // Move player
         this.player.move();
-        this.buttons.forEach((button) => {
-            button.checkButton(this.player);
+        this.buttons.forEach((button, buttonIndex) => {
+            if (button.checkButton(this.player)) {
+                this.buttons.splice(buttonIndex, 1);
+            }
         });
     }
     /**
@@ -61,18 +61,18 @@ export default class Game {
      * @returns `true` if the game should stop animation
      */
     update(elapsed) {
-        this.button.createButton(elapsed);
         this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
         this.buttons.forEach((button, buttonIndex) => {
             button.move(elapsed);
-            if (button.collidesWithCanvasBottom()) {
+            if (button.collidesWithCanvasBottom(this.canvas)) {
                 this.buttons.splice(buttonIndex, 1);
                 this.player.changeStamina(-10);
-                continue;
             }
         });
-        this.button.collidesWithCanvasBottom();
+        if (this.counter % 500 === 1) {
+            this.buttons.push(new Button((this.canvas.width / 4) * 3, 0, 0, 0.5, 100, 100));
+        }
         return false;
     }
     /**
@@ -88,12 +88,9 @@ export default class Game {
         ctx.fillStyle = `black`;
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.scrollBackground();
-        Game.writeTextToCanvas('Click A, S, W or D when written', this.canvas.width / 2, 175, this.canvas, 30);
+        Game.writeTextToCanvas('Klik op A, S, W or D wh', this.canvas.width / 2, 175, this.canvas, 30);
         if (this.counter % 5 === 1) {
             this.totalScore = this.totalScore + 1;
-        }
-        if (this.counter % 500 === 1) {
-            this.buttons.push(new Button((this.canvas.width / 4) * 3, 0, 0, 10, 100, 100));
         }
         this.counter += 1;
         this.drawScore();
@@ -168,6 +165,21 @@ export default class Game {
         if (this.imgHeight > this.canvas.height) {
             this.imgHeight = 0;
         }
+    }
+    /**
+     * Loads an image in such a way that the screen doesn't constantly flicker
+     *
+     *
+     * NOTE: this is a 'static' method. This means that this method must be called like
+     * `Game.loadNewImage()` instead of `this.loadNewImage()`.
+     *
+     * @param source The address or URL of the a media resource that is to be loaded
+     * @returns an HTMLImageElement with the source as its src attribute
+     */
+    static loadNewImage(source) {
+        const img = new Image();
+        img.src = source;
+        return img;
     }
 }
 ;

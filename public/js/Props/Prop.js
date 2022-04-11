@@ -2,8 +2,8 @@ export default class Prop {
     constructor(xPos, yPos, xVel, yVel, width, height) {
         this.xPos = xPos;
         this.yPos = yPos;
-        this.yVel = xVel;
-        this.xVel = yVel;
+        this.xVel = xVel;
+        this.yVel = yVel;
         this.width = width;
         this.height = height;
     }

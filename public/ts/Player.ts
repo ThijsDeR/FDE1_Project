@@ -1,4 +1,5 @@
 import Animator from './Animator.js';
+import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 
 export default class Player {
@@ -39,10 +40,10 @@ export default class Player {
     this.keyListener = new KeyListener();
 
     this.animator = new Animator([
-      {image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 1000},
-      {image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 1000},
+      {image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200},
+      {image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200},
     ])
-    this.positionX = this.canvas.width / 2;
+    this.positionX = this.canvas.height / 2;
     this.stamina = 100;
 
     this.width = 100;

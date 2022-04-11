@@ -11,8 +11,8 @@ protected height:number;
 public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number) {
     this.xPos = xPos;
     this.yPos = yPos;
-    this.yVel = xVel;
-    this.xVel = yVel;
+    this.xVel = xVel;
+    this.yVel = yVel;
     this.width = width;
     this.height = height;
 
