@@ -1,4 +1,4 @@
-export default class Props {
+export default class Prop {
 private yPos: number
 private xPos: number
 private xVel: number
@@ -18,19 +18,19 @@ public constructor() {
 
   }
 
-  public getxPos() {
+  public getXPos() {
     return this.xPos
   }
 
-  public getyPos() {
+  public getYPos() {
     return this.yPos
   }
 
-  public getyVel() {
+  public getYVel() {
     return this.xVel
   }
 
-  public getxVel() {
+  public getXVel() {
     return this.yVel
   }
 
@@ -41,6 +41,4 @@ public constructor() {
   public getHeight() {
     return this.height
   }
-
-
 }
