@@ -13,7 +13,7 @@ export default class Animator {
 
     public advance(elapsed: number) {
         this.timeSinceLastImage += elapsed;
-        
+
         if (this.images[this.currentImage].duration < this.timeSinceLastImage) {
             this.currentImage += 1;
             if ((this.images.length) === this.currentImage) this.currentImage = 0;
