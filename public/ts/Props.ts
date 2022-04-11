@@ -31,7 +31,7 @@ public constructor() {
   }
 
   public getxVel() {
-    return this.xVel
+    return this.yVel
   }
 
   public getWidth() {
