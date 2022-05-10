@@ -7,6 +7,7 @@
             <ul id="links">
                 <li><a href="{{route('profile')}}" class="nice-button">Profiel</a></li>
                 <li><a href="{{route('highscores')}}" class="nice-button">High Scores</a></li>
+                <li><a href="./localstorage?token={{auth()->user()->player->token}}" id="nice-button" class="nice-button" role="button">Start</a></li>
             </ul>
         </div>
 
@@ -19,6 +20,7 @@
                 <div id="button-container">
                     <a href="{{route('logout')}}" class="nice-button">logout</a>
                 </div>
+
             @else
                 <div id="button-container">
                     <a href="{{route('loginView')}}" class="nice-button" role="button">login</a>
