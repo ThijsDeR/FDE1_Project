@@ -1,4 +1,4 @@
-nav {
+nav#navbar {
     background-color: white;
     margin: 0;
     padding: 0;
@@ -14,21 +14,21 @@ nav {
     justify-content: center;
 }
 
-nav h2 {
+nav#navbar h2 {
     font-size: calc(1vw + 1vh);
 }
 
-nav #container {
+nav#navbar #container {
     display: grid;
     grid-template-columns: 20% 50% 30%;
     height: 80%;
 }
 
-nav #text-container {
+nav#navbar #text-container {
     position: relative;
 }
 
-nav #text-container h2{
+nav#navbar #text-container h2{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -38,11 +38,11 @@ nav #text-container h2{
     margin-left: 5%;
 }
 
-nav #link-container {
+nav#navbar #link-container {
     position: relative;
 }
 
-nav ul {
+nav#navbar ul {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -55,26 +55,26 @@ nav ul {
 
 }
 
-nav ul li {
+nav#navbar ul li {
     padding: 0px 2%;
     display: inline;
 }
 
-nav a {
+nav#navbar a {
     text-decoration: none;
     color: black;
 }
 
-nav #user-container {
+nav#navbar #user-container {
     display: grid;
     grid-template-columns: 50% 50%;
 }
 
-nav #button-container {
+nav#navbar #button-container {
     position: relative;
 }
 
-nav #button-container a{
+nav#navbar #button-container a{
     position: absolute;
     top: 50%;
     left: 50%;

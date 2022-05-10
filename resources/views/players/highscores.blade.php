@@ -11,7 +11,7 @@
 
         @foreach($players as $player)
         <div id="highscore-player-container">
-            <div id="text-container"><h2 id="place">{{$loop->iteration}}e</h2></div>
+            <div id="text-container"><h2 id="place">{{$players->currentPage() * $players->perPage() - $players->perPage() + $loop->iteration}}e</h2></div>
             <div id="text-container"><p id="name">{{ $player->user->username}}</p></div>
             <div id="text-container"><p id="highscore">{{ $player->highscore}}</p></div>
         </div>
@@ -19,6 +19,8 @@
         <hr/>
             
         @endforeach
+
+        {{ $players->links()}}
     </div>
 
 @endsection

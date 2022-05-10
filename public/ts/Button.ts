@@ -7,7 +7,6 @@ export default class Button extends ImageProp {
     private static readonly INCORRECT_PRESS = 0;
     private static readonly CORRECT_PRESS = 1;
     private static readonly NO_PRESS = 2;
-    private static readonly NO_BUTTON = 3;
 
     private static readonly ALPHABET_ARRAY: {letter: string, keycode: number, imageUrl: string}[] = [
         {letter: 'A', keycode: KeyListener.KEY_A, imageUrl: './assets/img/objects/a_button.png'},
@@ -31,7 +30,6 @@ export default class Button extends ImageProp {
     public collidesWithCanvasBottom(canvas: HTMLCanvasElement): boolean {
         if (this.yPos + this.image.height > canvas.height) return true;
         return false;
-
     }
 
 
@@ -51,13 +49,14 @@ export default class Button extends ImageProp {
     }
 
     private checkClickButton(player: Player): number {
-        if (player.getKeyListener().isKeyDown(this.currentButton.keycode)) return Button.CORRECT_PRESS
         let incorrect_press = false
         Button.ALPHABET_ARRAY.filter((letter) => letter.letter != this.currentButton!.letter).forEach((letter) => {
             if (player.getKeyListener().isKeyDown(letter.keycode)) incorrect_press = true
         });
+        if (incorrect_press) return Button.INCORRECT_PRESS;
+        if (player.getKeyListener().isKeyDown(this.currentButton.keycode)) return Button.CORRECT_PRESS;
+        return Button.NO_PRESS;
 
-        return incorrect_press ? Button.INCORRECT_PRESS : Button.NO_PRESS;
     }
  }
 

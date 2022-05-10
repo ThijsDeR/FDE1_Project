@@ -4,6 +4,7 @@ import Staminabar from './Staminabar.js';
 import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
+import Situation from './Situation.js';
 
 /**
  * Main class of this Game.
@@ -17,6 +18,9 @@ export default class Game {
   private gameloop: GameLoop;
 
   private buttons: Button[];
+
+  private situation: Situation | null;
+
 
   // The player on the canvas
   private player: Player;
@@ -67,7 +71,7 @@ export default class Game {
     // the scroll speed
     // an important thing to ensure here is that can.height
     // is divisible by scrollSpeed
-    this.scrollSpeed = 6;
+    this.scrollSpeed = 0.2;
 
     this.gameOver = false;
 
@@ -77,17 +81,37 @@ export default class Game {
 
   }
 
+  private newSituation() {
+    this.situation = new Situation(
+      {
+        xPos: this.canvas.width / 2,
+        yPos: 0,
+        xVel: 0,
+        yVel: this.scrollSpeed,
+        width: 100,
+        height: 100,
+      },
+
+      {
+        xPos: (this.canvas.width / 4 ) * 3,
+        yPos: 0,
+        xVel: 0,
+        yVel: this.scrollSpeed,
+        width: 100,
+        height: 100,
+      },
+
+      5
+      )
+  }
+
   /**
    * Handles any user input that has happened since the last call
    */
   public processInput(): void {
     // Move player
     this.player.move();
-    this.buttons.forEach((button, buttonIndex) => {
-      if(button.checkButton(this.player)) {
-        this.buttons.splice(buttonIndex, 1)
-      }
-    });
+    if (this.situation) this.situation.checkButton(this.player, this.canvas);
   }
 
   /**
@@ -102,23 +126,17 @@ export default class Game {
     this.player.update(elapsed);
     // Spawn a new scoring object every 45 frames
 
-    this.buttons.forEach((button, buttonIndex) => {
-      button.move(elapsed)
-      if (button.collidesWithCanvasBottom(this.canvas)) {
-        this.buttons.splice(buttonIndex, 1)
-        this.player.changeStamina(-10)
-      }
-    });
+    this.scrollBackground(elapsed);
 
-    if (this.counter % 500 === 1) {
-      this.buttons.push(new Button(
-        (this.canvas.width / 4 ) * 3,
-        0,
-        0,
-        0.5,
-        100,
-        100,
-      ))
+    if (this.situation) {
+      this.situation.update(elapsed)
+      this.situation.move(elapsed)
+      if (this.situation.isDone()) this.situation = null;
+    }
+
+
+    if (this.counter % 2000 === 1) {
+      this.newSituation();
     }
     return false;
   }
@@ -135,8 +153,19 @@ export default class Game {
     ctx.fillStyle = `black`;
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.scrollBackground()
+     // create an image element
+     const img = new Image(this.canvas.height, this.canvas.height);
 
+     // specify the image source relative to the html or js file
+     // when the image is in the same directory as the file
+     // only the file name is required:
+     img.src = "./assets/img/weg_game_2.png";
+     img.classList.add("backgroundImage");
+ 
+     // draw image 1
+     ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
+     // draw image 2
+     ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
 
     Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
 
@@ -150,9 +179,11 @@ export default class Game {
 
     this.player.draw(ctx);
 
-    this.buttons.forEach((button) => {
-      button.draw(ctx)
-    });
+   
+
+    if (this.situation) {
+      this.situation.draw(ctx)
+    }
 
     if(this.player.getStamina() >= 0) {
       this.player.changeStamina(-0.025);
@@ -211,28 +242,11 @@ export default class Game {
     return Math.round(Math.random() * (max - min) + min);
   }
 
-  private scrollBackground(){
-    // create an image element
-    const img = new Image(this.canvas.height, this.canvas.height);
+  private scrollBackground(elapsed: number){
+    
 
-    // specify the image source relative to the html or js file
-    // when the image is in the same directory as the file
-    // only the file name is required:
-    img.src = "./assets/img/weg_game_2.png";
-    img.classList.add("backgroundImage");
-
-
-
-    // this is the primary animation loop that is called 60 times
-    // per second
-    const ctx = this.canvas.getContext('2d')!;
-
-   // draw image 1
-    ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
-    // draw image 2
-    ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
     // update image height
-    this.imgHeight += this.scrollSpeed;
+    this.imgHeight += this.scrollSpeed * elapsed;
 
     // reseting the images when the first image entirely exits the screen
     if (this.imgHeight > this.canvas.height){
