@@ -42,7 +42,7 @@ export default class Game {
      */
     processInput() {
         // Move player
-        this.player.move();
+        this.player.movePlayer(this.canvas);
         this.buttons.forEach((button, buttonIndex) => {
             if (button.checkButton(this.player)) {
                 this.buttons.splice(buttonIndex, 1);

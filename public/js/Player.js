@@ -14,6 +14,8 @@ export default class Player extends AnimatedProp {
         ]);
         this.keyListener = new KeyListener();
         this.stamina = 100;
+        this.xVel = 5;
+        this.yVel = 5;
     }
     getKeyListener() {
         return this.keyListener;
@@ -50,7 +52,45 @@ export default class Player extends AnimatedProp {
     /**
      * Moves the player
      */
-    move() {
+    movePlayer(canvas) {
+        // Set the limit values
+        const minX = 0;
+        const maxX = canvas.width - this.width;
+        const minY = 0;
+        // Moving right
+        if (this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) && this.xPos < maxX) {
+            console.log('move right');
+            this.xPos += this.xVel;
+            // Limit to the max value
+            if (this.xPos > maxX) {
+                this.xPos = maxX;
+            }
+        }
+        // Moving left
+        if (this.keyListener.isKeyDown(KeyListener.KEY_LEFT) && this.xPos > minX) {
+            console.log('move left');
+            this.xPos -= this.xVel;
+            // Limit to the max value
+            if (this.xPos < minX) {
+                this.xPos = minX;
+            }
+        }
+        // Moving up
+        if (this.keyListener.isKeyDown(KeyListener.KEY_UP) && this.yPos > minY) {
+            console.log('move up');
+            this.yPos -= this.yVel;
+            if (this.yPos < minY) {
+                this.yPos = minY;
+            }
+        }
+        // Moving down
+        if (this.keyListener.isKeyDown(KeyListener.KEY_DOWN) && this.yPos > minY) {
+            console.log('move up');
+            this.yPos += this.yVel;
+            if (this.yPos < minY) {
+                this.yPos = minY;
+            }
+        }
     }
     update(elapsed) {
         this.advance(elapsed);

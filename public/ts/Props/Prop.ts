@@ -8,6 +8,7 @@ protected height:number;
 
 
 
+
 public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number) {
     this.xPos = xPos;
     this.yPos = yPos;
@@ -41,6 +42,8 @@ public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width
   public getHeight() {
     return this.height
   }
+
+
 
   public move(elapsed: number) {
     this.xPos += this.xVel * elapsed;
