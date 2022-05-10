@@ -85,7 +85,7 @@ export default class Player extends AnimatedProp {
         }
         // Moving down
         if (this.keyListener.isKeyDown(KeyListener.KEY_DOWN) && this.yPos > minY) {
-            console.log('move up');
+            console.log('move down');
             this.yPos += this.yVel;
             if (this.yPos < minY) {
                 this.yPos = minY;
