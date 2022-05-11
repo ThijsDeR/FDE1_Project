@@ -3,6 +3,7 @@ import Player from './Player.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Crossroad from './Crossroad.js';
 /**
  * Main class of this Game.
  */
@@ -33,9 +34,10 @@ export default class Game {
         // the scroll speed
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
-        this.scrollSpeed = 0.2;
+        this.scrollSpeed = 0.05;
         this.gameOver = false;
         this.buttons = [];
+        this.crossroad = new Crossroad(this.canvas);
     }
     newSituation() {
         this.situation = new Situation({
@@ -75,9 +77,10 @@ export default class Game {
         this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
+        this.crossroad.update(elapsed, this.scrollSpeed, this.player);
         if (this.situation) {
             this.situation.update(elapsed);
-            this.situation.move(elapsed);
+            this.situation.move(elapsed, this.scrollSpeed);
             if (this.situation.isDone())
                 this.situation = null;
         }
@@ -114,11 +117,12 @@ export default class Game {
             this.totalScore = this.totalScore + 1;
         }
         this.counter += 1;
-        this.drawScore();
-        this.player.draw(ctx);
         if (this.situation) {
             this.situation.draw(ctx);
         }
+        this.crossroad.draw(ctx);
+        this.player.draw(ctx);
+        this.drawScore();
         if (this.player.getStamina() >= 0) {
             this.player.changeStamina(-0.025);
             this.staminabar.draw(ctx, this.player.getStamina());

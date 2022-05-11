@@ -5,6 +5,7 @@ import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Crossroad from './Crossroad.js';
 
 /**
  * Main class of this Game.
@@ -20,6 +21,8 @@ export default class Game {
   private buttons: Button[];
 
   private situation: Situation | null;
+
+  private crossroad: Crossroad;
 
 
   // The player on the canvas
@@ -71,11 +74,13 @@ export default class Game {
     // the scroll speed
     // an important thing to ensure here is that can.height
     // is divisible by scrollSpeed
-    this.scrollSpeed = 0.2;
+    this.scrollSpeed = 0.05;
 
     this.gameOver = false;
 
     this.buttons = []
+
+    this.crossroad = new Crossroad(this.canvas)
 
 
 
@@ -128,9 +133,11 @@ export default class Game {
 
     this.scrollBackground(elapsed);
 
+    this.crossroad.update(elapsed, this.scrollSpeed, this.player)
+
     if (this.situation) {
       this.situation.update(elapsed)
-      this.situation.move(elapsed)
+      this.situation.move(elapsed, this.scrollSpeed)
       if (this.situation.isDone()) this.situation = null;
     }
 
@@ -175,15 +182,18 @@ export default class Game {
 
     this.counter += 1;
 
-    this.drawScore();
-
-    this.player.draw(ctx);
-
-   
+    
+  
 
     if (this.situation) {
       this.situation.draw(ctx)
     }
+
+    this.crossroad.draw(ctx)
+
+    this.player.draw(ctx);
+
+    this.drawScore();
 
     if(this.player.getStamina() >= 0) {
       this.player.changeStamina(-0.025);

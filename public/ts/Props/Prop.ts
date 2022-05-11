@@ -42,8 +42,8 @@ public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width
     return this.height
   }
 
-  public move(elapsed: number) {
+  public move(elapsed: number, scrollSpeed: number) {
     this.xPos += this.xVel * elapsed;
-    this.yPos += this.yVel * elapsed;
+    this.yPos += (this.yVel * elapsed) + (scrollSpeed * elapsed);
   }
 }

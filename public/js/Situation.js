@@ -34,9 +34,9 @@ export default class Situation extends ImageProp {
         super.draw(ctx);
         this.button.draw(ctx);
     }
-    move(elapsed) {
-        super.move(elapsed);
-        this.button.move(elapsed);
+    move(elapsed, scrollSpeed) {
+        super.move(elapsed, scrollSpeed);
+        this.button.move(elapsed, scrollSpeed);
     }
     isDone() {
         return this.buttonsLeft < 0;
