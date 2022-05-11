@@ -61,7 +61,7 @@ export default class Game {
      */
     processInput() {
         // Move player
-        this.player.move();
+        this.player.processInput(this.canvas);
         if (this.situation)
             this.situation.checkButton(this.player, this.canvas);
     }
@@ -77,6 +77,7 @@ export default class Game {
         if (this.gameOver)
             return false;
         this.player.update(elapsed);
+        this.player.move(elapsed);
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
         const result = this.crossroad.update(elapsed, this.scrollSpeed, this.player);
@@ -177,9 +178,7 @@ export default class Game {
         return Math.round(Math.random() * (max - min) + min);
     }
     scrollBackground(elapsed) {
-        // update image height
-        this.imgHeight += this.player.getyVelPlayer();
-
+        this.imgHeight += this.player.getYVel();
         // reseting the images when the first image entirely exits the screen
         if (this.imgHeight > this.canvas.height) {
             this.imgHeight = 0;

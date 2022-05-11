@@ -13,10 +13,10 @@ export default class Prop {
     getYPos() {
         return this.yPos;
     }
-    getYVel() {
+    getXVel() {
         return this.xVel;
     }
-    getXVel() {
+    getYVel() {
         return this.yVel;
     }
     getWidth() {

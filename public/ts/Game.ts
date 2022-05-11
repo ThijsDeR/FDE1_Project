@@ -115,7 +115,7 @@ export default class Game {
    */
   public processInput(): void {
     // Move player
-    this.player.move();
+    this.player.processInput(this.canvas);
     if (this.situation) this.situation.checkButton(this.player, this.canvas);
   }
 
@@ -130,6 +130,8 @@ export default class Game {
   public update(elapsed: number): boolean {
     if (this.gameOver) return false;
     this.player.update(elapsed);
+
+    this.player.move(elapsed);
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
@@ -257,10 +259,7 @@ export default class Game {
   }
 
   private scrollBackground(elapsed: number){
-    
-
-
-    this.imgHeight += this.player.getyVelPlayer();
+    this.imgHeight += this.player.getYVel();
 
 
     // reseting the images when the first image entirely exits the screen

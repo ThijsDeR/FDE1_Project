@@ -26,11 +26,11 @@ export default class Prop {
     return this.yPos
   }
 
-  public getYVel() {
+  public getXVel() {
     return this.xVel
   }
 
-  public getXVel() {
+  public getYVel() {
     return this.yVel
   }
 

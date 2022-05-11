@@ -5,6 +5,8 @@ import AnimatedProp from './Props/AnimatedProp.js';
 import ImageProp from './Props/ImageProp.js';
 
 export default class Player extends AnimatedProp {
+  public static readonly MAX_SPEED = 2;
+
   private keyListener: KeyListener;
 
   private stamina: number;
@@ -24,19 +26,11 @@ export default class Player extends AnimatedProp {
     this.keyListener = new KeyListener();
 
     this.stamina = 100;
-    this.xVel = 5;
-    this.yVel = 5;
   }
 
   public getKeyListener() {
     return this.keyListener;
   }
-  public getxVelPlayer() {
-      return this.xVel;
-  }
-  public getyVelPlayer() {
-    return this.yVel;
-}
 
   /**
    * Stamina getter
@@ -74,50 +68,29 @@ export default class Player extends AnimatedProp {
   /**
    * Moves the player
    */
-   public movePlayer(canvas: HTMLCanvasElement): void {
+   public processInput(canvas: HTMLCanvasElement): void {
     // Set the limit values
-    const minX = 0;
     const maxX = canvas.width - this.width;
-    const minY = 0;
     const maxY = canvas.height - this.height;
 
 
-    // Moving right
-    if (this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D) && this.xPos < maxX) {
-        console.log('move right');
-      this.xPos += this.xVel;
-      // Limit to the max value
-      if (this.xPos > maxX) {
-        this.xPos = maxX;
-      }
-    }
 
-    // Moving left
-    if (this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A) && this.xPos > minX) {
-        console.log('move left');
-      this.xPos -= this.xVel;
-      // Limit to the max value
-      if (this.xPos < minX) {
-        this.xPos = minX;
-      }
-    }
+    if ((this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D)) && this.xPos < maxX) {
+      this.xVel = Player.MAX_SPEED;
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A)) && this.xPos > 0) {
+      this.xVel = -Player.MAX_SPEED;
+    } else this.xVel = 0;
 
-    // Moving up
-    if (this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W) && this.yPos > minY) {
-        console.log('move up');
-      this.yPos -= this.yVel;
-      if (this.yPos < minY) {
-        this.yPos = minY;
-      }
-    }
 
-    if (this.keyListener.isKeyDown(KeyListener.KEY_DOWN) || this.keyListener.isKeyDown(KeyListener.KEY_S) && this.yPos < maxY) {
-        console.log("move down");
-        this.yPos += this.yVel;
-        if (this.yPos > maxY) {
-          this.yPos = maxY;
-        }
-      }
+    if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+      this.yVel = Player.MAX_SPEED;
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_DOWN) || this.keyListener.isKeyDown(KeyListener.KEY_S)) && this.yPos < maxY) {
+      this.yVel = -Player.MAX_SPEED;
+    } else this.yVel = 0;
+  }
+
+  public move(elapsed: number) {
+    this.xPos += this.xVel * elapsed;
   }
 
   public update(elapsed: number) {
