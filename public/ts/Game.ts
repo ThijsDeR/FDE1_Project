@@ -54,7 +54,7 @@ export default class Game {
     this.canvas.height = window.innerHeight;
 
     // Set the player at the center
-    this.player = new Player(this.canvas.width / 2 + 25, this.canvas.height * (3/4), 0, 0, this.canvas.width / 8, this.canvas.height / 4);
+    this.player = new Player((this.canvas.width / 2) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 8, this.canvas.height / 4);
 
     this.userData = new UserData()
     // Score is zero at start
@@ -128,16 +128,20 @@ export default class Game {
    * @returns `true` if the game should stop animation
    */
   public update(elapsed: number): boolean {
+    if (this.gameOver) return false;
     this.player.update(elapsed);
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
 
-    this.crossroad.update(elapsed, this.scrollSpeed, this.player)
+    const result = this.crossroad.update(elapsed, this.scrollSpeed, this.player);
+    if (result === Crossroad.GAME_OVER) this.gameOver = true;
+    if (result === Crossroad.FINISHED) this.crossroad = new Crossroad(this.canvas);
 
     if (this.situation) {
       this.situation.update(elapsed)
-      this.situation.move(elapsed, this.scrollSpeed)
+      this.situation.move(elapsed)
+      this.situation.scroll(elapsed, this.scrollSpeed)
       if (this.situation.isDone()) this.situation = null;
     }
 
