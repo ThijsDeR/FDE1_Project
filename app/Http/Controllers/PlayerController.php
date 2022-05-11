@@ -15,7 +15,7 @@ class PlayerController extends Controller
      */
     public function highscores()
     {
-        $players = Player::orderBy('highscore', 'desc')->paginate(15);
+        $players = Player::orderBy('highscore', 'desc')->simplePaginate(10);
         return view('players.highscores', compact('players'));
     }
 

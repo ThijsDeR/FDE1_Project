@@ -26,8 +26,8 @@ export default class AnimatedProp extends Prop {
     public draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(
             this.animator.getImage(),
-            this.xPos - (this.width / 2),
-            this.yPos - (this.height / 2),
+            this.xPos,
+            this.yPos,
             this.width,
             this.height
         );
