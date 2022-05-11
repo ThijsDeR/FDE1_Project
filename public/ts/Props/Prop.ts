@@ -42,6 +42,8 @@ export default class Prop {
     return this.height
   }
 
+
+
   public move(elapsed: number) {
     this.xPos += this.xVel * elapsed;
     this.yPos += (this.yVel * elapsed);

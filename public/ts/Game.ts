@@ -259,8 +259,9 @@ export default class Game {
   private scrollBackground(elapsed: number){
     
 
-    // update image height
-    this.imgHeight += this.scrollSpeed * elapsed;
+
+    this.imgHeight += this.player.getyVelPlayer();
+
 
     // reseting the images when the first image entirely exits the screen
     if (this.imgHeight > this.canvas.height){

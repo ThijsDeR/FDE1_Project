@@ -14,6 +14,7 @@ export default class ImageProp extends Prop {
         return this.image;
     }
 
+
     public draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(
             this.image,
