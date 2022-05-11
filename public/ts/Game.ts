@@ -232,7 +232,7 @@ export default class Game {
     // draw image 2
     ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
     // update image height
-    this.imgHeight += this.scrollSpeed;
+    this.imgHeight += this.player.getyVelPlayer();
 
     // reseting the images when the first image entirely exits the screen
     if (this.imgHeight > this.canvas.height){

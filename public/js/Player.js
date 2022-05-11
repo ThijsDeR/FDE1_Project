@@ -20,6 +20,12 @@ export default class Player extends AnimatedProp {
     getKeyListener() {
         return this.keyListener;
     }
+    getxVelPlayer() {
+        return this.xVel;
+    }
+    getyVelPlayer() {
+        return this.yVel;
+    }
     /**
      * Stamina getter
      *

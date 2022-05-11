@@ -9,6 +9,7 @@ export default class Player extends AnimatedProp {
 
   private stamina: number;
 
+
   /**
    * Construct a new Player instance
    *
@@ -24,12 +25,18 @@ export default class Player extends AnimatedProp {
 
     this.stamina = 100;
     this.xVel = 5;
-    this.yVel = 5
+    this.yVel = 5;
   }
 
   public getKeyListener() {
     return this.keyListener;
   }
+  public getxVelPlayer() {
+      return this.xVel;
+  }
+  public getyVelPlayer() {
+    return this.yVel;
+}
 
   /**
    * Stamina getter
@@ -70,7 +77,7 @@ export default class Player extends AnimatedProp {
    public movePlayer(canvas: HTMLCanvasElement): void {
     // Set the limit values
     const minX = 0;
-    const maxX = canvas.width - this.width
+    const maxX = canvas.width - this.width;
     const minY = 0;
     const maxY = canvas.height - this.height;
 
