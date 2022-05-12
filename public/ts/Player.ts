@@ -9,6 +9,7 @@ export default class Player extends AnimatedProp {
 
   private stamina: number;
 
+
   /**
    * Construct a new Player instance
    *
@@ -67,7 +68,15 @@ export default class Player extends AnimatedProp {
    * Moves the player
    */
   public move(): void {
-    
+
+  }
+
+  public stopKey(): boolean {
+    if(this.keyListener.isKeyDown(KeyListener.KEY_SPACE) === true) {
+        return true;
+     } else {
+         return false;
+     }
   }
 
   public update(elapsed: number) {

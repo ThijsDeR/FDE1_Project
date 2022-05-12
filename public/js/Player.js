@@ -52,6 +52,14 @@ export default class Player extends AnimatedProp {
      */
     move() {
     }
+    stopKey() {
+        if (this.keyListener.isKeyDown(KeyListener.KEY_SPACE) === true) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     update(elapsed) {
         this.advance(elapsed);
     }

@@ -6,7 +6,7 @@ export default class Situation extends ImageProp{
     private button: Button;
 
     private coordsButton: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number};
-    
+
     private buttonsLeft: number;
 
     private timeSinceLastPress: number;
@@ -65,9 +65,9 @@ export default class Situation extends ImageProp{
         this.button.draw(ctx);
     }
 
-    public move(elapsed: number): void {
-        super.move(elapsed);
-        this.button.move(elapsed);
+    public move(elapsed: number, scrollSpeed: number): void {
+        super.move(elapsed, scrollSpeed);
+        this.button.move(elapsed, scrollSpeed);
     }
 
     public isDone() {

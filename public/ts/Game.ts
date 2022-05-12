@@ -5,6 +5,7 @@ import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import CrossingStopSign from './CrossingStopSign.js';
 
 /**
  * Main class of this Game.
@@ -38,6 +39,8 @@ export default class Game {
 
   private gameOver: boolean;
 
+  private crossingStopSign: CrossingStopSign;
+
   /**
    * Construct a new Game
    *
@@ -59,6 +62,8 @@ export default class Game {
 
     this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
 
+    this.crossingStopSign = new CrossingStopSign(this.canvas);
+
     // Start the animation
     this.gameloop = new GameLoop(this);
     this.gameloop.start();
@@ -76,9 +81,6 @@ export default class Game {
     this.gameOver = false;
 
     this.buttons = []
-
-
-
   }
 
   private newSituation() {
@@ -124,13 +126,24 @@ export default class Game {
    */
   public update(elapsed: number): boolean {
     this.player.update(elapsed);
+
+    if(this.player.stopKey() === true){
+      this.scrollSpeed = 0;
+  } else {
+      this.scrollSpeed = 0.2;
+  }
+
+  console.log(this.player.stopKey())
+  console.log(this.scrollSpeed);
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
 
+    this.crossingStopSign.update(elapsed, this.scrollSpeed, this.player)
+
     if (this.situation) {
       this.situation.update(elapsed)
-      this.situation.move(elapsed)
+      this.situation.move(elapsed, this.scrollSpeed)
       if (this.situation.isDone()) this.situation = null;
     }
 
@@ -161,11 +174,13 @@ export default class Game {
      // only the file name is required:
      img.src = "./assets/img/weg_game_2.png";
      img.classList.add("backgroundImage");
- 
+
      // draw image 1
      ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
      // draw image 2
      ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
+
+     this.crossingStopSign.draw(ctx);
 
     Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
 
@@ -179,7 +194,7 @@ export default class Game {
 
     this.player.draw(ctx);
 
-   
+
 
     if (this.situation) {
       this.situation.draw(ctx)
@@ -243,7 +258,7 @@ export default class Game {
   }
 
   private scrollBackground(elapsed: number){
-    
+
 
     // update image height
     this.imgHeight += this.scrollSpeed * elapsed;
