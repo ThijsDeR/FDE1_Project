@@ -131,26 +131,27 @@ export default class Game {
     if (this.gameOver) return false;
     this.player.update(elapsed);
 
+    this.totalScore += this.player.getYVel();
     this.player.move(elapsed);
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
 
-    const result = this.crossroad.update(elapsed, this.scrollSpeed, this.player);
+    const result = this.crossroad.update(elapsed, this.player.getYVel(), this.player);
     if (result === Crossroad.GAME_OVER) this.gameOver = true;
     if (result === Crossroad.FINISHED) this.crossroad = new Crossroad(this.canvas);
 
-    if (this.situation) {
-      this.situation.update(elapsed)
-      this.situation.move(elapsed)
-      this.situation.scroll(elapsed, this.scrollSpeed)
-      if (this.situation.isDone()) this.situation = null;
-    }
+    // if (this.situation) {
+    //   this.situation.update(elapsed)
+    //   this.situation.move(elapsed)
+    //   this.situation.scroll(elapsed, this.scrollSpeed)
+    //   if (this.situation.isDone()) this.situation = null;
+    // }
 
 
-    if (this.counter % 2000 === 1) {
-      this.newSituation();
-    }
+    // if (this.counter % 2000 === 1) {
+    //   this.newSituation();
+    // }
     return false;
   }
 
@@ -182,18 +183,14 @@ export default class Game {
 
     Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
 
-    if (this.counter % 5 === 1) {
-      this.totalScore = this.totalScore + 1;
-    }
-
     this.counter += 1;
 
     
   
 
-    if (this.situation) {
-      this.situation.draw(ctx)
-    }
+    // if (this.situation) {
+    //   this.situation.draw(ctx)
+    // }
 
     this.crossroad.draw(ctx)
 
@@ -201,21 +198,21 @@ export default class Game {
 
     this.drawScore();
 
-    if(this.player.getStamina() >= 0) {
-      this.player.changeStamina(-0.025);
-      this.staminabar.draw(ctx, this.player.getStamina());
-    } else {
-        Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
-        this.userData.changeHighScore(this.totalScore);
-        this.gameOver = true
-    }
+    // if(this.player.getStamina() >= 0) {
+    //   this.player.changeStamina(-0.025);
+    //   this.staminabar.draw(ctx, this.player.getStamina());
+    // } else {
+    //     Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
+    //     this.userData.changeHighScore(this.totalScore);
+    //     this.gameOver = true
+    // }
   }
 
   /**
    * Draw the score on a canvas
    */
   private drawScore(): void {
-    Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 6, 200, this.canvas, 30);
+    Game.writeTextToCanvas(`Score: ${Math.round(this.totalScore)}`, this.canvas.width / 6, 200, this.canvas, 30);
   }
 
   /**
@@ -259,7 +256,7 @@ export default class Game {
   }
 
   private scrollBackground(elapsed: number){
-    this.imgHeight += this.player.getYVel();
+    this.imgHeight += this.player.getYVel() * elapsed;
 
 
     // reseting the images when the first image entirely exits the screen
