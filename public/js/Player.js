@@ -27,7 +27,7 @@ export default class Player extends AnimatedProp {
         return this.stamina;
     }
     /**
-     * Stamina substracter
+     * Add stamina
      *
      * @param stamina stamina number input
      */

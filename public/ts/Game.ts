@@ -198,14 +198,14 @@ export default class Game {
 
     this.drawScore();
 
-    // if(this.player.getStamina() >= 0) {
-    //   this.player.changeStamina(-0.025);
-    //   this.staminabar.draw(ctx, this.player.getStamina());
-    // } else {
-    //     Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
-    //     this.userData.changeHighScore(this.totalScore);
-    //     this.gameOver = true
-    // }
+    if(this.player.getStamina() >= 0) {
+      this.player.changeStamina(-0.025);
+      this.staminabar.draw(ctx, this.player.getStamina());
+    } else {
+        Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
+        this.userData.changeHighScore(this.totalScore);
+        this.gameOver = true
+    }
   }
 
   /**
