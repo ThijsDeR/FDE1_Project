@@ -7,6 +7,8 @@ import ImageProp from './Props/ImageProp.js';
 export default class Player extends AnimatedProp {
   public static readonly MAX_SPEED = 0.6;
 
+  public static readonly MAX_SPEED_X = 0.4;
+
   private keyListener: KeyListener;
 
   private stamina: number;
@@ -84,7 +86,7 @@ export default class Player extends AnimatedProp {
 
 
     if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
-      this.yVel = Player.MAX_SPEED;
+      this.yVel = Player.MAX_SPEED_X;
     } else if (spacebarPressed) {
       this.yVel = 0
     }
