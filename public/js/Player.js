@@ -82,6 +82,9 @@ export default class Player extends AnimatedProp {
     update(elapsed) {
         this.advance(elapsed);
     }
+    isStopped() {
+        return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+    }
 }
 Player.MAX_SPEED = 0.6;
 Player.MAX_SPEED_X = 0.4;

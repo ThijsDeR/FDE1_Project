@@ -100,4 +100,8 @@ export default class Player extends AnimatedProp {
   public update(elapsed: number) {
     this.advance(elapsed);
   }
+
+  public isStopped() {
+      return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+  }
 }

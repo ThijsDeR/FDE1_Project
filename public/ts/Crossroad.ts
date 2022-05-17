@@ -3,6 +3,7 @@ import Player from "./Player.js";
 import Frikandelbroodje from "./Props/Frikandelbroodje.js";
 import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
+import StopSign from "./Props/StopSign.js";
 
 export default class Crossroad {
     public static readonly NOT_DONE: number = 0;
@@ -19,7 +20,8 @@ export default class Crossroad {
         this.props = [
             new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
             new ImageProp(this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/w_button.png'),
-            new Frikandelbroodje(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
+            new Frikandelbroodje(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
+            new StopSign(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 1.1), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/bronze_trophy.png')
         ]
 
     }
@@ -45,10 +47,24 @@ export default class Crossroad {
                 if (prop instanceof StaminaBooster) {
                     player.changeStamina(prop.getStaminaBoostAmount());
                     this.props.splice(propIndex, 1);
-                } else gameOver = true;
+                } else if (prop instanceof StopSign) {
+                    if (player.isStopped()) {
+                        prop.activate()
+                    }
+                }
+
+                else gameOver = true;
             }
 
-            
+            if (prop instanceof StopSign) {
+                if (prop.getYPos() > player.getYPos() + player.getHeight()) {
+                    if (prop.isActive()) {
+                        this.props.splice(propIndex, 1);
+                    } else gameOver = true
+                }
+            }
+
+
 
         })
 
