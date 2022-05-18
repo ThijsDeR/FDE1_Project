@@ -5,7 +5,7 @@ import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import Crossroad from './Crossroad.js';
+import Crossroad from './CrossroadStopSign.js';
 
 /**
  * Main class of this Game.
