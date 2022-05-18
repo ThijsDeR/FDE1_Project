@@ -18,7 +18,8 @@ export default class Crossroad {
         this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/Kruispunt_2.png');
         this.props = [
             new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
-            new ImageProp(this.background.getWidth() / 2, this.background.getYPos(), 0.25, (Game.randomInteger(1, 5) / 10), this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getWidth() / 2, this.background.getYPos(), 0.25, (Game.randomInteger(4, 5) / 10), this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getWidth() / 1.61, this.background.getYPos() + (this.background.getHeight() / 2), 0,0, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
             new ImageProp(this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/w_button.png'),
             new Frikandelbroodje(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
         ]
