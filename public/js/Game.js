@@ -83,11 +83,11 @@ export default class Game {
         this.player.move(elapsed);
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
-        const result = this.crossroad.update(elapsed, this.player.getYVel(), this.player);
-        if (result === Crossroad.GAME_OVER)
+        const result = this.cyclist.update(elapsed, this.player.getYVel(), this.player);
+        if (result === OncomingCyclist.GAME_OVER)
             this.gameOver = true;
-        if (result === Crossroad.FINISHED)
-            this.crossroad = new Crossroad(this.canvas);
+        if (result === OncomingCyclist.FINISHED)
+            this.cyclist = new OncomingCyclist(this.canvas);
         // if (this.situation) {
         //   this.situation.update(elapsed)
         //   this.situation.move(elapsed)
@@ -128,6 +128,7 @@ export default class Game {
         //   this.situation.draw(ctx)
         // }
         this.crossroad.draw(ctx);
+        this.cyclist.draw(ctx);
         this.player.draw(ctx);
         this.drawScore();
         if (this.player.getStamina() >= 0) {

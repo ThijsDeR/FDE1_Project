@@ -24,10 +24,10 @@ export default class Crossroad {
 
             new ImageProp(this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/w_button.png'),
             new Frikandelbroodje(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
-            new TrackProp(
-                [
-                    {xPos1: (this.background.getWidth() / 3), yPos1: this.background.getYPos() + (this.background.getHeight() / 4), xPos2: (this.background.getWidth() / 3.5) , yPos2: this.background.getYPos() + (this.background.getHeight() / 2), xVel: 0.27, yVel: (Game.randomInteger(2, 2.5) / 10)},
-                ], this.background.getWidth() / 16,this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            // new TrackProp(
+            //     [
+            //         {xPos1: (this.background.getWidth() / 3), yPos1: this.background.getYPos() + (this.background.getHeight() / 4), xPos2: (this.background.getWidth() / 3.5) , yPos2: this.background.getYPos() + (this.background.getHeight() / 2), xVel: 0.27, yVel: (Game.randomInteger(2, 2.5) / 10)},
+            //     ], this.background.getWidth() / 16,this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
         ]
 
 

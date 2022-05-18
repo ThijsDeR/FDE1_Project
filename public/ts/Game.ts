@@ -141,9 +141,9 @@ export default class Game {
 
     this.scrollBackground(elapsed);
 
-    const result = this.crossroad.update(elapsed, this.player.getYVel(), this.player);
-    if (result === Crossroad.GAME_OVER) this.gameOver = true;
-    if (result === Crossroad.FINISHED) this.crossroad = new Crossroad(this.canvas);
+    const result = this.cyclist.update(elapsed, this.player.getYVel(), this.player);
+    if (result === OncomingCyclist.GAME_OVER) this.gameOver = true;
+    if (result === OncomingCyclist.FINISHED) this.cyclist = new OncomingCyclist(this.canvas);
 
 
     // if (this.situation) {
@@ -198,6 +198,7 @@ export default class Game {
     // }
 
     this.crossroad.draw(ctx)
+    this.cyclist.draw(ctx)
 
     this.player.draw(ctx);
 
