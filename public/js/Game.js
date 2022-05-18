@@ -4,6 +4,7 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import Crossroad from './Crossroad.js';
+import OncomingCyclist from './OncomingCyclist.js';
 /**
  * Main class of this Game.
  */
@@ -38,6 +39,7 @@ export default class Game {
         this.gameOver = false;
         this.buttons = [];
         this.crossroad = new Crossroad(this.canvas);
+        this.cyclist = new OncomingCyclist(this.canvas);
     }
     newSituation() {
         this.situation = new Situation({

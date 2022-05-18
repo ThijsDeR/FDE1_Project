@@ -6,6 +6,7 @@ import Button from './Button.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import Crossroad from './Crossroad.js';
+import OncomingCyclist from './OncomingCyclist.js';
 
 /**
  * Main class of this Game.
@@ -23,6 +24,8 @@ export default class Game {
   private situation: Situation | null;
 
   private crossroad: Crossroad;
+
+  private cyclist: OncomingCyclist;
 
 
   // The player on the canvas
@@ -81,6 +84,7 @@ export default class Game {
     this.buttons = []
 
     this.crossroad = new Crossroad(this.canvas)
+    this.cyclist = new OncomingCyclist(this.canvas)
 
 
 
@@ -141,6 +145,7 @@ export default class Game {
     if (result === Crossroad.GAME_OVER) this.gameOver = true;
     if (result === Crossroad.FINISHED) this.crossroad = new Crossroad(this.canvas);
 
+
     // if (this.situation) {
     //   this.situation.update(elapsed)
     //   this.situation.move(elapsed)
@@ -175,7 +180,7 @@ export default class Game {
      // only the file name is required:
      img.src = "./assets/img/weg_game_2.png";
      img.classList.add("backgroundImage");
- 
+
      // draw image 1
      ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
      // draw image 2
@@ -185,8 +190,8 @@ export default class Game {
 
     this.counter += 1;
 
-    
-  
+
+
 
     // if (this.situation) {
     //   this.situation.draw(ctx)
