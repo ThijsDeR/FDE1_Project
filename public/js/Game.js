@@ -3,6 +3,7 @@ import Player from './Player.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Trekker from './Trekker.js';
 /**
  * Main class of this Game.
  */
@@ -75,11 +76,21 @@ export default class Game {
         this.player.update(elapsed);
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
+        if (this.trekker) {
+            this.trekker.move(elapsed);
+            if (this.trekker.getYPos() === 0) {
+                this.trekker === null;
+            }
+        }
         if (this.situation) {
             this.situation.update(elapsed);
             this.situation.move(elapsed);
             if (this.situation.isDone())
                 this.situation = null;
+        }
+        if (this.counter % 1000 === 1) {
+            console.log("trrreekkeeer!");
+            this.trekker = new Trekker(this.canvas.width / 2, 0, 0, -0.15, this.canvas.width / 3, this.canvas.height / 4);
         }
         if (this.counter % 2000 === 1) {
             this.newSituation();
@@ -116,6 +127,9 @@ export default class Game {
         this.counter += 1;
         this.drawScore();
         this.player.draw(ctx);
+        if (this.trekker) {
+            this.trekker.draw(ctx);
+        }
         if (this.situation) {
             this.situation.draw(ctx);
         }

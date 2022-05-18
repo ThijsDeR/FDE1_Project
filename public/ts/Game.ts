@@ -5,6 +5,7 @@ import KeyListener from './KeyListener.js';
 import Button from './Button.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Trekker from './Trekker.js';
 
 /**
  * Main class of this Game.
@@ -24,6 +25,8 @@ export default class Game {
 
   // The player on the canvas
   private player: Player;
+
+  private trekker: Trekker;
 
   // Score
   private totalScore: number;
@@ -128,12 +131,23 @@ export default class Game {
 
     this.scrollBackground(elapsed);
 
+    if (this.trekker) {
+        this.trekker.move(elapsed)
+        if (this.trekker.getYPos() === 0) {
+            this.trekker === null;
+        }
+    }
+
     if (this.situation) {
       this.situation.update(elapsed)
       this.situation.move(elapsed)
       if (this.situation.isDone()) this.situation = null;
     }
 
+    if (this.counter % 1000 === 1) {
+        console.log("trrreekkeeer!")
+        this.trekker = new Trekker(this.canvas.width / 2, 0, 0, -0.15, this.canvas.width / 3, this.canvas.height / 4);
+    }
 
     if (this.counter % 2000 === 1) {
       this.newSituation();
@@ -161,7 +175,7 @@ export default class Game {
      // only the file name is required:
      img.src = "./assets/img/weg_game_2.png";
      img.classList.add("backgroundImage");
- 
+
      // draw image 1
      ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
      // draw image 2
@@ -179,7 +193,9 @@ export default class Game {
 
     this.player.draw(ctx);
 
-   
+    if (this.trekker) {
+        this.trekker.draw(ctx)
+    }
 
     if (this.situation) {
       this.situation.draw(ctx)
@@ -243,7 +259,7 @@ export default class Game {
   }
 
   private scrollBackground(elapsed: number){
-    
+
 
     // update image height
     this.imgHeight += this.scrollSpeed * elapsed;
