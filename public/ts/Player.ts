@@ -3,8 +3,13 @@ import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 import AnimatedProp from './Props/AnimatedProp.js';
 import ImageProp from './Props/ImageProp.js';
+import Trekker from './Trekker.js';
 
 export default class Player extends AnimatedProp {
+    public static readonly MAX_SPEED = 0.6;
+
+    public static readonly MAX_SPEED_X = 0.4;
+
   private keyListener: KeyListener;
 
   private stamina: number;
@@ -66,8 +71,43 @@ export default class Player extends AnimatedProp {
   /**
    * Moves the player
    */
-  public move(): void {
-    
+   public processInput(canvas: HTMLCanvasElement): void {
+    // Set the limit values
+    const maxX = canvas.width - this.width;
+    const maxY = canvas.height - this.height;
+
+    const spacebarPressed = this.keyListener.isKeyDown(KeyListener.KEY_SPACE)
+    if (!spacebarPressed) {
+      if ((this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D)) && this.xPos < maxX) {
+        this.xVel = Player.MAX_SPEED;
+      } else if ((this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A)) && this.xPos > 0) {
+        this.xVel = -Player.MAX_SPEED;
+      } else this.xVel = 0;
+    } else this.xVel = 0;
+
+
+    if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+      this.yVel = Player.MAX_SPEED_X;
+    } else if (spacebarPressed) {
+      this.yVel = 0
+    }
+    else this.yVel = Player.MAX_SPEED / 4;
+  }
+
+
+  public move(elapsed: number) {
+    this.xPos += this.xVel * elapsed;
+  }
+
+  public collidesWith(yPos: number, xPos: number) {
+    if(this.yPos === yPos) {
+        return true;
+    } else if(this.xPos === xPos) {
+        return true;
+    } else {
+        return false;
+    }
+
   }
 
   public update(elapsed: number) {

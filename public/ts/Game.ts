@@ -112,10 +112,10 @@ export default class Game {
    * Handles any user input that has happened since the last call
    */
   public processInput(): void {
-    // Move player
-    this.player.move();
-    if (this.situation) this.situation.checkButton(this.player, this.canvas);
-  }
+     // Move player
+     this.player.processInput(this.canvas);
+    //  if (this.situation) this.situation.checkButton(this.player, this.canvas);
+   }
 
   /**
    * Advances the game simulation one step. It may run AI and physics (usually
@@ -127,15 +127,23 @@ export default class Game {
    */
   public update(elapsed: number): boolean {
     this.player.update(elapsed);
+    this.player.move(elapsed);
+    console.log(this.player.getYPos());
+
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
 
     if (this.trekker) {
-        this.trekker.move(elapsed)
-        if (this.trekker.getYPos() === 0) {
-            this.trekker === null;
-        }
+        console.log(this.trekker.getYPos());
+        this.trekker.update(elapsed);
+        this.trekker.move(elapsed);
+        if (this.player.getYPos() <= this.trekker.getYPos() + 200 &&
+        this.player.getYPos() >= this.trekker.getYPos() - 200 &&
+        this.player.getXPos() <= this.trekker.getXPos() + 200) {
+        console.log('auw');
+        this.gameOver = true;
+    }
     }
 
     if (this.situation) {
@@ -144,9 +152,9 @@ export default class Game {
       if (this.situation.isDone()) this.situation = null;
     }
 
-    if (this.counter % 1000 === 1) {
+    if (this.counter % 800 === 1) {
         console.log("trrreekkeeer!")
-        this.trekker = new Trekker(this.canvas.width / 2, 0, 0, -0.15, this.canvas.width / 3, this.canvas.height / 4);
+        this.trekker = new Trekker(this.canvas.width / 2, -200, 0, -0.23, this.canvas.width / 3, this.canvas.height / 4);
     }
 
     if (this.counter % 2000 === 1) {
