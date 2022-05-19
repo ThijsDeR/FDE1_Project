@@ -1,9 +1,8 @@
 import GameLoop from './GameLoop.js';
-import Player from './Player.js';
 import Staminabar from './Staminabar.js';
-import KeyListener from './KeyListener.js';
-import Button from './Button.js';
 import UserData from './UserData.js';
+import CyclingPathIncomingTraffic from './CyclingPathIncomingTraffic.js';
+import Crossroad from './Crossroad.js';
 import Situation from './Situation.js';
 
 /**
@@ -17,24 +16,14 @@ export default class Game {
 
   private gameloop: GameLoop;
 
-  private buttons: Button[];
-
-  private situation: Situation | null;
-
-
-  // The player on the canvas
-  private player: Player;
+  private situation: Situation;
 
   // Score
   private totalScore: number;
 
   private staminabar: Staminabar;
 
-  private counter: number;
-
   private imgHeight: number;
-
-  private scrollSpeed: number;
 
   private gameOver: boolean;
 
@@ -51,58 +40,39 @@ export default class Game {
     this.canvas.height = window.innerHeight;
 
     // Set the player at the center
-    this.player = new Player(this.canvas.width / 2 + 25, this.canvas.height * (3/4), 0, 0, this.canvas.width / 8, this.canvas.height / 4);
-
     this.userData = new UserData()
     // Score is zero at start
     this.totalScore = 0;
 
-    this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
+    this.staminabar = new Staminabar(this.canvas.width / 6, 300, this.canvas.width / 3, 20);
 
     // Start the animation
     this.gameloop = new GameLoop(this);
     this.gameloop.start();
-    console.log('werkt!!');
-
-    this.counter = 0;
     // the initial image height
     this.imgHeight = 0;
 
     // the scroll speed
     // an important thing to ensure here is that can.height
     // is divisible by scrollSpeed
-    this.scrollSpeed = 0.2;
-
     this.gameOver = false;
 
-    this.buttons = []
+    this.situation = this.newSituation(100)
 
 
 
   }
 
-  private newSituation() {
-    this.situation = new Situation(
-      {
-        xPos: this.canvas.width / 2,
-        yPos: 0,
-        xVel: 0,
-        yVel: this.scrollSpeed,
-        width: 100,
-        height: 100,
-      },
-
-      {
-        xPos: (this.canvas.width / 4 ) * 3,
-        yPos: 0,
-        xVel: 0,
-        yVel: this.scrollSpeed,
-        width: 100,
-        height: 100,
-      },
-
-      5
-      )
+  private newSituation(stamina: number): Situation {
+    switch(Game.randomInteger(0, 1)) {
+      case 0:
+        return new CyclingPathIncomingTraffic(this.canvas, stamina)
+      case 1:
+        return new Crossroad(this.canvas, stamina)
+      default:
+        return new Crossroad(this.canvas, stamina)
+      
+    }
   }
 
   /**
@@ -110,8 +80,7 @@ export default class Game {
    */
   public processInput(): void {
     // Move player
-    this.player.move();
-    if (this.situation) this.situation.checkButton(this.player, this.canvas);
+    this.situation.processInput(this.canvas)
   }
 
   /**
@@ -123,21 +92,31 @@ export default class Game {
    * @returns `true` if the game should stop animation
    */
   public update(elapsed: number): boolean {
-    this.player.update(elapsed);
+    if (this.gameOver) return false;
+
+    this.totalScore += this.situation.getPlayerYVel()
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
 
-    if (this.situation) {
-      this.situation.update(elapsed)
-      this.situation.move(elapsed)
-      if (this.situation.isDone()) this.situation = null;
+    const result = this.situation.update(elapsed);
+    if (result === Situation.GAME_OVER) {
+      this.userData.changeHighScore(this.totalScore);
+      this.gameOver = true;
     }
+    if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
+
+    // if (this.situation) {
+    //   this.situation.update(elapsed)
+    //   this.situation.move(elapsed)
+    //   this.situation.scroll(elapsed, this.scrollSpeed)
+    //   if (this.situation.isDone()) this.situation = null;
+    // }
 
 
-    if (this.counter % 2000 === 1) {
-      this.newSituation();
-    }
+    // if (this.counter % 2000 === 1) {
+    //   this.newSituation();
+    // }
     return false;
   }
 
@@ -145,7 +124,6 @@ export default class Game {
    * Draw the game so the player can see what happened
    */
   public render(): void {
-    if (this.gameOver) return;
     // Render the items on the canvas
     // Get the canvas rendering context
     const ctx = this.canvas.getContext('2d')!;
@@ -163,43 +141,31 @@ export default class Game {
      img.classList.add("backgroundImage");
  
      // draw image 1
-     ctx.drawImage(img, 530 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
      // draw image 2
-     ctx.drawImage(img, 530 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);  
 
-    Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
+    // if (this.situation) {
+    //   this.situation.draw(ctx)
+    // }
 
-    if (this.counter % 5 === 1) {
-      this.totalScore = this.totalScore + 1;
-    }
-
-    this.counter += 1;
+    this.situation.render(ctx)
 
     this.drawScore();
 
-    this.player.draw(ctx);
+    this.staminabar.draw(ctx, this.situation.getPlayerStamina())
 
-   
-
-    if (this.situation) {
-      this.situation.draw(ctx)
+    if (this.gameOver) {
+      Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas.getContext('2d')!, 40);
     }
-
-    if(this.player.getStamina() >= 0) {
-      this.player.changeStamina(-0.025);
-      this.staminabar.draw(ctx, this.player.getStamina());
-    } else {
-        Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
-        this.userData.changeHighScore(this.totalScore);
-        this.gameOver = true
-    }
+    
   }
 
   /**
    * Draw the score on a canvas
    */
   private drawScore(): void {
-    Game.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 6, 200, this.canvas, 30);
+    Game.writeTextToCanvas(`Score: ${Math.round(this.totalScore)}`, this.canvas.width / 6, 200, this.canvas.getContext('2d')!, 30);
   }
 
   /**
@@ -216,12 +182,11 @@ export default class Game {
     text: string,
     xCoordinate: number,
     yCoordinate: number,
-    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
     fontSize: number = 20,
     color: string = 'white',
     alignment: CanvasTextAlign = 'center',
   ): void {
-    const ctx = canvas.getContext('2d')!;
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;
@@ -243,10 +208,8 @@ export default class Game {
   }
 
   private scrollBackground(elapsed: number){
-    
+    this.imgHeight += this.situation.getPlayerYVel() * elapsed;
 
-    // update image height
-    this.imgHeight += this.scrollSpeed * elapsed;
 
     // reseting the images when the first image entirely exits the screen
     if (this.imgHeight > this.canvas.height){

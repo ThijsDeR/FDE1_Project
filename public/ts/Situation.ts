@@ -1,76 +1,40 @@
-import Button from "./Button.js";
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
 
-export default class Situation extends ImageProp{
-    private button: Button;
+export default abstract class Situation {
+    public static readonly NOT_DONE: number = 0;
 
-    private coordsButton: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number};
+    public static readonly GAME_OVER: number = 1;
+
+    public static readonly FINISHED: number = 2;
+
+    protected player: Player;
     
-    private buttonsLeft: number;
+    protected props: ImageProp[];
 
-    private timeSinceLastPress: number;
+    protected background: ImageProp;
 
-    public constructor(
-        coordsSituation: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number},
-        coordsButton: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number},
-        amount: number
-    ) {
-        super(
-            coordsSituation.xPos,
-            coordsSituation.yPos,
-            coordsSituation.xVel,
-            coordsSituation.yVel,
-            coordsSituation.width,
-            coordsSituation.height,
-            'assets/img/objects/face_on_cross.png',
-        )
-        this.coordsButton = coordsButton
-        this.newButton()
-        this.buttonsLeft = amount - 1
-        this.timeSinceLastPress = 0
+    public update(elapsed: number): number {
+        return Situation.NOT_DONE;
     }
 
-    private newButton() {
-        this.button = new Button(
-            this.coordsButton.xPos,
-            this.coordsButton.yPos,
-            this.coordsButton.xVel,
-            this.coordsButton.yVel,
-            this.coordsButton.width,
-            this.coordsButton.height
-        );
+    public render(ctx: CanvasRenderingContext2D) {
+        this.background.draw(ctx);
+        this.props.forEach((prop) => {
+            prop.draw(ctx);
+        })
+        this.player.draw(ctx);
     }
 
-    public checkButton(player: Player, canvas: HTMLCanvasElement) {
-        if (this.timeSinceLastPress > 200) {
-            if (this.button.checkButton(player)) {
-                this.buttonsLeft -= 1;
-                if (!this.isDone()) this.newButton();
-                this.timeSinceLastPress = 0;
-            }
-        } else if (this.button.collidesWithCanvasBottom(canvas)) {
-            player.changeStamina(-10)
-            this.buttonsLeft -= 1
-            if (!this.isDone()) this.newButton();
-        }
+    public processInput(canvas: HTMLCanvasElement) {
+        this.player.processInput(canvas, 0, canvas.width);
     }
 
-    public update(elapsed: number) {
-        this.timeSinceLastPress += elapsed;
+    public getPlayerYVel() {
+        return this.player.getYVel();
     }
 
-    public draw(ctx: CanvasRenderingContext2D) {
-        super.draw(ctx);
-        this.button.draw(ctx);
-    }
-
-    public move(elapsed: number): void {
-        super.move(elapsed);
-        this.button.move(elapsed);
-    }
-
-    public isDone() {
-        return this.buttonsLeft < 0;
+    public getPlayerStamina() {
+        return this.player.getStamina();
     }
 }

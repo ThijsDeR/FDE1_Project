@@ -12,6 +12,6 @@ export default class AnimatedProp extends Prop {
         this.animator.advance(elapsed);
     }
     draw(ctx) {
-        ctx.drawImage(this.animator.getImage(), this.xPos - (this.width / 2), this.yPos - (this.height / 2), this.width, this.height);
+        ctx.drawImage(this.animator.getImage(), this.xPos, this.yPos, this.width, this.height);
     }
 }
