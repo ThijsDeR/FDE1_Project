@@ -1,21 +1,13 @@
-import Game from "./Game.js";
 import Player from "./Player.js";
 import Frikandelbroodje from "./Props/Frikandelbroodje.js";
 import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
+import Situation from "./Situation.js";
 
-export default class CyclingPathIncomingTraffic {
-    public static readonly NOT_DONE: number = 0;
-
-    public static readonly GAME_OVER: number = 1;
-
-    public static readonly FINISHED: number = 2;
-    private props: ImageProp[];
-
-    private background: ImageProp;
-
-    public constructor(canvas: HTMLCanvasElement) {
+export default class CyclingPathIncomingTraffic extends Situation{
+    public constructor(canvas: HTMLCanvasElement, stamina: number) {
+        super()
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 3, canvas.height, './assets/img/weg_game_2.png');
         this.props = [
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
@@ -28,14 +20,19 @@ export default class CyclingPathIncomingTraffic {
             new Frikandelbroodje((this.background.getWidth() / 2) + (canvas.width / 3), this.background.getYPos() + (this.background.getHeight()), 0, 0, canvas.width / 15,  canvas.height / 8, './assets/img/objects/frikandelbroodje.png', 10)
         ]
 
+        this.player = new Player((canvas.width / 2) - ((canvas.width / 8) / 2), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina)
+
+
     }
 
-    public update(elapsed: number, scrollSpeed: number, player: Player) {
+    public update(elapsed: number) {
+        this.player.move(elapsed);
+        this.player.update(elapsed);
         this.background.move(elapsed)
-        this.background.scroll(elapsed, scrollSpeed)
+        this.background.scroll(elapsed, this.player.getYVel())
 
-        if (player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
-            return CyclingPathIncomingTraffic.FINISHED;
+        if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
+            return Situation.FINISHED;
         }
 
         let gameOver = false;
@@ -44,11 +41,11 @@ export default class CyclingPathIncomingTraffic {
                 prop.move(elapsed)
             }
 
-            prop.scroll(elapsed, scrollSpeed)
+            prop.scroll(elapsed, this.player.getYVel())
 
-            if (prop.collidesWithOtherProp(player)) {
+            if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount());
                     this.props.splice(propIndex, 1);
                 } else gameOver = true;
             }
@@ -61,13 +58,13 @@ export default class CyclingPathIncomingTraffic {
 
         })
 
-        return gameOver ? CyclingPathIncomingTraffic.GAME_OVER : CyclingPathIncomingTraffic.NOT_DONE;
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025);
+        else gameOver = true;
+
+        return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
 
-    public draw(ctx: CanvasRenderingContext2D) {
-        this.background.draw(ctx);
-        this.props.forEach((prop) => {
-            prop.draw(ctx)
-        })
+    public processInput(canvas: HTMLCanvasElement) {
+        this.player.processInput(canvas, (this.background.getWidth() / 3) + this.background.getXPos(), ((this.background.getWidth() / 3) * 2) + this.background.getXPos()) ;
     }
 }
