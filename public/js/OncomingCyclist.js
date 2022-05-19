@@ -4,15 +4,15 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 export default class OncomingCyclist {
     constructor(canvas) {
-        this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/Kruispunt_2.png');
+        this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png');
         this.props = [
             // new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
             // new ImageProp(this.background.getWidth() / 3, this.background.getYPos(), 0.27, (Game.randomInteger(2, 2.5) / 10), this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
-            // new ImageProp(this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/w_button.png'),
+            new ImageProp(this.background.getWidth() / 3.25, this.background.getYPos(), 0, 0.35, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1Down.png'),
             // new Frikandelbroodje(this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
             new TrackProp([
                 { xPos1: (this.background.getWidth() / 3), yPos1: this.background.getYPos() + (this.background.getHeight() / 4), xPos2: (this.background.getWidth() / 3.5), yPos2: this.background.getYPos() + (this.background.getHeight() / 2), xVel: 0.27, yVel: (Game.randomInteger(2, 2.5) / 10) },
-            ], this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            ], this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1Down.png'),
         ];
     }
     update(elapsed, scrollSpeed, player) {

@@ -57,7 +57,7 @@ export default class Game {
     this.canvas.height = window.innerHeight;
 
     // Set the player at the center
-    this.player = new Player((this.canvas.width / 2) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 8, this.canvas.height / 4);
+    this.player = new Player((this.canvas.width / 2) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 16, this.canvas.height / 5);
 
     this.userData = new UserData()
     // Score is zero at start
@@ -84,6 +84,9 @@ export default class Game {
     this.buttons = []
 
     this.crossroad = new Crossroad(this.canvas)
+
+
+
     this.cyclist = new OncomingCyclist(this.canvas)
 
 
@@ -140,6 +143,12 @@ export default class Game {
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
+
+
+
+
+
+
 
     const result = this.cyclist.update(elapsed, this.player.getYVel(), this.player);
     if (result === OncomingCyclist.GAME_OVER) this.gameOver = true;

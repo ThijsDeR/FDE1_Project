@@ -20,7 +20,7 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         // Set the player at the center
-        this.player = new Player((this.canvas.width / 2) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 8, this.canvas.height / 4);
+        this.player = new Player((this.canvas.width / 2) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 16, this.canvas.height / 5);
         this.userData = new UserData();
         // Score is zero at start
         this.totalScore = 0;
