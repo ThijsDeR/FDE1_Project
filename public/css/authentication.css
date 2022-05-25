@@ -1,0 +1,31 @@
+#form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    height: 50vh;
+    background-color: white;
+    border-radius: 50px;
+    padding: 1vh 1vw;
+}
+
+#input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1vh 1vw;
+    margin: 1vh;
+}
+
+#input-container input {
+    height: 5vh;
+}
+
+#submit-container {
+    padding: 1vh 1vw;
+}
+
+#register-button {
+    color: blue
+}

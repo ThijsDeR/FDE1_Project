@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PlayerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
-Route::get('/game', [GameController::class, 'game']);
+Route::get('/localstorage', [GameController::class, 'localstorage'])->name('localstorage')->middleware('auth');
+Route::get('/game', [GameController::class, 'game'])->name('game')->middleware('auth');
+
+Route::get('/login', [AuthController::class, 'show'])->name('loginView');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highscores');
+
+Route::get('/players/{token}', [PlayerController::class, 'info'])->name('playerInfo');
+Route::put('/players/{token}', [PlayerController::class, 'update'])->name('update');

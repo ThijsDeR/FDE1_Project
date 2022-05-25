@@ -1,6 +1,9 @@
 import GameLoop from './GameLoop.js';
-import Player from './Player.js';
 import Staminabar from './Staminabar.js';
+import UserData from './UserData.js';
+import CyclingPathIncomingTraffic from './CyclingPathIncomingTraffic.js';
+import Crossroad from './Crossroad.js';
+import Situation from './Situation.js';
 
 /**
  * Main class of this Game.
@@ -9,15 +12,20 @@ export default class Game {
   // The canvas
   private canvas: HTMLCanvasElement;
 
+  private userData: UserData;
+
   private gameloop: GameLoop;
 
-  // The player on the canvas
-  private player: Player;
+  private situation: Situation;
 
   // Score
   private totalScore: number;
 
   private staminabar: Staminabar;
+
+  private imgHeight: number;
+
+  private gameOver: boolean;
 
   /**
    * Construct a new Game
@@ -32,16 +40,39 @@ export default class Game {
     this.canvas.height = window.innerHeight;
 
     // Set the player at the center
-    this.player = new Player(this.canvas);
-
+    this.userData = new UserData()
     // Score is zero at start
     this.totalScore = 0;
 
-    this.staminabar = new Staminabar(this.canvas, 100, 500, 200, 100);
+    this.staminabar = new Staminabar(this.canvas.width / 6, 300, this.canvas.width / 3, 20);
 
     // Start the animation
     this.gameloop = new GameLoop(this);
     this.gameloop.start();
+    // the initial image height
+    this.imgHeight = 0;
+
+    // the scroll speed
+    // an important thing to ensure here is that can.height
+    // is divisible by scrollSpeed
+    this.gameOver = false;
+
+    this.situation = this.newSituation(100)
+
+
+
+  }
+
+  private newSituation(stamina: number): Situation {
+    switch(Game.randomInteger(0, 1)) {
+      case 0:
+        return new CyclingPathIncomingTraffic(this.canvas, stamina)
+      case 1:
+        return new Crossroad(this.canvas, stamina)
+      default:
+        return new Crossroad(this.canvas, stamina)
+      
+    }
   }
 
   /**
@@ -49,7 +80,7 @@ export default class Game {
    */
   public processInput(): void {
     // Move player
-    this.player.move();
+    this.situation.processInput(this.canvas)
   }
 
   /**
@@ -61,8 +92,31 @@ export default class Game {
    * @returns `true` if the game should stop animation
    */
   public update(elapsed: number): boolean {
+    if (this.gameOver) return false;
+
+    this.totalScore += this.situation.getPlayerYVel()
     // Spawn a new scoring object every 45 frames
 
+    this.scrollBackground(elapsed);
+
+    const result = this.situation.update(elapsed);
+    if (result === Situation.GAME_OVER) {
+      this.userData.changeHighScore(this.totalScore);
+      this.gameOver = true;
+    }
+    if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
+
+    // if (this.situation) {
+    //   this.situation.update(elapsed)
+    //   this.situation.move(elapsed)
+    //   this.situation.scroll(elapsed, this.scrollSpeed)
+    //   if (this.situation.isDone()) this.situation = null;
+    // }
+
+
+    // if (this.counter % 2000 === 1) {
+    //   this.newSituation();
+    // }
     return false;
   }
 
@@ -74,23 +128,44 @@ export default class Game {
     // Get the canvas rendering context
     const ctx = this.canvas.getContext('2d')!;
     // Clear the entire canvas
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.fillStyle = `black`;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.writeTextToCanvas('UP arrow = middle | LEFT arrow = left |  arrow = right', this.canvas.width / 2, 40, 14);
+     // create an image element
+     const img = new Image(this.canvas.height, this.canvas.height);
 
+     // specify the image source relative to the html or js file
+     // when the image is in the same directory as the file
+     // only the file name is required:
+     img.src = "./assets/img/weg_game_2.png";
+     img.classList.add("backgroundImage");
+ 
+     // draw image 1
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
+     // draw image 2
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);  
+
+    // if (this.situation) {
+    //   this.situation.draw(ctx)
+    // }
+
+    this.situation.render(ctx)
 
     this.drawScore();
 
-    this.player.draw(ctx);
+    this.staminabar.draw(ctx, this.situation.getPlayerStamina())
 
-    this.staminabar.draw(ctx, 100);
+    if (this.gameOver) {
+      Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas.getContext('2d')!, 40);
+    }
+    
   }
 
   /**
    * Draw the score on a canvas
    */
   private drawScore(): void {
-    this.writeTextToCanvas(`Score: ${this.totalScore}`, this.canvas.width / 2, 80, 16);
+    Game.writeTextToCanvas(`Score: ${Math.round(this.totalScore)}`, this.canvas.width / 6, 200, this.canvas.getContext('2d')!, 30);
   }
 
   /**
@@ -103,15 +178,15 @@ export default class Game {
    * @param color - The color of the text
    * @param alignment - Where to align the text
    */
-  public writeTextToCanvas(
+  public static writeTextToCanvas(
     text: string,
     xCoordinate: number,
     yCoordinate: number,
+    ctx: CanvasRenderingContext2D,
     fontSize: number = 20,
-    color: string = 'red',
+    color: string = 'white',
     alignment: CanvasTextAlign = 'center',
   ): void {
-    const ctx = this.canvas.getContext('2d')!;
     ctx.font = `${fontSize}px sans-serif`;
     ctx.fillStyle = color;
     ctx.textAlign = alignment;
@@ -131,4 +206,31 @@ export default class Game {
   public static randomInteger(min: number, max: number): number {
     return Math.round(Math.random() * (max - min) + min);
   }
+
+  private scrollBackground(elapsed: number){
+    this.imgHeight += this.situation.getPlayerYVel() * elapsed;
+
+
+    // reseting the images when the first image entirely exits the screen
+    if (this.imgHeight > this.canvas.height){
+      this.imgHeight = 0;
+    }
+  }
+
+  /**
+   * Loads an image in such a way that the screen doesn't constantly flicker
+   *
+   *
+   * NOTE: this is a 'static' method. This means that this method must be called like
+   * `Game.loadNewImage()` instead of `this.loadNewImage()`.
+   *
+   * @param source The address or URL of the a media resource that is to be loaded
+   * @returns an HTMLImageElement with the source as its src attribute
+   */
+   public static loadNewImage(source: string): HTMLImageElement {
+    const img = new Image();
+    img.src = source;
+    return img;
+  }
 }
+;
