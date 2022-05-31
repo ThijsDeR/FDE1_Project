@@ -15,15 +15,18 @@ upgrades.forEach((upgrade) => __awaiter(void 0, void 0, void 0, function* () {
     const level = upgrade.querySelector('span.level');
     const price = upgrade.querySelector('span.price');
     const buyBtn = upgrade.querySelector('button.buy');
+    const vp = document.querySelector('span#vp');
     level.innerHTML = data.level;
     price.innerHTML = data.price;
     upgrade.querySelector('button').addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
         const upgrade_data = yield userdata.upgrade(upgrade.id);
         if (upgrade_data.status === 200) {
             // worked
+            const playerData = yield userdata.getPlayerData();
+            vp.innerHTML = playerData.vp;
             const data = yield userdata.getUpgrade(upgrade.id);
             level.innerHTML = data.level;
-            upgrade.innerHTML = data.price;
+            price.innerHTML = data.price;
             buyBtn.classList.add('bought');
             setTimeout(() => {
                 buyBtn.classList.remove('bought');

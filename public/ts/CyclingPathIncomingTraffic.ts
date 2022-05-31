@@ -4,10 +4,11 @@ import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Situation from "./Situation.js";
+import UserData from "./UserData.js";
 
 export default class CyclingPathIncomingTraffic extends Situation{
-    public constructor(canvas: HTMLCanvasElement, stamina: number) {
-        super()
+    public constructor(canvas: HTMLCanvasElement, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(upgrades)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 3, canvas.height, './assets/img/weg_game_2.png');
         this.props = [
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
@@ -45,7 +46,8 @@ export default class CyclingPathIncomingTraffic extends Situation{
 
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`)
                     this.props.splice(propIndex, 1);
                 } else gameOver = true;
             }
@@ -58,8 +60,8 @@ export default class CyclingPathIncomingTraffic extends Situation{
 
         })
 
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025);
-        else gameOver = true;
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}` )
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        else gameOver = true;
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }

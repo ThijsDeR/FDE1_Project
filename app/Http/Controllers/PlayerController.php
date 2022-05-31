@@ -26,9 +26,16 @@ class PlayerController extends Controller
         return view('players.profile', compact('user'));
     }
 
+    public function addVP(Request $request, $token) {
+        $player = Player::where('token', $token)->first();
+        $player->vp += $request->vp;
+        $player->save();
+        return response('Succesfull update', 200);
+    }
+
     public function update(Request $request, $token) {
         Player::where('token', $token)->update($request->only(['highscore', 'vp']));
-        return response('Succesfull update', 204);
+        return response('Succesfull update', 200);
     }
 
     public function info($token) {

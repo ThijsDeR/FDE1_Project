@@ -13,7 +13,7 @@ export default class Game {
      *
      * @param canvas The canvas HTML element to render on
      */
-    constructor(canvas) {
+    constructor(canvas, upgrades) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
         this.canvas.width = window.innerWidth;
@@ -32,16 +32,16 @@ export default class Game {
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
         this.gameOver = false;
+        this.upgrades = upgrades;
+        console.log(upgrades);
         this.situation = this.newSituation(100);
     }
     newSituation(stamina) {
         switch (Game.randomInteger(0, 1)) {
             case 0:
-                return new CyclingPathIncomingTraffic(this.canvas, stamina);
-            case 1:
-                return new Crossroad(this.canvas, stamina);
+                return new CyclingPathIncomingTraffic(this.canvas, stamina, this.upgrades);
             default:
-                return new Crossroad(this.canvas, stamina);
+                return new Crossroad(this.canvas, stamina, this.upgrades);
         }
     }
     /**
@@ -68,6 +68,7 @@ export default class Game {
         const result = this.situation.update(elapsed);
         if (result === Situation.GAME_OVER) {
             this.userData.changeHighScore(this.totalScore);
+            this.userData.addVP(this.totalScore);
             this.gameOver = true;
         }
         if (result === Situation.FINISHED)

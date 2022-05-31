@@ -10,6 +10,7 @@
         <h2>{{$user->username}}</h2>
         <hr/>
         <ul>
+            <li><strong>VP: </strong><span id="vp">{{$user->player->vp}}</span></li>
             <li><strong>Highscore: </strong>{{$user->player->highscore}}</li>
             <li><strong>Playing Since: </strong>{{$user->created_at}}</li>
             <li><strong>Upgrades: </strong>

@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
+import UserData from "./UserData.js";
 
 export default abstract class Situation {
     public static readonly NOT_DONE: number = 0;
@@ -13,6 +14,12 @@ export default abstract class Situation {
     protected props: ImageProp[];
 
     protected background: ImageProp;
+
+    protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+
+    public constructor (upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        this.upgrades = upgrades;
+    }
 
     public update(elapsed: number): number {
         return Situation.NOT_DONE;
