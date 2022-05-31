@@ -27,11 +27,25 @@ class PlayerController extends Controller
     }
 
     public function update(Request $request, $token) {
-        Player::where('token', $token)->update($request->only(['highscore', 'upgrades']));
+        Player::where('token', $token)->update($request->only(['highscore', 'vp']));
         return response('Succesfull update', 204);
     }
 
     public function info($token) {
         return Player::where('token', $token)->first();
+    }
+
+    public function upgrade(Request $request, $token) {
+        $result = Player::where('token', $token)->first()->upgrade->level_up($request->upgrade_type);
+        return $result;
+    }
+
+    public function getUpgrade($name, $token) {
+        $upgrade = Player::where('token', $token)->first()->upgrade;
+        $upgradeArray = array();
+        $upgradeArray['price'] = $upgrade->upgrade_cost($name);
+        $upgradeArray['level'] = $upgrade->$name;
+        
+        return $upgradeArray;
     }
 }
