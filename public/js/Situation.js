@@ -1,19 +1,18 @@
-export default class Situation {
-    constructor(upgrades) {
+import Scene from "./Scene.js";
+export default class Situation extends Scene {
+    constructor(canvas, userData, upgrades) {
+        super(canvas, userData);
         this.upgrades = upgrades;
     }
-    update(elapsed) {
-        return Situation.NOT_DONE;
-    }
-    render(ctx) {
-        this.background.draw(ctx);
+    render() {
+        this.background.draw(this.ctx);
         this.props.forEach((prop) => {
-            prop.draw(ctx);
+            prop.draw(this.ctx);
         });
-        this.player.draw(ctx);
+        this.player.draw(this.ctx);
     }
-    processInput(canvas) {
-        this.player.processInput(canvas, 0, canvas.width);
+    processInput() {
+        this.player.processInput(this.canvas, 0, this.canvas.width);
     }
     getPlayerYVel() {
         return this.player.getYVel();

@@ -1,8 +1,9 @@
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
+import Scene from "./Scene.js";
 import UserData from "./UserData.js";
 
-export default abstract class Situation {
+export default abstract class Situation extends Scene {
     public static readonly NOT_DONE: number = 0;
 
     public static readonly GAME_OVER: number = 1;
@@ -17,24 +18,21 @@ export default abstract class Situation {
 
     protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
 
-    public constructor (upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(canvas, userData)
         this.upgrades = upgrades;
     }
 
-    public update(elapsed: number): number {
-        return Situation.NOT_DONE;
-    }
-
-    public render(ctx: CanvasRenderingContext2D) {
-        this.background.draw(ctx);
+    public render() {
+        this.background.draw(this.ctx);
         this.props.forEach((prop) => {
-            prop.draw(ctx);
+            prop.draw(this.ctx);
         })
-        this.player.draw(ctx);
+        this.player.draw(this.ctx);
     }
 
-    public processInput(canvas: HTMLCanvasElement) {
-        this.player.processInput(canvas, 0, canvas.width);
+    public processInput() {
+        this.player.processInput(this.canvas, 0, this.canvas.width);
     }
 
     public getPlayerYVel() {

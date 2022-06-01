@@ -3,7 +3,7 @@ import Player from './Player.js';
 import KeyListener from './KeyListener.js';
 import ImageProp from './Props/ImageProp.js';
 
-export default class Button extends ImageProp {
+export default class SituationButton extends ImageProp {
     private static readonly INCORRECT_PRESS = 0;
     private static readonly CORRECT_PRESS = 1;
     private static readonly NO_PRESS = 2;
@@ -21,7 +21,7 @@ export default class Button extends ImageProp {
     private currentButton: {letter: string, keycode: number, imageUrl: string};
 
     public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number) {
-        const currentButton = Button.ALPHABET_ARRAY[Game.randomInteger(0, Button.ALPHABET_ARRAY.length - 1)];
+        const currentButton = SituationButton.ALPHABET_ARRAY[Game.randomInteger(0, SituationButton.ALPHABET_ARRAY.length - 1)];
         // type: string, imgSrc: string, xPos: number, yPos: number
         super(xPos, yPos, xVel, yVel, width, height, currentButton.imageUrl);
         this.currentButton = currentButton;
@@ -36,12 +36,12 @@ export default class Button extends ImageProp {
 
     public checkButton(player: Player) {
             const buttonCheck = this.checkClickButton(player);
-            if (buttonCheck === Button.NO_PRESS) return false;
-            if (buttonCheck === Button.INCORRECT_PRESS) {
+            if (buttonCheck === SituationButton.NO_PRESS) return false;
+            if (buttonCheck === SituationButton.INCORRECT_PRESS) {
                 player.changeStamina(-5)
                 return true;
             }
-            if (buttonCheck === Button.CORRECT_PRESS) {
+            if (buttonCheck === SituationButton.CORRECT_PRESS) {
                 player.changeStamina(20)
                 return true;
             }
@@ -50,12 +50,12 @@ export default class Button extends ImageProp {
 
     private checkClickButton(player: Player): number {
         let incorrect_press = false
-        Button.ALPHABET_ARRAY.filter((letter) => letter.letter != this.currentButton!.letter).forEach((letter) => {
+        SituationButton.ALPHABET_ARRAY.filter((letter) => letter.letter != this.currentButton!.letter).forEach((letter) => {
             if (player.getKeyListener().isKeyDown(letter.keycode)) incorrect_press = true
         });
-        if (incorrect_press) return Button.INCORRECT_PRESS;
-        if (player.getKeyListener().isKeyDown(this.currentButton.keycode)) return Button.CORRECT_PRESS;
-        return Button.NO_PRESS;
+        if (incorrect_press) return SituationButton.INCORRECT_PRESS;
+        if (player.getKeyListener().isKeyDown(this.currentButton.keycode)) return SituationButton.CORRECT_PRESS;
+        return SituationButton.NO_PRESS;
 
     }
  }
