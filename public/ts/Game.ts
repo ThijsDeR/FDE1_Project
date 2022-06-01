@@ -97,19 +97,13 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-<<<<<<< HEAD
-    switch (Game.randomInteger(0, 1)) {
+    switch (Game.randomInteger(0, 2)) {
       case 0:
         return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
-=======
-    switch(Game.randomInteger(0, 2)) {
-      case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, stamina)
       case 1:
-        return new Crossroad(this.canvas, stamina)
+        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
       case 2:
-        return new carDriveway(this.canvas, stamina)
->>>>>>> 71-situatie-auto-oprit
+        return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
 
@@ -173,18 +167,6 @@ export default class Game {
     // create an image element
     const img = new Image(this.canvas.height, this.canvas.height);
 
-<<<<<<< HEAD
-    // specify the image source relative to the html or js file
-    // when the image is in the same directory as the file
-    // only the file name is required:
-    img.src = "./assets/img/weg_game_2.png";
-    img.classList.add("backgroundImage");
-
-    // draw image 1
-    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 3, this.canvas.height);
-    // draw image 2
-    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
-=======
      // specify the image source relative to the html or js file
      // when the image is in the same directory as the file
      // only the file name is required:
@@ -195,7 +177,6 @@ export default class Game {
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 2, this.canvas.height);
      // draw image 2
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);  
->>>>>>> 71-situatie-auto-oprit
 
     // if (this.situation) {
     //   this.situation.draw(ctx)

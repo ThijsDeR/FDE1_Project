@@ -39,8 +39,8 @@ export default class carDriveway extends Situation {
         this.player = new Player((canvas.width / 1.55), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
     }
     update(elapsed) {
-        this.player.update(elapsed);
         this.player.move(elapsed);
+        this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
         if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
@@ -54,7 +54,8 @@ export default class carDriveway extends Situation {
             prop.scroll(elapsed, this.player.getYVel());
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`);
                     this.props.splice(propIndex, 1);
                 }
                 else
@@ -64,8 +65,9 @@ export default class carDriveway extends Situation {
                 prop.update();
             }
         });
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}`);
         if (this.player.getStamina() >= 0)
-            this.player.changeStamina(-0.025);
+            this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else
             gameOver = true;
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;

@@ -48,37 +48,44 @@ export default class carDriveway extends Situation {
         ]
         this.player = new Player((canvas.width / 1.55), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina)
     }
-    public update(elapsed: number) {
-        this.player.update(elapsed);
+    
+    public update(elapsed: number): number {
         this.player.move(elapsed);
-        this.background.move(elapsed);
-        this.background.scroll(elapsed, this.player.getYVel());
+        this.player.update(elapsed);
+        this.background.move(elapsed)
+        this.background.scroll(elapsed, this.player.getYVel())
+
         if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
             return Situation.FINISHED;
         }
+
         let gameOver = false;
         this.props.forEach((prop, propIndex) => {
             if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
-                prop.move(elapsed);
+                prop.move(elapsed)
             }
-            prop.scroll(elapsed, this.player.getYVel());
+
+            prop.scroll(elapsed, this.player.getYVel())
+
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`)
                     this.props.splice(propIndex, 1);
-                }
-                else
-                    gameOver = true;
+                } else gameOver = true;
             }
 
             if (prop instanceof TrackProp) {
                 prop.update()
             }
-        });
-        if (this.player.getStamina() >= 0)
-            this.player.changeStamina(-0.025);
-        else
-            gameOver = true;
+
+            
+
+        })
+
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}` )
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        else gameOver = true;
+
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
 
