@@ -113,18 +113,12 @@ export default class Game {
         ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         // create an image element
         const img = new Image(this.canvas.height, this.canvas.height);
-        // specify the image source relative to the html or js file
-        // when the image is in the same directory as the file
-        // only the file name is required:
         img.src = "./assets/img/weg_game_2.png";
         img.classList.add("backgroundImage");
         // draw image 1
         ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 3, this.canvas.height);
         // draw image 2
         ctx.drawImage(img, this.canvas.width / 3, this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
-        // if (this.situation) {
-        //   this.situation.draw(ctx)
-        // }
         this.situation.render();
         if (this.gameOver) {
             if (this.cutScene)
