@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('upgrades', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('token', 50)->unique();
-            $table->integer('highscore')->default(0);
-            $table->integer('vp')->default(0);
-            $table->timestamps();
+            $table->unsignedBigInteger('player_id');
+            $table->integer('stamina_resistance')->default(1);
+            $table->integer('stamina_gain')->default(1);
+            $table->timestamps(); 
 
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('player_id')->references('id')->on('players')->cascadeOnDelete();
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('players');
+        Schema::dropIfExists('upgrades');
     }
 };

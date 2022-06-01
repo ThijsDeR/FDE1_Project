@@ -40,7 +40,7 @@ export default class UserData {
             return response;
         });
     }
-    setPlayerData(data) {
+    setHighscore(data) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch('./players/' + this.token, {
@@ -56,16 +56,58 @@ export default class UserData {
             return response;
         });
     }
+    addVP(vp) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch('./players/addVP/' + this.token, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ vp: vp })
+            });
+            return response;
+        });
+    }
     changeHighScore(highscore) {
-        console.log('new highscore feature stuff 1');
         this.getPlayerData().then((data) => {
             if (highscore > data.highscore) {
-                this.setPlayerData({ highscore: highscore, upgrades: {} }).then((data) => {
+                this.setHighscore({ highscore: highscore }).then((data) => {
                     console.log(data);
                 });
             }
+            else {
+            }
         });
-        console.log('new highscore feature stuff 2');
+    }
+    getUpgrade(upgrade) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const rawResponse = yield fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+                headers: {
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                }
+            });
+            const response = yield rawResponse.json();
+            return response;
+        });
+    }
+    upgrade(upgrade) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`./profile/upgrade/${this.token}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ upgrade_type: upgrade })
+            });
+            return response;
+        });
     }
 }
 UserData.TOKEN_OBJECT_NAME = 'token';

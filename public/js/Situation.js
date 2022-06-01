@@ -1,4 +1,7 @@
 export default class Situation {
+    constructor(upgrades) {
+        this.upgrades = upgrades;
+    }
     update(elapsed) {
         return Situation.NOT_DONE;
     }

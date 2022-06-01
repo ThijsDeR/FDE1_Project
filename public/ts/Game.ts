@@ -27,12 +27,14 @@ export default class Game {
 
   private gameOver: boolean;
 
+  private upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+
   /**
    * Construct a new Game
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement) {
+  public constructor(canvas: HTMLElement, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -57,6 +59,10 @@ export default class Game {
     // is divisible by scrollSpeed
     this.gameOver = false;
 
+    this.upgrades = upgrades;
+
+    console.log(upgrades)
+
     this.situation = this.newSituation(100)
 
 
@@ -66,11 +72,9 @@ export default class Game {
   private newSituation(stamina: number): Situation {
     switch(Game.randomInteger(0, 1)) {
       case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, stamina)
-      case 1:
-        return new Crossroad(this.canvas, stamina)
+        return new CyclingPathIncomingTraffic(this.canvas, stamina, this.upgrades)
       default:
-        return new Crossroad(this.canvas, stamina)
+        return new Crossroad(this.canvas, stamina, this.upgrades)
       
     }
   }
@@ -102,6 +106,7 @@ export default class Game {
     const result = this.situation.update(elapsed);
     if (result === Situation.GAME_OVER) {
       this.userData.changeHighScore(this.totalScore);
+      this.userData.addVP(this.totalScore);
       this.gameOver = true;
     }
     if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())

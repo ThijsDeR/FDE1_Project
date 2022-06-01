@@ -5,8 +5,8 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Situation from "./Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
-    constructor(canvas, stamina) {
-        super();
+    constructor(canvas, stamina, upgrades) {
+        super(upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 3, canvas.height, './assets/img/weg_game_2.png');
         this.props = [
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
@@ -35,7 +35,8 @@ export default class CyclingPathIncomingTraffic extends Situation {
             prop.scroll(elapsed, this.player.getYVel());
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`);
                     this.props.splice(propIndex, 1);
                 }
                 else
@@ -45,8 +46,9 @@ export default class CyclingPathIncomingTraffic extends Situation {
                 prop.update();
             }
         });
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}`);
         if (this.player.getStamina() >= 0)
-            this.player.changeStamina(-0.025);
+            this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else
             gameOver = true;
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;

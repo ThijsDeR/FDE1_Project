@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
+use App\Models\Player;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +35,7 @@ Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highsc
 
 Route::get('/players/{token}', [PlayerController::class, 'info'])->name('playerInfo');
 Route::put('/players/{token}', [PlayerController::class, 'update'])->name('update');
+Route::put('/players/addVP/{token}', [PlayerController::class, 'addVP'])->name('player.addVP');
+
+Route::put('/profile/upgrade/{token}', [PlayerController::class, 'upgrade'])->name('player.upgrade');
+Route::get('/profile/getUpgrade/{name}/{token}', [PlayerController::class, 'getUpgrade'])->name('player.getUpgrade');

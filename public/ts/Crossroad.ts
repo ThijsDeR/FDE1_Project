@@ -6,8 +6,8 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import Situation from "./Situation.js";
 
 export default class Crossroad extends Situation {
-    public constructor(canvas: HTMLCanvasElement, stamina: number) {
-        super()
+    public constructor(canvas: HTMLCanvasElement, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(upgrades)
         this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/KruispuntZebraPad.png');
         this.props = [
             new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
@@ -38,13 +38,15 @@ export default class Crossroad extends Situation {
 
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount());
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`)
                     this.props.splice(propIndex, 1);
                 } else gameOver = true;
             }
         })
-
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025);
+        
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}` )
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else gameOver = true;
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;

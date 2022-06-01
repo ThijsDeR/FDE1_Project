@@ -8,7 +8,7 @@
 @section('content')
     <div class="big-button-container">
         @if (auth()->user())
-          <a href="./localstorage?token={{auth()->user()->player->token}}" id="nice-button" class="nice-button" role="button">Start</a>
+          <a href="./game" id="nice-button" class="nice-button" role="button">Start</a>
         @else
           <a href="{{route('loginView')}}" id="nice-button" class="nice-button" role="button">login</a>
         @endif
