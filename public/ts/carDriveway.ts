@@ -80,7 +80,9 @@ export default class carDriveway extends Situation {
             gameOver = true;
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
+
+    // Player boundaries
     processInput(canvas: HTMLCanvasElement) {
-        this.player.processInput(canvas, this.background.getWidth() / 3, (this.background.getWidth() / 3) * 2);
+        this.player.processInput(canvas, this.background.getWidth() * 1.18, (this.background.getWidth() * 1.384));
     }
 }
