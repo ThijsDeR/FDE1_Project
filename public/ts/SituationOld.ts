@@ -1,4 +1,4 @@
-import Button from "./Button.js";
+import Button from "./SituationButton.js";
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
 

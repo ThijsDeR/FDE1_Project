@@ -5,8 +5,8 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Situation from "./Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
-    constructor(canvas, stamina, upgrades) {
-        super(upgrades);
+    constructor(canvas, userData, stamina, upgrades) {
+        super(canvas, userData, upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 3, canvas.height, './assets/img/weg_game_2.png');
         this.props = [
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
@@ -53,7 +53,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             gameOver = true;
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
-    processInput(canvas) {
-        this.player.processInput(canvas, (this.background.getWidth() / 3) + this.background.getXPos(), ((this.background.getWidth() / 3) * 2) + this.background.getXPos());
+    processInput() {
+        this.player.processInput(this.canvas, (this.background.getWidth() / 3) + this.background.getXPos(), ((this.background.getWidth() / 3) * 2) + this.background.getXPos());
     }
 }

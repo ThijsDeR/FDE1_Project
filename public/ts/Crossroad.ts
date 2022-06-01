@@ -4,10 +4,11 @@ import Frikandelbroodje from "./Props/Frikandelbroodje.js";
 import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import Situation from "./Situation.js";
+import UserData from "./UserData.js";
 
 export default class Crossroad extends Situation {
-    public constructor(canvas: HTMLCanvasElement, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
-        super(upgrades)
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(canvas, userData, upgrades)
         this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/KruispuntZebraPad.png');
         this.props = [
             new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
@@ -52,7 +53,7 @@ export default class Crossroad extends Situation {
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
 
-    public processInput(canvas: HTMLCanvasElement) {
-        this.player.processInput(canvas, this.background.getWidth() / 3, (this.background.getWidth() / 3) * 2);
+    public processInput() {
+        this.player.processInput(this.canvas, this.background.getWidth() / 3, (this.background.getWidth() / 3) * 2);
     }
 }

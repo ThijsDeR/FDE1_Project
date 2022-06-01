@@ -3,12 +3,14 @@ import Frikandelbroodje from "./Props/Frikandelbroodje.js";
 import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
+import Scene from "./Scene.js";
 import Situation from "./Situation.js";
 import UserData from "./UserData.js";
 
-export default class CyclingPathIncomingTraffic extends Situation{
-    public constructor(canvas: HTMLCanvasElement, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
-        super(upgrades)
+export default class CyclingPathIncomingTraffic extends Situation {
+
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(canvas, userData, upgrades)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 3, canvas.height, './assets/img/weg_game_2.png');
         this.props = [
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
@@ -23,10 +25,9 @@ export default class CyclingPathIncomingTraffic extends Situation{
 
         this.player = new Player((canvas.width / 2) - ((canvas.width / 8) / 2), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina)
 
-
     }
 
-    public update(elapsed: number) {
+    public update(elapsed: number): number {
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
@@ -66,7 +67,7 @@ export default class CyclingPathIncomingTraffic extends Situation{
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
 
-    public processInput(canvas: HTMLCanvasElement) {
-        this.player.processInput(canvas, (this.background.getWidth() / 3) + this.background.getXPos(), ((this.background.getWidth() / 3) * 2) + this.background.getXPos()) ;
+    public processInput() {
+        this.player.processInput(this.canvas, (this.background.getWidth() / 3) + this.background.getXPos(), ((this.background.getWidth() / 3) * 2) + this.background.getXPos()) ;
     }
 }
