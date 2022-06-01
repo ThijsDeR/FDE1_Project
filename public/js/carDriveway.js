@@ -5,8 +5,8 @@ import Player from "./Player.js";
 import TrackProp from "./Props/TrackProp.js";
 import Game from "./Game.js";
 export default class carDriveway extends Situation {
-    constructor(canvas, stamina) {
-        super();
+    constructor(canvas, userData, stamina, upgrades) {
+        super(canvas, userData, upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png');
         const carVectors = [];
         Game.randomInteger(0, 1) === 0 ? carVectors.push({
@@ -71,7 +71,7 @@ export default class carDriveway extends Situation {
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
     // Player boundaries
-    processInput(canvas) {
-        this.player.processInput(canvas, this.background.getWidth() * 1.18, (this.background.getWidth() * 1.384));
+    processInput() {
+        this.player.processInput(this.canvas, this.background.getWidth() * 1.18, (this.background.getWidth() * 1.384));
     }
 }
