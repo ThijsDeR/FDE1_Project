@@ -1,12 +1,14 @@
 import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
-import CyclingPathIncomingTraffic from './CyclingPathIncomingTraffic.js';
-import carDriveway from './carDriveway.js';
-import Crossroad from './Crossroad.js';
 import Situation from './Situation.js';
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
+
+// Import situations
+import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
+import carDriveway from './Situations/carDriveway.js';
+import Crossroad from './Situations/Crossroad.js';
 
 /**
  * Main class of this Game.

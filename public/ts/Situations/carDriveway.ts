@@ -1,10 +1,10 @@
-import ImageProp from "./Props/ImageProp.js";
-import StaminaBooster from "./Props/StaminaBooster.js";
-import Situation from "./Situation.js";
-import Player from "./Player.js";
-import TrackProp from "./Props/TrackProp.js";
-import Game from "./Game.js";
-import UserData from "./UserData.js";
+import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
+import Situation from "../Situation.js";
+import Player from "../Player.js";
+import TrackProp from "../Props/TrackProp.js";
+import Game from "../Game.js";
+import UserData from "../UserData.js";
 
 export default class carDriveway extends Situation {
     public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {

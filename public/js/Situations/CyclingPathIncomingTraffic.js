@@ -1,9 +1,9 @@
-import Player from "./Player.js";
-import Frikandelbroodje from "./Props/Frikandelbroodje.js";
-import ImageProp from "./Props/ImageProp.js";
-import StaminaBooster from "./Props/StaminaBooster.js";
-import TrackProp from "./Props/TrackProp.js";
-import Situation from "./Situation.js";
+import Player from "../Player.js";
+import Frikandelbroodje from "../Props/Frikandelbroodje.js";
+import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
+import TrackProp from "../Props/TrackProp.js";
+import Situation from "../Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
