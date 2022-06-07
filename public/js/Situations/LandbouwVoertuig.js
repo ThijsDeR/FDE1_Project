@@ -1,41 +1,21 @@
-import Game from "./Game.js";
-import Player from "./Player.js";
-import Frikandelbroodje from "./Props/Frikandelbroodje.js";
-import ImageProp from "./Props/ImageProp.js";
-import StaminaBooster from "./Props/StaminaBooster.js";
-
+import Player from "../Player.js";
+import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 export default class LandbouwVoertuig {
-    public static readonly NOT_DONE: number = 0;
-
-    public static readonly GAME_OVER: number = 1;
-
-    public static readonly FINISHED: number = 2;
-
-    private props: ImageProp[];
-
-    private background: ImageProp;
-
-    private canvas: HTMLCanvasElement;
-
-    public constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas) {
         this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/Polderweg.png');
         this.props = [
             new ImageProp(this.background.getWidth() / 2.7, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5, './assets/img/objects/w_button.png'),
-        ]
+        ];
         this.canvas = canvas;
-
     }
-
-    public update(elapsed: number, scrollSpeed: number, player: Player) {
-        this.background.move(elapsed)
-        this.background.scroll(elapsed, scrollSpeed)
-
+    update(elapsed, scrollSpeed, player) {
+        this.background.move(elapsed);
+        this.background.scroll(elapsed, scrollSpeed);
         if (player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
             return LandbouwVoertuig.FINISHED;
         }
-
         let gameOver = false;
-
         // if (player.getXPos() < this.background.getXPos() - (this.background.getWidth() / 4)) {
         //     gameOver = true;
         // } else if (player.getXPos() > this.background.getXPos() + this.background.getWidth()) {
@@ -49,51 +29,49 @@ export default class LandbouwVoertuig {
         //     console.log(this.background.getHeight());
         //     gameOver = true;
         // }
-
         if (player.getXPos() <= this.background.getXPos() + (this.background.getWidth() / 4)) {
             // console.log('een');
             gameOver = true;
-        } else if (player.getXPos() >= this.background.getWidth() - (this.background.getWidth() / 3.5)) {
+        }
+        else if (player.getXPos() >= this.background.getWidth() - (this.background.getWidth() / 3.5)) {
             // console.log('twee');
             gameOver = true;
-        } else if (player.getYVel() === Player.MAX_SPEED_X &&
-        player.getYPos() >= this.props[0].getYPos() - this.props[0].getHeight() &&
-        player.getYPos() <= this.props[0].getYPos()) {
+        }
+        else if (player.getYVel() === Player.MAX_SPEED_X &&
+            player.getYPos() >= this.props[0].getYPos() - this.props[0].getHeight() &&
+            player.getYPos() <= this.props[0].getYPos()) {
             gameOver = true;
-        } else if (player.getYVel() === 0 &&
-        player.getYPos() >= this.props[0].getYPos() - this.props[0].getHeight() &&
-        player.getYPos() - player.getHeight() <= this.props[0].getYPos()) {
+        }
+        else if (player.getYVel() === 0 &&
+            player.getYPos() >= this.props[0].getYPos() - this.props[0].getHeight() &&
+            player.getYPos() - player.getHeight() <= this.props[0].getYPos()) {
             player.changeStamina(0.075);
         }
-
         console.log(this.props[0].getYPos());
-
         this.props.forEach((prop, propIndex) => {
-            console.log(prop.getXVel())
+            console.log(prop.getXVel());
             if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
-                prop.move(elapsed)
+                prop.move(elapsed);
             }
-
-            prop.scroll(elapsed, scrollSpeed)
-
+            prop.scroll(elapsed, scrollSpeed);
             if (prop.collidesWithOtherProp(player)) {
                 if (prop instanceof StaminaBooster) {
                     player.changeStamina(prop.getStaminaBoostAmount());
                     this.props.splice(propIndex, 1);
-                } else gameOver = true;
+                }
+                else
+                    gameOver = true;
             }
-
-
-
-        })
-
+        });
         return gameOver ? LandbouwVoertuig.GAME_OVER : LandbouwVoertuig.NOT_DONE;
     }
-
-    public draw(ctx: CanvasRenderingContext2D) {
+    draw(ctx) {
         this.background.draw(ctx);
         this.props.forEach((prop) => {
-            prop.draw(ctx)
-        })
+            prop.draw(ctx);
+        });
     }
 }
+LandbouwVoertuig.NOT_DONE = 0;
+LandbouwVoertuig.GAME_OVER = 1;
+LandbouwVoertuig.FINISHED = 2;

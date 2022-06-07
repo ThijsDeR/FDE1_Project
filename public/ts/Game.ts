@@ -12,6 +12,7 @@ import carDriveway from './Situations/CarDriveway.js';
 import Crossroad from './Situations/Crossroad.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+import TractorIncoming from './Situations/TractorIncoming.js';
 
 
 /**
@@ -71,6 +72,7 @@ export default class Game {
 
     this.upgrades = upgrades;
 
+    // this.situation = new OncomingCyclist(this.canvas, this.userData, 100, this.upgrades)
     this.situation = this.newSituation(100)
 
 
@@ -104,21 +106,16 @@ export default class Game {
 
   private newSituation(stamina: number): Situation {
     switch (Game.randomInteger(0, 3)) {
-      // case 0:
-      //   return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
-      // case 1:
-      //   return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
-      // case 2:
-      //   return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
-      // case 3:
-      //   return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
-      // default:
-      //   return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
       case 0:
-        return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
+        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+      case 1:
+        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+      case 2:
+        return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
+      case 3:
+        return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
-
     }
   }
 
