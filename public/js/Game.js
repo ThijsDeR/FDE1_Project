@@ -1,9 +1,8 @@
 import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
-import CyclingPathIncomingTraffic from './CyclingPathIncomingTraffic.js';
-import Crossroad from './Crossroad.js';
 import Situation from './Situation.js';
+import PrioritySameRoad from './PrioritySameRoad.js';
 /**
  * Main class of this Game.
  */
@@ -37,11 +36,11 @@ export default class Game {
     newSituation(stamina) {
         switch (Game.randomInteger(0, 1)) {
             case 0:
-                return new CyclingPathIncomingTraffic(this.canvas, stamina);
+                return new PrioritySameRoad(this.canvas, stamina);
             case 1:
-                return new Crossroad(this.canvas, stamina);
+                return new PrioritySameRoad(this.canvas, stamina);
             default:
-                return new Crossroad(this.canvas, stamina);
+                return new PrioritySameRoad(this.canvas, stamina);
         }
     }
     /**

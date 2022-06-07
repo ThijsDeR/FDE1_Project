@@ -4,6 +4,7 @@ import UserData from './UserData.js';
 import CyclingPathIncomingTraffic from './CyclingPathIncomingTraffic.js';
 import Crossroad from './Crossroad.js';
 import Situation from './Situation.js';
+import PrioritySameRoad from './PrioritySameRoad.js';
 
 /**
  * Main class of this Game.
@@ -66,12 +67,12 @@ export default class Game {
   private newSituation(stamina: number): Situation {
     switch(Game.randomInteger(0, 1)) {
       case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, stamina)
+        return new PrioritySameRoad(this.canvas, stamina)
       case 1:
-        return new Crossroad(this.canvas, stamina)
+        return new PrioritySameRoad(this.canvas, stamina)
       default:
-        return new Crossroad(this.canvas, stamina)
-      
+        return new PrioritySameRoad(this.canvas, stamina)
+
     }
   }
 
@@ -139,11 +140,11 @@ export default class Game {
      // only the file name is required:
      img.src = "./assets/img/weg_game_2.png";
      img.classList.add("backgroundImage");
- 
+
      // draw image 1
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 3, this.canvas.height);
      // draw image 2
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);  
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 3, this.canvas.height);
 
     // if (this.situation) {
     //   this.situation.draw(ctx)
@@ -158,7 +159,7 @@ export default class Game {
     if (this.gameOver) {
       Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas.getContext('2d')!, 40);
     }
-    
+
   }
 
   /**
