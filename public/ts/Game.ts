@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
 
@@ -11,6 +12,7 @@ import carDriveway from './Situations/CarDriveway.js';
 import Crossroad from './Situations/Crossroad.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+
 
 /**
  * Main class of this Game.
@@ -50,7 +52,6 @@ export default class Game {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    // Set the player at the center
     this.userData = new UserData()
     // Score is zero at start
     this.totalScore = 0;
@@ -71,6 +72,7 @@ export default class Game {
     this.upgrades = upgrades;
 
     this.situation = this.newSituation(100)
+
 
     this.cutScene = null;
   }
@@ -150,6 +152,7 @@ export default class Game {
 
     this.scrollBackground(elapsed);
 
+
     const result = this.situation.update(elapsed);
     if (result === Situation.GAME_OVER) {
       this.userData.changeHighScore(this.totalScore);
@@ -180,10 +183,12 @@ export default class Game {
      // specify the image source relative to the html or js file
      // when the image is in the same directory as the file
      // only the file name is required:
+
      img.src = "./assets/img/objects/MainRoadFixed.png";
      img.classList.add("backgroundImage");
- 
+
      // draw image 1
+
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 2, this.canvas.height);
      // draw image 2
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);  
@@ -192,9 +197,8 @@ export default class Game {
     //   this.situation.draw(ctx)
     // }
 
-    this.situation.render()
 
-    
+    this.situation.render()
 
     if (this.gameOver) {
       if (this.cutScene) this.cutScene.render()

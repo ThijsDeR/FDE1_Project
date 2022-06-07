@@ -2,8 +2,10 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+
 import GameOverScene from './GameOverScene.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
+
 /**
  * Main class of this Game.
  */
@@ -19,6 +21,8 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         // Set the player at the center
+
+
         this.userData = new UserData();
         // Score is zero at start
         this.totalScore = 0;
@@ -32,9 +36,11 @@ export default class Game {
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
         this.gameOver = false;
+
         this.upgrades = upgrades;
         this.situation = this.newSituation(100);
         this.cutScene = null;
+
     }
     restart() {
         // Resize the canvas so it looks more like a Runner game
@@ -99,6 +105,7 @@ export default class Game {
         this.totalScore += this.situation.getPlayerYVel();
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
+
         const result = this.situation.update(elapsed);
         if (result === Situation.GAME_OVER) {
             this.userData.changeHighScore(this.totalScore);
@@ -125,6 +132,8 @@ export default class Game {
         // specify the image source relative to the html or js file
         // when the image is in the same directory as the file
         // only the file name is required:
+
+
         img.src = "./assets/img/objects/MainRoadFixed.png";
         img.classList.add("backgroundImage");
         // draw image 1
