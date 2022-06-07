@@ -8,12 +8,7 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class CrossroadStopSign extends Situation {
-    public static readonly NOT_DONE: number = 0;
-
-    public static readonly GAME_OVER: number = 1;
-
-    public static readonly FINISHED: number = 2;
-
+    
     public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
         super(canvas, userData, upgrades)
         this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/objects/Kruispunt_2.png');
@@ -54,7 +49,7 @@ export default class CrossroadStopSign extends Situation {
                     this.props.splice(propIndex, 1);
                 } else if (prop instanceof StopSign) {
                     if (this.player.isStopped()) {
-                        prop.activate()
+                        prop.advance(elapsed)
                     }
                 }
 
@@ -65,13 +60,11 @@ export default class CrossroadStopSign extends Situation {
             }
 
             if (prop instanceof StopSign) {
-                if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
-                    if (prop.isActive()) {
-                        this.props.splice(propIndex, 1);
-                    } else {
-                        gameOver = true;
-                    }
-
+                if (prop.isActive()) {
+                    this.props.splice(propIndex, 1);
+                }
+                else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) { 
+                    gameOver = true;
                 }
             }
 
