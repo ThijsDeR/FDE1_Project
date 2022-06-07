@@ -3,6 +3,7 @@ import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 import AnimatedProp from './Props/AnimatedProp.js';
 import ImageProp from './Props/ImageProp.js';
+import LandbouwVoertuig from './Situations/TractorIncoming.js';
 
 export default class Player extends AnimatedProp {
   public static readonly MAX_SPEED = 0.6;
@@ -82,13 +83,11 @@ export default class Player extends AnimatedProp {
       } else this.xVel = 0;
     } else this.xVel = 0;
 
-
-    if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
-      this.yVel = Player.MAX_SPEED_X;
-    } else if (spacebarPressed) {
+    if (spacebarPressed) {
       this.yVel = 0
-    }
-    else this.yVel = Player.MAX_SPEED / 4;
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+      this.yVel = Player.MAX_SPEED_X;
+    } else this.yVel = Player.MAX_SPEED / 4;
   }
 
   public move(elapsed: number) {
@@ -97,5 +96,9 @@ export default class Player extends AnimatedProp {
 
   public update(elapsed: number) {
     this.advance(elapsed);
+  }
+
+  public isStopped() {
+      return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
   }
 }

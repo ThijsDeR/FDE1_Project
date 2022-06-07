@@ -2,6 +2,7 @@
 version: '3'
 services:
     application:
+        container_name: Project_Sail
         build:
             context: ./vendor/laravel/sail/runtimes/8.1
             dockerfile: Dockerfile
@@ -23,7 +24,9 @@ services:
             - sail
         depends_on:
             - mysql
+
     mysql:
+        container_name: Project_Database
         image: 'mysql/mysql-server:8.0'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
@@ -43,6 +46,25 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+
+    composer:
+        container_name: Project_Composer
+        image: composer:latest
+        volumes:
+        - '.:/app'
+        command: 
+            "composer update"
+
+    node:
+        container_name: Project_npm
+        image: node:latest
+        working_dir: /home/node/app
+        volumes: 
+        - ./:/home/node/app
+        command: >
+            bash -c "npm update
+            && npm run ts-watch"
+
 networks:
     sail:
         driver: bridge

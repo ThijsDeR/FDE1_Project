@@ -60,15 +60,6 @@ export default class Prop {
       && this.yPos < prop.getYPos() + prop.getHeight()
       && this.yPos + this.height > prop.getYPos()
     ) {
-      console.log(this.xPos)
-      console.log(this.yPos)
-      console.log(this.width)
-      console.log(this.height)
-      console.log('--------')
-      console.log(prop.getXPos())
-      console.log(prop.getYPos())
-      console.log(prop.getWidth())
-      console.log(prop.getHeight())
       return true;
     } return false;
   }

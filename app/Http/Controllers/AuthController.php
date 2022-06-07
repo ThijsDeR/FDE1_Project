@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Player;
+use App\Models\Upgrade;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class AuthController extends Controller
         ])->validate();
 
         if(auth()->attempt($request->only(['username', 'password']))) {
-            return redirect()->route('home');
+            return redirect('./localstorage?token=' . auth()->user()->player->token);
         }
 
         return redirect()->back()->withErrors(['username' => 'Invalid Credentials']);
@@ -50,17 +51,24 @@ class AuthController extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
             ]);
+
+            
         } catch (Exception $e){
             return redirect()->back()->withErrors(['username' => 'Already In Use']);
         }
 
-        Player::create([
+        $player = Player::create([
             'user_id' => $user->id,
             'token' => Str::random(48),
         ]);
 
+        $upgrade = Upgrade::create([
+            'player_id' => $player->id,
+        ]);
+        
+
         $this->login($request);
 
-        return redirect()->route('home');
+        return redirect('./localstorage?token=' . auth()->user()->player->token);
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('token', 50)->unique();
             $table->integer('highscore')->default(0);
-            $table->string('upgrades', 10000)->default('{}');
+            $table->integer('vp')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();

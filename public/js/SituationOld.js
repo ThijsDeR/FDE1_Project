@@ -1,4 +1,4 @@
-import Button from "./Button.js";
+import Button from "./SituationButton.js";
 import ImageProp from "./Props/ImageProp.js";
 export default class SituationOld extends ImageProp {
     constructor(coordsSituation, coordsButton, amount) {

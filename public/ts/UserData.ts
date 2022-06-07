@@ -25,7 +25,7 @@ export default class UserData {
     return this.token;
   }
 
-  public async getPlayerData(): Promise<unknown> {
+  public async getPlayerData() {
     const rawResponse = await fetch('./players/' + this.token, {
       headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
@@ -35,7 +35,7 @@ export default class UserData {
     return response;
   }
 
-  private async setPlayerData(data: {highscore: number, upgrades: {}}): Promise<unknown> {
+  private async setHighscore(data: {highscore: number}) {
     const response = await fetch('./players/' + this.token, {
       method: 'PUT',
       headers: {
@@ -50,16 +50,58 @@ export default class UserData {
     return response;
   }
 
+  public async addVP(vp: number) {
+    const response = await fetch('./players/addVP/' + this.token, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({vp: vp})
+    })
+
+    return response;
+  }
+
   public changeHighScore(highscore: number) {
-    console.log('new highscore feature stuff 1')
     this.getPlayerData().then((data: any) => {
       if (highscore > data.highscore) {
-        this.setPlayerData({highscore: highscore, upgrades: {}}).then((data) => {
+        this.setHighscore({highscore: highscore}).then((data) => {
           console.log(data)
         });
       }
+      else {
+        
+      }
     })
-    console.log('new highscore feature stuff 2')
+
+
   }
 
+
+
+  public async getUpgrade(upgrade: string) {
+    const rawResponse = await fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      }
+    })
+    const response = await rawResponse.json();
+    return response
+  }
+
+  public async upgrade(upgrade: string) {
+    const response = await fetch(`./profile/upgrade/${this.token}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({upgrade_type: upgrade})
+    })
+
+    return response;
+  }
 }
