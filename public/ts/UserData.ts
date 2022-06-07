@@ -25,49 +25,83 @@ export default class UserData {
     return this.token;
   }
 
-  public getPlayerData(): Promise<unknown> {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        url: './players/' + this.token,
-        type: 'GET',
-        success: function (data) {
-          resolve(data)
-        },
-        error: function (error) {
-          reject(error)
-        }
-      })
+  public async getPlayerData() {
+    const rawResponse = await fetch('./players/' + this.token, {
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      }
     })
+    const response = rawResponse.json()
+    return response;
   }
 
-  private setPlayerData(data: {highscore: number, upgrades: {}}): Promise<unknown> {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        url: './players/' + this.token,
-        type: 'PUT',
-        data: data,
-        dataType: "text",
-        success: function (data) {
-          resolve(data)
-        },
-        error: function (error) {
-          reject(error)
-        }
-      })
+  private async setHighscore(data: {highscore: number}) {
+    const response = await fetch('./players/' + this.token, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify(data)
     })
+
+    console.log(response)
+    return response;
+  }
+
+  public async addVP(vp: number) {
+    const response = await fetch('./players/addVP/' + this.token, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({vp: vp})
+    })
+
+    return response;
   }
 
   public changeHighScore(highscore: number) {
     this.getPlayerData().then((data: any) => {
       if (highscore > data.highscore) {
-        this.setPlayerData({highscore: highscore, upgrades: {}}).then((data) => {
+        this.setHighscore({highscore: highscore}).then((data) => {
           console.log(data)
         });
       }
+      else {
+        
+      }
     })
+
+
   }
 
+
+
+  public async getUpgrade(upgrade: string) {
+    const rawResponse = await fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      }
+    })
+    const response = await rawResponse.json();
+    return response
+  }
+
+  public async upgrade(upgrade: string) {
+    const response = await fetch(`./profile/upgrade/${this.token}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({upgrade_type: upgrade})
+    })
+
+    return response;
+  }
 }

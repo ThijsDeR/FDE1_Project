@@ -14,12 +14,11 @@ class PlayerSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Player::create([
-            'user_id' => '1',
-            'token' => 'NhHHHuWJBGxkuQ2tD1qA1MfV1TZDYUyz2l0IZOKVfTTa3xv8',
-            'name' => 'TeaEyes',
-            'upgrades' => '{}'
-        ]);
+        // \App\Models\Player::create([
+        //     'user_id' => '1',
+        //     'token' => 'NhHHHuWJBGxkuQ2tD1qA1MfV1TZDYUyz2l0IZOKVfTTa3xv8',
+        //     'name' => 'TeaEyes',
+        // ]);
 
     }
 }

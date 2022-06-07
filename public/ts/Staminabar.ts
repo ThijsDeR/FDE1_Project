@@ -1,6 +1,6 @@
-export default class Staminabar {
+import Game from "./Game.js";
 
-    private canvas: HTMLCanvasElement;
+export default class Staminabar {
 
     private xPos: number;
 
@@ -10,8 +10,7 @@ export default class Staminabar {
 
     private height: number;
 
-    public constructor(canvas: HTMLCanvasElement, xPos: number, yPos: number, width: number, height: number) {
-        this.canvas = canvas;
+    public constructor(xPos: number, yPos: number, width: number, height: number) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = width;
@@ -25,7 +24,7 @@ export default class Staminabar {
       //   drawEllipse(10, 10, 100, 60);
       //   drawEllipseByCenter(60,40,20,10);
         ctx.beginPath();
-        ctx.rect(this.xPos, this.yPos, this.width*(stamina/100), this.height);
+        ctx.rect(this.xPos - (this.width * (stamina/100) / 2), this.yPos, this.width*(stamina/100), this.height);
         if(stamina > 63){
             ctx.fillStyle="green"
         }else if(stamina > 37){
@@ -37,5 +36,7 @@ export default class Staminabar {
         }
         ctx.closePath();
         ctx.fill();
+
+        Game.writeTextToCanvas(ctx, 'Stamina:', this.xPos, this.yPos, 30, undefined, undefined, 'bottom')
     };
 }

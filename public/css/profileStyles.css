@@ -13,3 +13,12 @@
 #profile-container h2{
     text-align: center;
 }
+
+
+button.buy.error {
+    color: red
+}
+
+button.buy.bought {
+    color: green
+}

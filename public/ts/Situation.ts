@@ -1,83 +1,85 @@
-import Button from "./Button.js";
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
+import StaminaBooster from "./Props/StaminaBooster.js";
+import TrackProp from "./Props/TrackProp.js";
+import Scene from "./Scene.js";
+import UserData from "./UserData.js";
 
-export default class Situation extends ImageProp{
-    private button: Button;
+export default abstract class Situation extends Scene {
+    public static readonly NOT_DONE: number = 0;
 
-    private coordsButton: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number};
+    public static readonly GAME_OVER: number = 1;
+
+    public static readonly FINISHED: number = 2;
+
+    protected player: Player;
     
-    private buttonsLeft: number;
+    protected props: ImageProp[];
 
-    private timeSinceLastPress: number;
+    protected background: ImageProp;
 
-    public constructor(
-        coordsSituation: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number},
-        coordsButton: {xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number},
-        amount: number
-    ) {
-        super(
-            coordsSituation.xPos,
-            coordsSituation.yPos,
-            coordsSituation.xVel,
-            coordsSituation.yVel,
-            coordsSituation.width,
-            coordsSituation.height,
-            'assets/img/objects/face_on_cross.png',
-        )
-        this.coordsButton = coordsButton
-        this.newButton()
-        this.buttonsLeft = amount - 1
-        this.timeSinceLastPress = 0
+    protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+        super(canvas, userData)
+        this.upgrades = upgrades;
     }
 
-    private newButton() {
-        this.button = new Button(
-            this.coordsButton.xPos,
-            this.coordsButton.yPos,
-            this.coordsButton.xVel,
-            this.coordsButton.yVel,
-            this.coordsButton.width,
-            this.coordsButton.height
-        );
+    public render() {
+        this.background.draw(this.ctx);
+        this.props.forEach((prop) => {
+            prop.draw(this.ctx);
+        })
+        this.player.draw(this.ctx);
     }
 
-    public checkButton(player: Player, canvas: HTMLCanvasElement) {
-        if (this.timeSinceLastPress > 200) {
-            if (this.button.checkButton(player)) {
-                this.buttonsLeft -= 1;
-                if (!this.isDone()) this.newButton();
-                this.timeSinceLastPress = 0;
-            }
-        } else if (this.button.collidesWithCanvasBottom(canvas)) {
-            player.changeStamina(-10)
-            this.buttonsLeft -= 1
-            if (!this.isDone()) this.newButton();
+    public processInput() {
+        this.player.processInput(this.canvas, 0, this.canvas.width);
+    }
+
+    public getPlayerYVel() {
+        return this.player.getYVel();
+    }
+
+    public getPlayerStamina() {
+        return this.player.getStamina();
+    }
+
+    public update(elapsed: number): number {
+        this.player.move(elapsed);
+        this.player.update(elapsed);
+        this.background.move(elapsed)
+        this.background.scroll(elapsed, this.player.getYVel())
+
+        if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
+            return Situation.FINISHED;
         }
-    }
 
-    public update(elapsed: number) {
-        this.timeSinceLastPress += elapsed;
-    }
+        let gameOver = false;
+        this.props.forEach((prop, propIndex) => {
+            if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
+                prop.move(elapsed)
+            }
 
-    public draw(ctx: CanvasRenderingContext2D) {
-        super.draw(ctx);
-        this.button.draw(ctx);
-    }
+            prop.scroll(elapsed, this.player.getYVel())
 
-    public move(elapsed: number): void {
-        super.move(elapsed);
-        this.button.move(elapsed);
-    }
+            if (prop.collidesWithOtherProp(this.player)) {
+                if (prop instanceof StaminaBooster) {
+                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`)
+                    this.props.splice(propIndex, 1);
+                } else gameOver = true;
+            }
 
-    public scroll(elapsed: number, scrollSpeed: number): void {
-        super.scroll(elapsed, scrollSpeed);
-        this.button.scroll(elapsed, scrollSpeed);
-    }
+            if (prop instanceof TrackProp) {
+                prop.update()
+            }
+        })
 
+        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}` )
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        
+        else gameOver = true;
 
-
-    public isDone() {
-        return this.buttonsLeft < 0;
+        return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
 }
