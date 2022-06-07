@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import PrioritySameRoad from './PrioritySameRoad.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -206,7 +207,6 @@ export default class Game {
     }
 
     if (this.cutScene) this.cutScene.render()
-
   }
 
   /**
