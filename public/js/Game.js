@@ -66,8 +66,6 @@ export default class Game {
                 return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
             case 2:
                 return new carDriveway(this.canvas, this.userData, stamina, this.upgrades);
-            case 3:
-                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
             default:
                 return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
         }
