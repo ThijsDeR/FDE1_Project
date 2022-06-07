@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 export default class UserData {
     /**
      *
@@ -20,45 +29,84 @@ export default class UserData {
         return this.token;
     }
     getPlayerData() {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: './players/' + this.token,
-                type: 'GET',
-                success: function (data) {
-                    resolve(data);
-                },
-                error: function (error) {
-                    reject(error);
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const rawResponse = yield fetch('./players/' + this.token, {
+                headers: {
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
                 }
             });
+            const response = rawResponse.json();
+            return response;
         });
     }
-    setPlayerData(data) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
+    setHighscore(data) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch('./players/' + this.token, {
+                method: 'PUT',
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
                 },
-                url: './players/' + this.token,
-                type: 'PUT',
-                data: data,
-                dataType: "text",
-                success: function (data) {
-                    resolve(data);
-                },
-                error: function (error) {
-                    reject(error);
-                }
+                body: JSON.stringify(data)
             });
+            console.log(response);
+            return response;
+        });
+    }
+    addVP(vp) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch('./players/addVP/' + this.token, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ vp: vp })
+            });
+            return response;
         });
     }
     changeHighScore(highscore) {
         this.getPlayerData().then((data) => {
             if (highscore > data.highscore) {
-                this.setPlayerData({ highscore: highscore, upgrades: {} }).then((data) => {
+                this.setHighscore({ highscore: highscore }).then((data) => {
                     console.log(data);
                 });
             }
+            else {
+            }
+        });
+    }
+    getUpgrade(upgrade) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const rawResponse = yield fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+                headers: {
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                }
+            });
+            const response = yield rawResponse.json();
+            return response;
+        });
+    }
+    upgrade(upgrade) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`./profile/upgrade/${this.token}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ upgrade_type: upgrade })
+            });
+            return response;
         });
     }
 }

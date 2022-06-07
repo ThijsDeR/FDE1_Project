@@ -1,10 +1,11 @@
 import GameLoop from './GameLoop.js';
-import Player from './Player.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import Crossroad from './Crossroad.js';
-import LandbouwVoertuig from './LandbouwVoertuig.js';
+
+import GameOverScene from './GameOverScene.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
+
 /**
  * Main class of this Game.
  */
@@ -14,58 +15,75 @@ export default class Game {
      *
      * @param canvas The canvas HTML element to render on
      */
-    constructor(canvas) {
+    constructor(canvas, upgrades) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         // Set the player at the center
-        this.player = new Player((this.canvas.width - (this.canvas.width / 3)) - ((this.canvas.width / 8) / 2), this.canvas.height / 2, 0, 0, this.canvas.width / 8, this.canvas.height / 4);
+
+
         this.userData = new UserData();
         // Score is zero at start
         this.totalScore = 0;
-        this.staminabar = new Staminabar(this.canvas, 530, 100, this.canvas.width / 3, 20);
+        this.staminabar = new Staminabar(this.canvas.width / 6, 300, this.canvas.width / 3, 20);
         // Start the animation
         this.gameloop = new GameLoop(this);
         this.gameloop.start();
-        console.log('werkt!!');
-        this.counter = 0;
         // the initial image height
         this.imgHeight = 0;
         // the scroll speed
         // an important thing to ensure here is that can.height
         // is divisible by scrollSpeed
-        this.scrollSpeed = 0.05;
         this.gameOver = false;
-        this.buttons = [];
-        this.crossroad = new Crossroad(this.canvas);
-        this.landbouwVoertuig = new LandbouwVoertuig(this.canvas);
+
+        this.upgrades = upgrades;
+        this.situation = this.newSituation(100);
+        this.cutScene = null;
+
     }
-    newSituation() {
-        this.situation = new Situation({
-            xPos: this.canvas.width / 2,
-            yPos: 0,
-            xVel: 0,
-            yVel: this.scrollSpeed,
-            width: 100,
-            height: 100,
-        }, {
-            xPos: (this.canvas.width / 4) * 3,
-            yPos: 0,
-            xVel: 0,
-            yVel: this.scrollSpeed,
-            width: 100,
-            height: 100,
-        }, 5);
+    restart() {
+        // Resize the canvas so it looks more like a Runner game
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        // Set the player at the center
+        this.userData = new UserData();
+        // Score is zero at start
+        this.totalScore = 0;
+        this.staminabar = new Staminabar(this.canvas.width / 6, 300, this.canvas.width / 3, 20);
+        // the initial image height
+        this.imgHeight = 0;
+        // the scroll speed
+        // an important thing to ensure here is that can.height
+        // is divisible by scrollSpeed
+        this.gameOver = false;
+        this.situation = this.newSituation(100);
+        this.cutScene = null;
+    }
+    newSituation(stamina) {
+        switch (Game.randomInteger(0, 3)) {
+            // case 0:
+            //   return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+            // case 1:
+            //   return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+            // case 2:
+            //   return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
+            // case 3:
+            //   return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+            // default:
+            //   return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
+            case 0:
+                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
+            default:
+                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
+        }
     }
     /**
      * Handles any user input that has happened since the last call
      */
     processInput() {
         // Move player
-        this.player.processInput(this.canvas);
-        if (this.situation)
-            this.situation.checkButton(this.player, this.canvas);
+        this.situation.processInput();
     }
     /**
      * Advances the game simulation one step. It may run AI and physics (usually
@@ -76,38 +94,33 @@ export default class Game {
      * @returns `true` if the game should stop animation
      */
     update(elapsed) {
-        if (this.gameOver)
+        if (this.gameOver) {
+            if (this.cutScene) {
+                const completed = this.cutScene.update(elapsed);
+                if (completed)
+                    this.restart();
+            }
             return false;
-        this.player.update(elapsed);
-        this.totalScore += this.player.getYVel();
-        this.player.move(elapsed);
+        }
+        this.totalScore += this.situation.getPlayerYVel();
         // Spawn a new scoring object every 45 frames
         this.scrollBackground(elapsed);
-        // const result = this.crossroad.update(elapsed, this.player.getYVel(), this.player);
-        // if (result === Crossroad.GAME_OVER) this.gameOver = true;
-        // if (result === Crossroad.FINISHED) this.crossroad = new Crossroad(this.canvas);
-        const trekker = this.landbouwVoertuig.update(elapsed, this.player.getYVel(), this.player);
-        if (trekker === LandbouwVoertuig.GAME_OVER)
+
+        const result = this.situation.update(elapsed);
+        if (result === Situation.GAME_OVER) {
+            this.userData.changeHighScore(this.totalScore);
+            this.userData.addVP(this.totalScore);
+            this.cutScene = new GameOverScene(this.canvas, this.userData);
             this.gameOver = true;
-        if (trekker === LandbouwVoertuig.FINISHED)
-            this.landbouwVoertuig = new LandbouwVoertuig(this.canvas);
-        // if (this.situation) {
-        //   this.situation.update(elapsed)
-        //   this.situation.move(elapsed)
-        //   this.situation.scroll(elapsed, this.scrollSpeed)
-        //   if (this.situation.isDone()) this.situation = null;
-        // }
-        // if (this.counter % 2000 === 1) {
-        //   this.newSituation();
-        // }
+        }
+        if (result === Situation.FINISHED)
+            this.situation = this.newSituation(this.situation.getPlayerStamina());
         return false;
     }
     /**
      * Draw the game so the player can see what happened
      */
     render() {
-        if (this.gameOver)
-            return;
         // Render the items on the canvas
         // Get the canvas rendering context
         const ctx = this.canvas.getContext('2d');
@@ -119,36 +132,35 @@ export default class Game {
         // specify the image source relative to the html or js file
         // when the image is in the same directory as the file
         // only the file name is required:
-        img.src = "./assets/img/MainRoadFixed.png";
+
+
+        img.src = "./assets/img/objects/MainRoadFixed.png";
         img.classList.add("backgroundImage");
         // draw image 1
-        ctx.drawImage(img, 0, this.imgHeight, this.canvas.width, this.canvas.height);
+        ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 2, this.canvas.height);
         // draw image 2
-        ctx.drawImage(img, 0, this.imgHeight - this.canvas.height, this.canvas.width, this.canvas.height);
-        Game.writeTextToCanvas('Klik op A, S, W of D wanneer ze verschijnen', this.canvas.width / 2, 175, this.canvas, 30);
-        this.counter += 1;
+        ctx.drawImage(img, this.canvas.width / 3, this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
         // if (this.situation) {
         //   this.situation.draw(ctx)
         // }
-        // this.crossroad.draw(ctx);
-        this.landbouwVoertuig.draw(ctx);
-        this.player.draw(ctx);
-        this.drawScore();
-        if (this.player.getStamina() >= 0) {
-            this.player.changeStamina(-0.025);
-            this.staminabar.draw(ctx, this.player.getStamina());
+        this.situation.render();
+        if (this.gameOver) {
+            if (this.cutScene)
+                this.cutScene.render();
+            return;
         }
         else {
-            Game.writeTextToCanvas('Game Over!', this.canvas.width / 2, 275, this.canvas, 40);
-            this.userData.changeHighScore(this.totalScore);
-            this.gameOver = true;
+            this.drawScore();
+            this.staminabar.draw(ctx, this.situation.getPlayerStamina());
         }
+        if (this.cutScene)
+            this.cutScene.render();
     }
     /**
      * Draw the score on a canvas
      */
     drawScore() {
-        Game.writeTextToCanvas(`Score: ${Math.round(this.totalScore)}`, this.canvas.width / 6, 200, this.canvas, 30);
+        Game.writeTextToCanvas(this.canvas.getContext('2d'), `Score: ${Math.round(this.totalScore)}`, this.canvas.width / 6, 200, 30);
     }
     /**
      * Writes text to the canvas
@@ -160,12 +172,52 @@ export default class Game {
      * @param color - The color of the text
      * @param alignment - Where to align the text
      */
-    static writeTextToCanvas(text, xCoordinate, yCoordinate, canvas, fontSize = 20, color = 'white', alignment = 'center') {
-        const ctx = canvas.getContext('2d');
-        ctx.font = `${fontSize}px sans-serif`;
+    static writeTextToCanvas(ctx, text, xPos, yPos, fontSize = 20, color = 'white', textAlign = 'center', textBaseline = 'middle', maxWidth = 10000) {
+        ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = color;
-        ctx.textAlign = alignment;
-        ctx.fillText(text, xCoordinate, yCoordinate);
+        ctx.textAlign = textAlign;
+        ctx.textBaseline = textBaseline;
+        const words = text.split(' ');
+        let line = '';
+        const yPositions = [];
+        const lines = [];
+        for (let i = 0; i < words.length; i++) {
+            const tempLine = `${line + words[i]} `;
+            const metrics = ctx.measureText(tempLine);
+            const tempWidth = metrics.width;
+            if (tempWidth > maxWidth && i > 0) {
+                lines.push(line);
+                // ctx.fillText(line, xPos, yPos);
+                line = `${words[i]} `;
+                // yPos += fontSize;
+            }
+            else {
+                line = tempLine;
+            }
+        }
+        lines.push(line);
+        const amount = lines.length;
+        if (amount % 2 === 0) {
+            for (let i = amount / 2; i > 0; i--) {
+                yPositions.push(yPos - (fontSize * i));
+            }
+            for (let i = 0; i < (amount / 2); i++) {
+                yPositions.push(yPos + (fontSize * i));
+            }
+        }
+        else {
+            for (let i = (amount - 1) / 2; i > 0; i--) {
+                yPositions.push(yPos - (fontSize * i));
+            }
+            yPositions.push(yPos);
+            for (let i = 0; i < (amount - 1) / 2; i++) {
+                yPositions.push(yPos + (fontSize * (i + 1)));
+            }
+        }
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        lines.forEach((line, lineIndex) => {
+            ctx.fillText(line, xPos, yPositions[lineIndex]);
+        });
     }
     /**
      * Generates a random integer number between min and max
@@ -181,7 +233,7 @@ export default class Game {
         return Math.round(Math.random() * (max - min) + min);
     }
     scrollBackground(elapsed) {
-        this.imgHeight += this.player.getYVel() * elapsed;
+        this.imgHeight += this.situation.getPlayerYVel() * elapsed;
         // reseting the images when the first image entirely exits the screen
         if (this.imgHeight > this.canvas.height) {
             this.imgHeight = 0;

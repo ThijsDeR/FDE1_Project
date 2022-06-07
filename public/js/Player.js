@@ -7,13 +7,13 @@ export default class Player extends AnimatedProp {
      *
      * @param canvas the canvas on which the player should exist
      */
-    constructor(xPos, yPos, xVel, yVel, width, height) {
+    constructor(xPos, yPos, xVel, yVel, width, height, stamina) {
         super(xPos, yPos, xVel, yVel, width, height, [
             { image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200 },
             { image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200 },
         ]);
         this.keyListener = new KeyListener();
-        this.stamina = 100;
+        this.stamina = stamina;
     }
     getKeyListener() {
         return this.keyListener;
@@ -50,16 +50,15 @@ export default class Player extends AnimatedProp {
     /**
      * Moves the player
      */
-    processInput(canvas) {
+    processInput(canvas, minX, maxX) {
         // Set the limit values
-        const maxX = canvas.width - this.width;
-        const maxY = canvas.height - this.height;
+        const maximX = maxX - this.width;
         const spacebarPressed = this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
         if (!spacebarPressed) {
-            if ((this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D)) && this.xPos < maxX) {
+            if ((this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D)) && this.xPos < maximX) {
                 this.xVel = Player.MAX_SPEED;
             }
-            else if ((this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A)) && this.xPos > 0) {
+            else if ((this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A)) && this.xPos > minX) {
                 this.xVel = -Player.MAX_SPEED;
             }
             else
@@ -67,11 +66,11 @@ export default class Player extends AnimatedProp {
         }
         else
             this.xVel = 0;
-        if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
-            this.yVel = Player.MAX_SPEED_X;
-        }
-        else if (spacebarPressed) {
+        if (spacebarPressed) {
             this.yVel = 0;
+        }
+        else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+            this.yVel = Player.MAX_SPEED_X;
         }
         else
             this.yVel = Player.MAX_SPEED / 4;
@@ -81,6 +80,9 @@ export default class Player extends AnimatedProp {
     }
     update(elapsed) {
         this.advance(elapsed);
+    }
+    isStopped() {
+        return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
     }
 }
 Player.MAX_SPEED = 0.6;
