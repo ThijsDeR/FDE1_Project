@@ -82,13 +82,11 @@ export default class Player extends AnimatedProp {
       } else this.xVel = 0;
     } else this.xVel = 0;
 
-
-    if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
-      this.yVel = Player.MAX_SPEED_X;
-    } else if (spacebarPressed) {
+    if (spacebarPressed) {
       this.yVel = 0
-    }
-    else this.yVel = Player.MAX_SPEED / 4;
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+      this.yVel = Player.MAX_SPEED_X;
+    } else this.yVel = Player.MAX_SPEED / 4;
   }
 
   public move(elapsed: number) {

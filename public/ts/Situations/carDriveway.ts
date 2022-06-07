@@ -5,7 +5,7 @@ import TrackProp from "../Props/TrackProp.js";
 import Game from "../Game.js";
 import UserData from "../UserData.js";
 
-export default class carDriveway extends Situation {
+export default class CarDriveway extends Situation {
     public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
         super(canvas, userData, upgrades)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png')

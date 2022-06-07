@@ -3,11 +3,7 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
-// Import situations
-import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
-import carDriveway from './Situations/carDriveway.js';
-import Crossroad from './Situations/Crossroad.js';
-import OncomingCyclist from './Situations/oncomingCyclists.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
 /**
  * Main class of this Game.
  */
@@ -60,12 +56,18 @@ export default class Game {
     }
     newSituation(stamina) {
         switch (Game.randomInteger(0, 3)) {
+            // case 0:
+            //   return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+            // case 1:
+            //   return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+            // case 2:
+            //   return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
+            // case 3:
+            //   return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+            // default:
+            //   return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
             case 0:
-                return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
-            case 1:
-                return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
-            case 2:
-                return new carDriveway(this.canvas, this.userData, stamina, this.upgrades);
+                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
             default:
                 return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
         }

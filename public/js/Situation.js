@@ -39,7 +39,6 @@ export default class Situation extends Scene {
             if (prop.collidesWithOtherProp(this.player)) {
                 if (prop instanceof StaminaBooster) {
                     this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
-                    console.log(`stamina gain: ${prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50)}`);
                     this.props.splice(propIndex, 1);
                 }
                 else
@@ -49,7 +48,6 @@ export default class Situation extends Scene {
                 prop.update();
             }
         });
-        console.log(`stamina resistance: ${-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)}`);
         if (this.player.getStamina() >= 0)
             this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else
