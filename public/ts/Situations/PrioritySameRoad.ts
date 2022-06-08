@@ -15,7 +15,7 @@ export default class PrioritySameRoad extends Situation {
             new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/w_button.png'),
             new TrackProp(
                 [
-                    { xPos1: this.background.getXPos() + this.background.getWidth() / 2, yPos1: (this.background.getHeight() * 3) + this.background.getYPos() , xPos2: this.background.getXPos() + this.background.getWidth() / 2 , yPos2: this.background.getHeight() / 2 + this.background.getYPos(), xVel: 0, yVel:  -2},
+                    { xPos1: this.background.getXPos() + this.background.getWidth() / 2, yPos1: (this.background.getHeight() * 2) + this.background.getYPos() , xPos2: this.background.getXPos() + this.background.getWidth() / 2 , yPos2: this.background.getHeight() / 2 + this.background.getYPos(), xVel: 0, yVel: -0.5},
                     { xPos1: this.background.getXPos() + this.background.getWidth() / 2 , yPos1: this.background.getHeight() / 2 + this.background.getYPos(), xPos2: this.background.getXPos() + this.background.getWidth(), yPos2: this.background.getHeight() / 2 + this.background.getYPos(), xVel: 0.20, yVel: 0},
                 ], this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
             new Frikandelbroodje(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)

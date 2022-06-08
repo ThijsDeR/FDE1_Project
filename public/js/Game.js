@@ -39,8 +39,8 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
-        // this.situation = new PrioritySameRoad(this.canvas, this.userData, 100, this.upgrades)
-        this.situation = this.newSituation(100);
+        this.situation = new CyclingPathIncomingTraffic(this.canvas, this.userData, 100, this.upgrades);
+        // this.situation = this.newSituation(100)
         this.cutScene = null;
     }
     restart() {
