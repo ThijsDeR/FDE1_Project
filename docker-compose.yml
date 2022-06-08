@@ -63,6 +63,7 @@ services:
         - ./:/home/node/app
         command: >
             bash -c "npm update
+            && npm run build
             && npm run ts-watch"
 
 networks:

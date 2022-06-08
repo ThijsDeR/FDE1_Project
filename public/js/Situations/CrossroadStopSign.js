@@ -41,7 +41,7 @@ export default class CrossroadStopSign extends Situation {
                 }
                 else if (prop instanceof StopSign) {
                     if (this.player.isStopped()) {
-                        prop.activate();
+                        prop.advance(elapsed);
                     }
                 }
                 else {
@@ -50,13 +50,11 @@ export default class CrossroadStopSign extends Situation {
                 }
             }
             if (prop instanceof StopSign) {
-                if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
-                    if (prop.isActive()) {
-                        this.props.splice(propIndex, 1);
-                    }
-                    else {
-                        gameOver = true;
-                    }
+                if (prop.isActive()) {
+                    this.props.splice(propIndex, 1);
+                }
+                else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
+                    gameOver = true;
                 }
             }
         });
@@ -73,6 +71,3 @@ export default class CrossroadStopSign extends Situation {
         });
     }
 }
-CrossroadStopSign.NOT_DONE = 0;
-CrossroadStopSign.GAME_OVER = 1;
-CrossroadStopSign.FINISHED = 2;

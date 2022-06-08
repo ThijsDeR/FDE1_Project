@@ -1,7 +1,7 @@
 import ImageProp from "./ImageProp.js";
 
 export default class StopSign extends ImageProp {
-    protected activated: boolean
+    private timeStopped: number;
 
     public constructor(
         xPos: number,
@@ -13,13 +13,14 @@ export default class StopSign extends ImageProp {
         imageUrl: string,
     ) {
         super(xPos, yPos, xVel, yVel, width, height, imageUrl);
-    }
-
-    public activate() {
-        this.activated = true
+        this.timeStopped = 0;
     }
 
     public isActive() {
-        return this.activated;
+        return this.timeStopped > 1000;
+    }
+
+    public advance(elapsed: number) {
+        this.timeStopped += elapsed
     }
 }
