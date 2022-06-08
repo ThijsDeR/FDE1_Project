@@ -72,8 +72,8 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    // this.situation = new OncomingCyclist(this.canvas, this.userData, 100, this.upgrades)
-    this.situation = this.newSituation(100)
+    this.situation = new OncomingCyclist(this.canvas, this.userData, 100, this.upgrades)
+    // this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
@@ -105,7 +105,7 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-    switch (Game.randomInteger(0, 3)) {
+    switch (Game.randomInteger(0, 5)) {
       case 0:
         return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
       case 1:
@@ -114,6 +114,8 @@ export default class Game {
         return new carDriveway(this.canvas, this.userData, stamina, this.upgrades)
       case 3:
         return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+      case 4:
+        return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
     }
@@ -159,7 +161,7 @@ export default class Game {
     }
     if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
 
-  
+
     return false;
   }
 
@@ -188,7 +190,7 @@ export default class Game {
 
      ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 2, this.canvas.height);
      // draw image 2
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);  
+     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
 
     // if (this.situation) {
     //   this.situation.draw(ctx)

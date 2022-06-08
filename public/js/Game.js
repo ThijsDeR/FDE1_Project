@@ -9,6 +9,7 @@ import carDriveway from './Situations/CarDriveway.js';
 import Crossroad from './Situations/Crossroad.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+import TractorIncoming from './Situations/TractorIncoming.js';
 /**
  * Main class of this Game.
  */
@@ -37,8 +38,8 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
-        // this.situation = new OncomingCyclist(this.canvas, this.userData, 100, this.upgrades)
-        this.situation = this.newSituation(100);
+        this.situation = new OncomingCyclist(this.canvas, this.userData, 100, this.upgrades);
+        // this.situation = this.newSituation(100)
         this.cutScene = null;
     }
     restart() {
@@ -60,7 +61,7 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 3)) {
+        switch (Game.randomInteger(0, 5)) {
             case 0:
                 return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
             case 1:
@@ -69,6 +70,8 @@ export default class Game {
                 return new carDriveway(this.canvas, this.userData, stamina, this.upgrades);
             case 3:
                 return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades);
+            case 4:
+                return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades);
             default:
                 return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
         }

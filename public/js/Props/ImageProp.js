@@ -9,6 +9,25 @@ export default class ImageProp extends Prop {
         return this.image;
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.xPos, this.yPos, this.width, this.height);
+        // ctx.drawImage(
+        //     this.image,
+        //     this.xPos,
+        //     this.yPos,
+        //     this.width,
+        //     this.height
+        //   );
+        const degToRad = (deg) => deg * Math.PI / 180;
+        ctx.save();
+        ctx.translate(this.xPos + (this.width / 2), this.yPos + (this.height / 2));
+        ctx.rotate(degToRad(this.calculateDirection()));
+        ctx.drawImage(this.image, -(this.width / 2), -(this.height / 2), this.width, this.height);
+        ctx.restore();
+    }
+    calculateDirection() {
+        const degrees = Math.atan2(this.yVel, this.xVel);
+        if (this.xVel === 0 && this.yVel === 0)
+            return degrees;
+        else
+            return (degrees * (180 / Math.PI)) + 90;
     }
 }
