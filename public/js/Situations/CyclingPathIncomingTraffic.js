@@ -16,7 +16,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             ], canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
             new Frikandelbroodje((this.background.getWidth() / 2) + (canvas.width / 3), this.background.getYPos() + (this.background.getHeight()), 0, 0, canvas.width / 15, canvas.height / 8, './assets/img/objects/frikandelbroodje.png', 10)
         ];
-        this.player = new Player((canvas.width / 2) - ((canvas.width / 8) / 2), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
+        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

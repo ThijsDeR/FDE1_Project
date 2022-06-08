@@ -13,7 +13,7 @@ export default class OncomingCyclist extends Situation {
                 { xPos1: this.background.getXPos() + ((this.background.getWidth() / 4) * 3), yPos1: this.background.getYPos() + (this.background.getHeight() / 1.75), xPos2: this.background.getXPos() + (this.background.getWidth() * 2), yPos2: this.background.getYPos() + (this.background.getHeight() / 1.75), xVel: 0.17, yVel: 0 },
             ], this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
         ];
-        this.player = new Player((canvas.width / 2) - ((canvas.width / 8) / 2), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
+        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

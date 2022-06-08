@@ -16,6 +16,14 @@ export default class CarDriveway extends Situation {
             xPos2: (this.background.getWidth() * 2 / 1.4), yPos2: (this.background.getYPos() + (this.background.getHeight() / 2 - 175)),
             // Velocity
             xVel: -0.2, yVel: 0
+        }, {
+            // GOOD DRIVER
+            // Starting position
+            xPos1: (this.background.getWidth() * 2 / 1.4), yPos1: (this.background.getYPos() + (this.background.getHeight() / 2 - 175)),
+            // Target position
+            xPos2: (this.background.getWidth() * 2 / 1.5), yPos2: (this.background.getYPos() + (this.background.getHeight() / 2 - 175)),
+            // Velocity
+            xVel: -0.000000000000000000001, yVel: 0
         }) : carVectors.push({
             // BAD DRIVER
             // Starting position
