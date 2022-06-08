@@ -14,7 +14,7 @@ export default class Situation extends Scene {
         this.player.draw(this.ctx);
     }
     processInput() {
-        this.player.processInput(this.canvas, 0, this.canvas.width);
+        this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
     getPlayerYVel() {
         return this.player.getYVel();

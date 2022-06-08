@@ -34,7 +34,7 @@ export default abstract class Situation extends Scene {
     }
 
     public processInput() {
-        this.player.processInput(this.canvas, 0, this.canvas.width);
+        this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
 
     public getPlayerYVel() {

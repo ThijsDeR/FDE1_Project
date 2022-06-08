@@ -5,12 +5,12 @@ import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(0, -canvas.height, 0, 0, canvas.width, canvas.height, './assets/img/Polderweg.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png');
         this.props = [
-            new ImageProp(this.background.getWidth() / 2.7, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5, './assets/img/objects/w_button.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5, './assets/img/objects/w_button.png'),
         ];
         this.canvas = canvas;
-        this.player = new Player((canvas.width / 2) - ((canvas.width / 8) / 2), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
+        this.player = new Player(this.background.getXPos() + (this.background.getWidth() / 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
     }
     update(elapsed) {
         this.player.move(elapsed);
@@ -49,6 +49,6 @@ export default class TractorIncoming extends Situation {
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
     processInput() {
-        this.player.processInput(this.canvas, this.background.getXPos() + (this.background.getWidth() / 4), this.background.getWidth() - (this.background.getWidth() / 3.5));
+        this.player.processInput(this.canvas, this.background.getXPos() + (this.background.getWidth() / 4), this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5));
     }
 }
