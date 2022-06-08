@@ -72,7 +72,7 @@ export default class CrossroadStopSign extends Situation {
 
         })
 
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else gameOver = true;
 
         return gameOver ? CrossroadStopSign.GAME_OVER : CrossroadStopSign.NOT_DONE;

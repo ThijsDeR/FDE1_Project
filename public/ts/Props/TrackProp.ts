@@ -6,45 +6,57 @@ export default class TrackProp extends ImageProp {
     private currentVector: number;
 
     public constructor(vectors: {xPos1: number, yPos1: number, xPos2: number, yPos2: number, xVel: number, yVel: number}[], width: number, height: number, imageUrl: string) {
-        super(vectors[0].xPos1, vectors[0].yPos1, 0, 0, width, height, imageUrl);
+        super(vectors[0].xPos1, vectors[0].yPos1, vectors[0].xVel, vectors[0].yVel, width, height, imageUrl);
 
         this.vectors = vectors;
         this.currentVector = 0;
 
     }
 
-    public move(elapsed: number): void {
-        const vector = this.vectors[this.currentVector]
-        if (
-            (vector.xPos1 < vector.xPos2 && this.xPos < vector.xPos2)
-            || (vector.xPos1 > vector.xPos2 && this.xPos > vector.xPos2)
-            ) this.xPos += vector.xVel * elapsed
-        
-        if (
-            (vector.yPos1 < vector.yPos2 && this.yPos <= vector.yPos2)
-            || (vector.yPos1 > vector.yPos2 && this.yPos >= vector.yPos2)
-            ) this.yPos += vector.yVel * elapsed
-    }
+    // public move(elapsed: number): void {
+    //     const vector = this.vectors[this.currentVector]
+    //     if (
+    //         (vector.xPos1 < vector.xPos2 && this.xPos < vector.xPos2)
+    //         || (vector.xPos1 > vector.xPos2 && this.xPos > vector.xPos2)
+    //         ) this.xPos += vector.xVel * elapsed
+
+    //     if (
+    //         (vector.yPos1 < vector.yPos2 && this.yPos <= vector.yPos2)
+    //         || (vector.yPos1 > vector.yPos2 && this.yPos >= vector.yPos2)
+    //         ) this.yPos += vector.yVel * elapsed
+    // }
 
     public update() {
-        const vector = this.vectors[this.currentVector]
 
-        if (
-            ((vector.xPos1 < vector.xPos2 && this.xPos >= vector.xPos2)
-            || (vector.xPos1 > vector.xPos2 && this.xPos <= vector.xPos2)
-            || (this.xPos === vector.xPos2))
-
-            && ((vector.yPos1 < vector.yPos2 && this.yPos >= vector.yPos2)
-            || (vector.yPos1 > vector.yPos2 && this.yPos <= vector.yPos2)
-            || (this.yPos === vector.yPos2))
-        ) {
+        if (this.isDoneXVel() && this.isDoneYVel()) {
             if (this.vectors.length > this.currentVector + 1) {
                 this.currentVector += 1
             }
-            console.log(this.currentVector)
         }
 
+        const vector = this.vectors[this.currentVector]
 
+        if (this.isDoneXVel()) this.xVel = 0
+        else this.xVel = vector.xVel
+        if (this.isDoneYVel()) this.yVel = 0
+        else this.yVel = vector.yVel
+    }
+
+
+    private isDoneXVel() {
+        const vector = this.vectors[this.currentVector]
+
+        return ((vector.xPos1 < vector.xPos2 && this.xPos >= vector.xPos2)
+        || (vector.xPos1 > vector.xPos2 && this.xPos <= vector.xPos2)
+        || (this.xPos === vector.xPos2))
+    }
+
+    private isDoneYVel() {
+        const vector = this.vectors[this.currentVector]
+
+        return ((vector.yPos1 < vector.yPos2 && this.yPos >= vector.yPos2)
+        || (vector.yPos1 > vector.yPos2 && this.yPos <= vector.yPos2)
+        || (this.yPos === vector.yPos2))
     }
 
     public scroll(elapsed: number, scrollSpeed: number): void {

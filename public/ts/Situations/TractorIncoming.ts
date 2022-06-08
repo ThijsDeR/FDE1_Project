@@ -39,7 +39,7 @@ export default class TractorIncoming extends Situation {
         this.player.getYPos() >= this.props[0].getYPos() - this.props[0].getHeight() &&
         this.player.getYPos() <= this.props[0].getYPos()) {
             gameOver = true;
-        } 
+        }
 
         console.log(this.props[0].getYPos());
 
@@ -62,7 +62,7 @@ export default class TractorIncoming extends Situation {
 
         })
 
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        
+        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
         else gameOver = true;
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
