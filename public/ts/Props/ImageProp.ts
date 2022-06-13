@@ -8,9 +8,12 @@ export default class ImageProp extends Prop {
 
     protected type: 'normal' | 'turning';
 
-    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, imageUrl: string){
+    private turning: boolean;
+
+    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, imageUrl: string, turning: boolean = true){
         super(xPos, yPos, xVel, yVel, width, height);
         this.image = Game.loadNewImage(imageUrl);
+        this.turning = turning
     }
 
 
@@ -32,7 +35,7 @@ export default class ImageProp extends Prop {
 
         ctx.save();
         ctx.translate(this.xPos + (this.width / 2), this.yPos + (this.height / 2));
-        ctx.rotate(degToRad(this.calculateDirection()))
+        if (this.turning) ctx.rotate(degToRad(this.calculateDirection()))
         ctx.drawImage(
             this.image,
             -(this.width / 2),
