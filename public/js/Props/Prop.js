@@ -25,9 +25,9 @@ export default class Prop {
     getHeight() {
         return this.height;
     }
-    move(elapsed) {
-        this.xPos += this.xVel * elapsed;
-        this.yPos += (this.yVel * elapsed);
+    move(elapsed, xVel = null, yVel = null) {
+        xVel ? this.xPos += xVel * elapsed : this.xPos += this.xVel * elapsed;
+        yVel ? this.yPos += yVel * elapsed : this.yPos += this.yVel * elapsed;
     }
     scroll(elapsed, scrollSpeed) {
         this.yPos += (scrollSpeed * elapsed);
