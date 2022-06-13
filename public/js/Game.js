@@ -11,7 +11,6 @@ import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
-import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 /**
  * Main class of this Game.
  */
@@ -40,9 +39,8 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
-        this.situation = new PedestrianCrossingVan(this.canvas, this.userData, 100, this.upgrades);
-
-        // this.situation = this.newSituation(100)
+        // this.situation = new CyclingPathIncomingTraffic(this.canvas, this.userData, 100, this.upgrades)
+        this.situation = this.newSituation(100);
         this.cutScene = null;
     }
     restart() {

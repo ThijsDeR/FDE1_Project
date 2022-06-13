@@ -73,9 +73,9 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new PedestrianCrossingVan(this.canvas, this.userData, 100, this.upgrades)
+    // this.situation = new CyclingPathIncomingTraffic(this.canvas, this.userData, 100, this.upgrades)
 
-    // this.situation = this.newSituation(100)
+    this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
