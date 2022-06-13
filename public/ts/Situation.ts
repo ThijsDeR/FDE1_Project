@@ -77,6 +77,9 @@ export default abstract class Situation extends Scene {
         this.props.forEach((prop, propIndex) => {
             if (this.movePropsCheck()) {
                 prop.move(elapsed)
+                if (prop instanceof TrackProp) {
+                    prop.update()
+                }
             }
 
             prop.scroll(elapsed, this.player.getYVel())
@@ -84,9 +87,7 @@ export default abstract class Situation extends Scene {
             let propCollission = this.handleCollission(prop, propIndex, elapsed)
             if (propCollission) gameOver = true;
 
-            if (prop instanceof TrackProp) {
-                prop.update()
-            }
+            
 
             let extraPropHandling = this.extraPropHandling(prop, propIndex)
             if (extraPropHandling) gameOver = true

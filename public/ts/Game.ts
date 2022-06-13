@@ -15,6 +15,7 @@ import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
+import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 
 /**
  * Main class of this Game.
@@ -73,9 +74,9 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    // this.situation = new CyclingPathIncomingTraffic(this.canvas, this.userData, 100, this.upgrades)
+    this.situation = new ParkingSpotCar(this.canvas, this.userData, 100, this.upgrades)
 
-    this.situation = this.newSituation(100)
+    // this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
