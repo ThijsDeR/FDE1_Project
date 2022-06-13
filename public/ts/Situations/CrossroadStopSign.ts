@@ -2,14 +2,15 @@ import Game from "../Game.js";
 import Player from "../Player.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import Prop from "../Props/Prop.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import StopSign from "../Props/StopSign.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class CrossroadStopSign extends Situation {
-    
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
         super(canvas, userData, upgrades)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt_2.png');
         this.props = [
@@ -22,63 +23,40 @@ export default class CrossroadStopSign extends Situation {
         this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina)
     }
 
-
-    public update(elapsed: number) {
-        this.player.move(elapsed);
-        this.player.update(elapsed)
-        this.background.move(elapsed)
-        this.background.scroll(elapsed, this.player.getYVel())
-
-        if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
-            return CrossroadStopSign.FINISHED;
-        }
-        const crash = new Audio('./audio/bike_crash.mp3');
-        crash.volume = 0.7
+    protected handleCollission(prop: Prop, propIndex: number, elapsed: number): boolean {
         let gameOver = false;
-        this.props.forEach((prop, propIndex) => {
-            console.log(prop.getXVel())
-            if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
-                prop.move(elapsed)
-            }
-
-            prop.scroll(elapsed, this.player.getYVel())
-
-            if (prop.collidesWithOtherProp(this.player)) {
-                if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
-                    this.props.splice(propIndex, 1);
-                } else if (prop instanceof StopSign) {
-                    if (this.player.isStopped()) {
-                        prop.advance(elapsed)
-                    }
-                }
-
-                else {
-                    gameOver = true;
-                    crash.play();
+        if (prop.collidesWithOtherProp(this.player)) {
+            if (prop instanceof StaminaBooster) {
+                this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+                this.props.splice(propIndex, 1);
+            } else if (prop instanceof StopSign) {
+                if (this.player.isStopped()) {
+                    prop.advance(elapsed)
                 }
             }
 
-            if (prop instanceof StopSign) {
-                if (prop.isActive()) {
-                    this.props.splice(propIndex, 1);
-                }
-                else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) { 
-                    gameOver = true;
-                }
+            else {
+                gameOver = true;
+                this.crashSound.play();
             }
+        }
 
-
-
-        })
-
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
-        else gameOver = true;
-
-        return gameOver ? CrossroadStopSign.GAME_OVER : CrossroadStopSign.NOT_DONE;
+        return gameOver
     }
 
-   
+    protected extraPropHandling(prop: Prop, propIndex: number): boolean {
+        let gameOver = false
+        if (prop instanceof StopSign) {
+            if (prop.isActive()) {
+                this.props.splice(propIndex, 1);
+            }
+            else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
+                gameOver = true;
+            }
+        }
+
+        return gameOver
+    }
 
     public draw(ctx: CanvasRenderingContext2D) {
         this.background.draw(ctx);

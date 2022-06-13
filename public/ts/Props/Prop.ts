@@ -44,9 +44,9 @@ export default class Prop {
 
 
 
-  public move(elapsed: number) {
-    this.xPos += this.xVel * elapsed;
-    this.yPos += (this.yVel * elapsed);
+  public move(elapsed: number, xVel: number | null = null, yVel: number | null = null) {
+    xVel ? this.xPos += xVel * elapsed : this.xPos += this.xVel * elapsed;
+    yVel ? this.yPos += yVel * elapsed : this.yPos += this.yVel * elapsed;
   }
 
   public scroll(elapsed: number, scrollSpeed: number) {

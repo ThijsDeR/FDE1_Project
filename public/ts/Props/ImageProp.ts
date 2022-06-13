@@ -22,7 +22,7 @@ export default class ImageProp extends Prop {
     }
 
 
-    public draw(ctx: CanvasRenderingContext2D) {
+    public draw(ctx: CanvasRenderingContext2D, offsetX: number = 0, offsetY: number = 0) {
         // ctx.drawImage(
         //     this.image,
         //     this.xPos,
@@ -36,6 +36,7 @@ export default class ImageProp extends Prop {
         ctx.save();
         ctx.translate(this.xPos + (this.width / 2), this.yPos + (this.height / 2));
         if (this.turning) ctx.rotate(degToRad(this.calculateDirection()))
+
         ctx.drawImage(
             this.image,
             -(this.width / 2),
@@ -49,7 +50,7 @@ export default class ImageProp extends Prop {
 
     private calculateDirection() {
         const degrees = Math.atan2(this.yVel, this.xVel)
-        if (this.xVel === 0 && this.yVel === 0) return degrees;
+        if (this.xVel === 0 && this.yVel === 0) return 0;
         else return (degrees * (180 / Math.PI)) + 90
     }
 }

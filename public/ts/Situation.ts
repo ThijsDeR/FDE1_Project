@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
+import Prop from "./Props/Prop.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
@@ -12,6 +13,8 @@ export default abstract class Situation extends Scene {
 
     public static readonly FINISHED: number = 2;
 
+    protected crashSound: HTMLAudioElement;
+
     protected player: Player;
     
     protected props: ImageProp[];
@@ -23,6 +26,8 @@ export default abstract class Situation extends Scene {
     public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
         super(canvas, userData)
         this.upgrades = upgrades;
+        this.crashSound = new Audio('./audio/bike_crash.mp3')
+        this.crashSound.volume = 0.7
     }
 
     public render() {
@@ -49,35 +54,75 @@ export default abstract class Situation extends Scene {
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
-        this.background.scroll(elapsed, this.player.getYVel())
+        this.background.scroll(elapsed, this.player.getYVel())     
 
-        if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
+        if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
 
-        let gameOver = false;
+        let gameOver = this.handleProps(elapsed)
+
+        if(this.player.getStamina() >= 0) this.handleStaminaDepletion()
+        else gameOver = true;
+
+        return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
+    }
+
+    protected finishedCheck() {
+        return this.player.getYPos() < this.background.getYPos() - this.background.getHeight()
+    }
+
+    protected handleProps(elapsed: number) {
+        let gameOver = false
         this.props.forEach((prop, propIndex) => {
-            if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
+            if (this.movePropsCheck()) {
                 prop.move(elapsed)
             }
 
             prop.scroll(elapsed, this.player.getYVel())
 
-            if (prop.collidesWithOtherProp(this.player)) {
-                if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
-                    this.props.splice(propIndex, 1);
-                } else gameOver = true;
-            }
+            let propCollission = this.handleCollission(prop, propIndex, elapsed)
+            if (propCollission) gameOver = true;
 
             if (prop instanceof TrackProp) {
                 prop.update()
             }
+
+            let extraPropHandling = this.extraPropHandling(prop, propIndex)
+            if (extraPropHandling) gameOver = true
         })
 
-        if(this.player.getStamina() >= 0) this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));        
-        else gameOver = true;
+        return gameOver
+    }
 
-        return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
+    protected movePropsCheck() {
+        return this.background.getYPos() + (this.background.getHeight() / 2) > 0
+    }
+
+    protected handleCollission(prop: Prop, propIndex: number, elapsed: number) {
+        let gameOver = false;
+        if (prop.collidesWithOtherProp(this.player)) {
+            if (prop instanceof StaminaBooster) {
+                this.handleStaminaChange(prop, propIndex)
+            } else {
+                this.crashSound.play()
+                gameOver = true;
+            }
+        }
+
+        return gameOver
+    }
+
+    protected handleStaminaChange(prop: StaminaBooster, propIndex: number) {
+        this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+        this.props.splice(propIndex, 1);
+    }
+
+    protected handleStaminaDepletion() {
+        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    }
+
+    protected extraPropHandling(prop: Prop, propIndex: number) {
+        return false;
     }
 }
