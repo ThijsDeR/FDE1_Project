@@ -5,6 +5,8 @@ export default class Situation extends Scene {
     constructor(canvas, userData, upgrades) {
         super(canvas, userData);
         this.upgrades = upgrades;
+        this.crashSound = new Audio('./audio/bike_crash.mp3');
+        this.crashSound.volume = 0.7;
     }
     render() {
         this.background.draw(this.ctx);
@@ -27,32 +29,63 @@ export default class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
-        if (this.player.getYPos() < this.background.getYPos() - this.background.getHeight()) {
+        if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
-        let gameOver = false;
-        this.props.forEach((prop, propIndex) => {
-            if (this.background.getYPos() + (this.background.getHeight() / 2) > 0) {
-                prop.move(elapsed);
-            }
-            prop.scroll(elapsed, this.player.getYVel());
-            if (prop.collidesWithOtherProp(this.player)) {
-                if (prop instanceof StaminaBooster) {
-                    this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
-                    this.props.splice(propIndex, 1);
-                }
-                else
-                    gameOver = true;
-            }
-            if (prop instanceof TrackProp) {
-                prop.update();
-            }
-        });
+        let gameOver = this.handleProps(elapsed);
         if (this.player.getStamina() >= 0)
-            this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+            this.handleStaminaDepletion();
         else
             gameOver = true;
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
+    }
+    finishedCheck() {
+        return this.player.getYPos() < this.background.getYPos() - this.background.getHeight();
+    }
+    handleProps(elapsed) {
+        let gameOver = false;
+        this.props.forEach((prop, propIndex) => {
+            if (this.movePropsCheck()) {
+                prop.move(elapsed);
+            }
+            prop.scroll(elapsed, this.player.getYVel());
+            let propCollission = this.handleCollission(prop, propIndex, elapsed);
+            if (propCollission)
+                gameOver = true;
+            if (prop instanceof TrackProp) {
+                prop.update();
+            }
+            let extraPropHandling = this.extraPropHandling(prop, propIndex);
+            if (extraPropHandling)
+                gameOver = true;
+        });
+        return gameOver;
+    }
+    movePropsCheck() {
+        return this.background.getYPos() + (this.background.getHeight() / 2) > 0;
+    }
+    handleCollission(prop, propIndex, elapsed) {
+        let gameOver = false;
+        if (prop.collidesWithOtherProp(this.player)) {
+            if (prop instanceof StaminaBooster) {
+                this.handleStaminaChange(prop, propIndex);
+            }
+            else {
+                this.crashSound.play();
+                gameOver = true;
+            }
+        }
+        return gameOver;
+    }
+    handleStaminaChange(prop, propIndex) {
+        this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
+        this.props.splice(propIndex, 1);
+    }
+    handleStaminaDepletion() {
+        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    }
+    extraPropHandling(prop, propIndex) {
+        return false;
     }
 }
 Situation.NOT_DONE = 0;

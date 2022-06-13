@@ -72,7 +72,7 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new CarDriveway(this.canvas, this.userData, 100, this.upgrades)
+    this.situation = new TractorIncoming(this.canvas, this.userData, 100, this.upgrades)
     // this.situation = this.newSituation(100)
 
 
