@@ -75,9 +75,9 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new SchoolStreet(this.canvas, this.userData, 100, this.upgrades)
+    // this.situation = new SchoolStreet(this.canvas, this.userData, 100, this.upgrades)
 
-    // this.situation = this.newSituation(100)
+    this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
@@ -109,7 +109,7 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-    switch (Game.randomInteger(0, 6)) {
+    switch (Game.randomInteger(0, 9)) {
       case 0:
         return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
       case 1:
@@ -122,6 +122,12 @@ export default class Game {
         return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
       case 5:
         return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
+      case 6:
+        return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
+      case 7:
+        return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
+      case 8:
+        return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
     }
