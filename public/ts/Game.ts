@@ -16,6 +16,7 @@ import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
+import SchoolStreet from './Situations/SchoolStreet.js';
 
 /**
  * Main class of this Game.
@@ -74,7 +75,7 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new ParkingSpotCar(this.canvas, this.userData, 100, this.upgrades)
+    this.situation = new SchoolStreet(this.canvas, this.userData, 100, this.upgrades)
 
     // this.situation = this.newSituation(100)
 
