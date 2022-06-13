@@ -1,7 +1,7 @@
 import ImageProp from "./ImageProp.js";
 export default class TrackProp extends ImageProp {
-    constructor(vectors, width, height, imageUrl) {
-        super(vectors[0].xPos1, vectors[0].yPos1, vectors[0].xVel, vectors[0].yVel, width, height, imageUrl);
+    constructor(vectors, width, height, imageUrl, turning = true) {
+        super(vectors[0].xPos1, vectors[0].yPos1, vectors[0].xVel, vectors[0].yVel, width, height, imageUrl, turning);
         this.vectors = vectors;
         this.currentVector = 0;
     }

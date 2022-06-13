@@ -5,8 +5,8 @@ export default class TrackProp extends ImageProp {
 
     private currentVector: number;
 
-    public constructor(vectors: {xPos1: number, yPos1: number, xPos2: number, yPos2: number, xVel: number, yVel: number}[], width: number, height: number, imageUrl: string) {
-        super(vectors[0].xPos1, vectors[0].yPos1, vectors[0].xVel, vectors[0].yVel, width, height, imageUrl);
+    public constructor(vectors: {xPos1: number, yPos1: number, xPos2: number, yPos2: number, xVel: number, yVel: number}[], width: number, height: number, imageUrl: string, turning: boolean = true) {
+        super(vectors[0].xPos1, vectors[0].yPos1, vectors[0].xVel, vectors[0].yVel, width, height, imageUrl, turning);
 
         this.vectors = vectors;
         this.currentVector = 0;
