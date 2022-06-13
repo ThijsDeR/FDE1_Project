@@ -1,3 +1,4 @@
+import Game from "./Game.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
@@ -7,6 +8,7 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
+        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
     }
     render() {
         this.background.draw(this.ctx);
@@ -14,6 +16,10 @@ export default class Situation extends Scene {
             prop.draw(this.ctx);
         });
         this.player.draw(this.ctx);
+        if (this.mist) {
+            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
+            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight());
+        }
     }
     processInput() {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
