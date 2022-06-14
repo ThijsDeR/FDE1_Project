@@ -38,7 +38,6 @@ export default class CrossroadStopSign extends Situation {
 
             else {
                 gameOver = true;
-                this.crashSound.play();
             }
         }
 
@@ -64,5 +63,10 @@ export default class CrossroadStopSign extends Situation {
         this.props.forEach((prop) => {
             prop.draw(ctx)
         })
+    }
+    
+    // Set boundaries to the player's movements
+    public processInput() {
+        this.player.processInput(this.canvas, this.background.getXPos() + this.background.getWidth() / 3, this.background.getXPos() + (this.background.getWidth() / 3) * 2);
     }
 }
