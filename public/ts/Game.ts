@@ -17,6 +17,7 @@ import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import TrainRails from './Situations/TrainRails.js';
 
 /**
  * Main class of this Game.
@@ -75,7 +76,7 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new CarDriveway(this.canvas, this.userData, 100, this.upgrades)
+    this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
 
     // this.situation = this.newSituation(100)
 
@@ -109,7 +110,7 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-    switch (Game.randomInteger(0, 9)) {
+    switch (Game.randomInteger(0, 10)) {
       case 0:
         return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
       case 1:
@@ -128,6 +129,8 @@ export default class Game {
         return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
       case 8:
         return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
+      case 9:
+        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
     }

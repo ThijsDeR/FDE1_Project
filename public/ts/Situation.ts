@@ -112,6 +112,7 @@ export default abstract class Situation extends Scene {
     protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
+            console.log('gay')
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {

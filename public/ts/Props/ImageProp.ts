@@ -67,10 +67,17 @@ export default class ImageProp extends Prop {
         let prop2Height = prop.getHeight();
         
         if (this.turning) {
+            let prop1XPos = this.xPos
+            let prop1YPos = this.yPos
+            let prop2XPos = prop.getXPos()
+            let prop2YPos = prop.getYPos()
+            
             if (
                 (this.degrees > 70 && this.degrees < 110)
                 || (this.degrees > 250 && this.degrees < 290)
             ) {
+                prop1XPos = this.xPos - ((this.height / 2) - (this.width / 2)) 
+                prop1YPos = this.yPos + ((this.height / 2) - (this.width / 2))
                 prop1Width = this.height
                 prop1Height = this.width
             }
@@ -80,12 +87,35 @@ export default class ImageProp extends Prop {
                 (propDegrees > 70 && propDegrees < 110)
                 || (propDegrees > 250 && propDegrees < 290)
             ) {
+                prop2XPos = prop.getXPos() - ((prop.getHeight() / 2) - (prop.getWidth() / 2)) 
+                prop2YPos = prop.getYPos() + ((prop.getHeight() / 2) - (prop.getWidth() / 2))
                 prop2Width = prop.getHeight()
                 prop2Height = this.getWidth()
             }
-        }
 
-        if (
+            console.log(`
+                prop1:
+                xPos: ${prop1XPos}
+                yPos: ${prop1YPos}
+                width: ${prop1Width} 
+                height: ${prop1Height}
+            `)
+
+            console.log(`
+                prop2:
+                xPos: ${prop2XPos}
+                yPos: ${prop2YPos}
+                width: ${prop2Width} 
+                height: ${prop2Height}
+            `)
+            if (
+                prop1XPos < prop2XPos + prop2Width
+                && prop1XPos + prop1Width > prop2XPos
+                && prop1YPos < prop2YPos + prop2Height
+                && prop1YPos + prop1Height > prop2YPos
+            ) return true;
+            return false;
+        } else if (
           this.xPos < prop.getXPos() + prop2Width
           && this.xPos + prop1Width > prop.getXPos()
           && this.yPos < prop.getYPos() + prop2Height
