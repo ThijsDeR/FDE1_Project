@@ -6,7 +6,7 @@ import Game from "../Game.js";
 export default class CarDriveway extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png', false);
         const carVectors = [];
         Game.randomInteger(0, 1) === 0 ? carVectors.push({
             // GOOD DRIVER

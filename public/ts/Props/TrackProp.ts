@@ -26,8 +26,8 @@ export default class TrackProp extends ImageProp {
     //         ) this.yPos += vector.yVel * elapsed
     // }
 
-    public update() {
-
+    public update(elapsed: number) {
+        super.update(elapsed)
         if (this.isDoneXVel() && this.isDoneYVel()) {
             if (this.vectors.length > this.currentVector + 1) {
                 this.currentVector += 1

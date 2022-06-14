@@ -6,7 +6,7 @@ import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
         this.props = [
             new Tractor(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5),
         ];
@@ -15,7 +15,7 @@ export default class TractorIncoming extends Situation {
     }
     handleCollission(prop, propIndex, elapsed) {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex);
             }
