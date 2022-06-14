@@ -40,16 +40,18 @@ export default class ImageProp extends Prop {
         let prop1Height = this.height;
         let prop2Width = prop.getWidth();
         let prop2Height = prop.getHeight();
-        if ((this.degrees > 70 && this.degrees < 110)
-            || (this.degrees > 250 && this.degrees < 290)) {
-            prop1Width = this.height;
-            prop1Height = this.width;
-        }
-        const propDegrees = prop.getDegrees();
-        if ((propDegrees > 70 && propDegrees < 110)
-            || (propDegrees > 250 && propDegrees < 290)) {
-            prop2Width = prop.getHeight();
-            prop2Height = this.getWidth();
+        if (this.turning) {
+            if ((this.degrees > 70 && this.degrees < 110)
+                || (this.degrees > 250 && this.degrees < 290)) {
+                prop1Width = this.height;
+                prop1Height = this.width;
+            }
+            const propDegrees = prop.getDegrees();
+            if ((propDegrees > 70 && propDegrees < 110)
+                || (propDegrees > 250 && propDegrees < 290)) {
+                prop2Width = prop.getHeight();
+                prop2Height = this.getWidth();
+            }
         }
         if (this.xPos < prop.getXPos() + prop2Width
             && this.xPos + prop1Width > prop.getXPos()
