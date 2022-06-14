@@ -64,9 +64,9 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 0)) {
+        switch (Game.randomInteger(0, 10)) {
             case 0:
-                return new Obstacles(this.canvas, this.userData, stamina, this.upgrades);
+                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
             case 1:
                 return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
             case 2:
@@ -83,6 +83,8 @@ export default class Game {
                 return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades);
             case 8:
                 return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades);
+            case 9:
+                return new Obstacles(this.canvas, this.userData, stamina, this.upgrades);
             default:
                 return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
         }

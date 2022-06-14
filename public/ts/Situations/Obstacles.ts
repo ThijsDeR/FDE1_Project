@@ -35,6 +35,7 @@ export default class Obstacles extends Situation {
         }) : obstacle2.forEach(obstacle2 => {
             this.props.push(obstacle2)
         });
+        
 
 
         this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina)
