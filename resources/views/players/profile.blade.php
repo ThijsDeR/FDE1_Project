@@ -1,8 +1,7 @@
 @extends('common.master')
 
 @section('head-content')
-    <link href="{{ asset('css/profileStyles.css') }}" rel="stylesheet">
-    <script type="module" src="{{ asset('js/PageScripts/Shop.js')}}"></script>
+    <link href="{{ asset('css/player/profileStyles.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -10,21 +9,14 @@
         <h2>{{$user->username}}</h2>
         <hr/>
         <ul>
-            <li><strong>VP: </strong><span id="vp">{{$user->player->vp}}</span></li>
-            <li><strong>Highscore: </strong>{{$user->player->highscore}}</li>
-            <li><strong>Playing Since: </strong>{{$user->created_at}}</li>
-            <li><strong>Upgrades: </strong>
-                <ul id="upgrades">
-                    <li id="stamina_resistance">
-                        Stamina Resistance: <span class="level"></span>
-                        <button class="buy"><span class="price"></span> VP</button>
-                    </li>
-                    <li id="stamina_gain">
-                        Stamina Gain: <span class="level"></span>
-                        <button class="buy"><span class="price"></span> VP</button>
-                    </li>
-                </ul>
-            </li>
+            <li>Verkeers Punten: <strong><span id="vp">{{$user->player->vp}}</span></strong></li>
+            <li>Highscore: <strong>{{$user->player->highscore}}</strong></li>
+            <li>Speelt sinds: <strong>{{$user->created_at}}</strong></li>
         </ul>
+
+        <div id="shops">
+            <a href="{{route('upgrades')}}" id="upgrades">Upgrades</a>
+            <a href="{{route('skins')}}" id="skins">Skins</a>
+        </div>
     </div>
 @endsection

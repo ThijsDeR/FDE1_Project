@@ -31,6 +31,8 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/profile/skins', [PlayerController::class, 'skins'])->name('skins')->middleware('auth');
+Route::get('/profile/upgrades', [PlayerController::class, 'upgrades'])->name('upgrades')->middleware('auth');
 Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highscores');
 
 Route::get('/players/{token}', [PlayerController::class, 'info'])->name('playerInfo');

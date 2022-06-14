@@ -26,6 +26,16 @@ class PlayerController extends Controller
         return view('players.profile', compact('user'));
     }
 
+    public function upgrades()
+    {
+        return view('players.upgrades');
+    }
+
+    public function skins()
+    {
+        return view('players.skins');
+    }
+
     public function addVP(Request $request, $token) {
         $player = Player::where('token', $token)->first();
         $player->vp += $request->vp;
