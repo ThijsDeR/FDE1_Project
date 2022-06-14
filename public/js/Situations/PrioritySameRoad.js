@@ -6,7 +6,7 @@ import Situation from "../Situation.js";
 export default class PrioritySameRoad extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png');
+        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png', false);
         this.props = [
             new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
             new TrackProp([

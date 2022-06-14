@@ -6,9 +6,9 @@ import Situation from "../Situation.js";
 export default class PedestrianCrossingVan extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
         this.props = [
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 5) * 3, this.background.getYPos() + (this.background.getHeight() / 10) * 9, 0, 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png')
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 5) * 3, this.background.getYPos() + (this.background.getHeight() / 10) * 9, 0, 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png', false)
         ];
         const personWalking = new TrackProp([
             {

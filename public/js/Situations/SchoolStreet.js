@@ -6,7 +6,7 @@ import Situation from "../Situation.js";
 export default class SchoolStreet extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
         this.props = [];
         for (let i = 0; i < 20; i++) {
             let yPos = this.background.getYPos() + (this.background.getHeight() / 20) * i;

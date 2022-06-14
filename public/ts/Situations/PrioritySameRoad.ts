@@ -10,7 +10,7 @@ import UserData from "../UserData.js";
 export default class PrioritySameRoad extends Situation {
     public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
         super(canvas, userData, upgrades)
-        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png');
+        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png', false);
         this.props = [
             new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
             new TrackProp(

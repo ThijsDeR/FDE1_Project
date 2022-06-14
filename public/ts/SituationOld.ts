@@ -56,9 +56,9 @@ export default class SituationOld extends ImageProp{
         }
     }
 
-    public update(elapsed: number) {
-        this.timeSinceLastPress += elapsed;
-    }
+    // public update(elapsed: number) {
+    //     this.timeSinceLastPress += elapsed;
+    // }
 
     public draw(ctx: CanvasRenderingContext2D) {
         super.draw(ctx);
