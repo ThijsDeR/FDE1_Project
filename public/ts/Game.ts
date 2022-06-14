@@ -17,6 +17,7 @@ import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import Obstacles from './Situations/Obstacles.js';
 
 /**
  * Main class of this Game.
@@ -109,9 +110,9 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-    switch (Game.randomInteger(0, 9)) {
+    switch (Game.randomInteger(0, 0)) {
       case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+        return new Obstacles(this.canvas, this.userData, stamina, this.upgrades)
       case 1:
         return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
       case 2:

@@ -4,8 +4,6 @@ import UserData from './UserData.js';
 import Situation from './Situation.js';
 import PrioritySameRoad from './Situations/PrioritySameRoad.js';
 import GameOverScene from './GameOverScene.js';
-// Import situations
-import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 import Crossroad from './Situations/Crossroad.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
@@ -14,6 +12,7 @@ import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import Obstacles from './Situations/Obstacles.js';
 /**
  * Main class of this Game.
  */
@@ -65,9 +64,9 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 9)) {
+        switch (Game.randomInteger(0, 0)) {
             case 0:
-                return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
+                return new Obstacles(this.canvas, this.userData, stamina, this.upgrades);
             case 1:
                 return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
             case 2:
