@@ -31,7 +31,7 @@ export default class UserData {
     getPlayerData() {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const rawResponse = yield fetch('./players/' + this.token, {
+            const rawResponse = yield fetch('/players/' + this.token, {
                 headers: {
                     'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
                 }
@@ -43,7 +43,7 @@ export default class UserData {
     setHighscore(data) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch('./players/' + this.token, {
+            const response = yield fetch('/players/' + this.token, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -59,7 +59,7 @@ export default class UserData {
     addVP(vp) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch('./players/addVP/' + this.token, {
+            const response = yield fetch('/players/addVP/' + this.token, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -85,7 +85,7 @@ export default class UserData {
     getUpgrade(upgrade) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const rawResponse = yield fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+            const rawResponse = yield fetch(`/profile/getUpgrade/${upgrade}/${this.token}`, {
                 headers: {
                     'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
                 }
@@ -97,7 +97,7 @@ export default class UserData {
     upgrade(upgrade) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch(`./profile/upgrade/${this.token}`, {
+            const response = yield fetch(`/profile/upgrade/${this.token}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
