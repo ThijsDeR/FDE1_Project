@@ -3,7 +3,7 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
-import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
+import SchoolStreet from './Situations/SchoolStreet.js';
 /**
  * Main class of this Game.
  */
@@ -78,7 +78,7 @@ export default class Game {
             // case 10: 
             //   return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
             default:
-                return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades);
+                return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades);
         }
     }
     /**
