@@ -6,14 +6,16 @@ import Game from "../Game.js";
 import UserData from "../UserData.js";
 
 export default class CarDriveway extends Situation {
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
         super(canvas, userData, upgrades)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png')
 
-        const carVectors:any = []
-        Game.randomInteger(0,1) === 0 ? carVectors.push(
+        // Define possibilities for driver
+        const carVectors: any = []
+        Game.randomInteger(0, 1) === 0 ? carVectors.push(
+
+            // GOOD DRIVER
             {
-                // GOOD DRIVER
                 // Starting position
                 xPos1: (this.background.getWidth() * 2 / 1.2), yPos1: (this.background.getYPos() + (this.background.getHeight() / 2 - 175)),
                 // Target position
@@ -22,7 +24,6 @@ export default class CarDriveway extends Situation {
                 xVel: -0.2, yVel: 0
             },
             {
-                // GOOD DRIVER
                 // Starting position
                 xPos1: (this.background.getWidth() * 2 / 1.4), yPos1: (this.background.getYPos() + (this.background.getHeight() / 2 - 175)),
                 // Target position
@@ -30,9 +31,10 @@ export default class CarDriveway extends Situation {
                 // Velocity
                 xVel: -0.000000000000000000001, yVel: 0
             }
-        ): carVectors.push(
+        ) : carVectors.push(
+
+            // BAD DRIVER
             {
-                // BAD DRIVER
                 // Starting position
                 xPos1: (this.background.getWidth() * 2 / 1.2), yPos1: (this.background.getYPos() + (this.background.getHeight() / 3.1)),
                 // Target position
@@ -50,10 +52,13 @@ export default class CarDriveway extends Situation {
             }
         )
 
+        // Create driver
         this.props = [
             new TrackProp(
                 carVectors, canvas.width / 15, canvas.height / 7, './assets/img/objects/car.png'),
         ]
+
+        // Create the player
         this.player = new Player((canvas.width / 1.55), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina)
     }
 
