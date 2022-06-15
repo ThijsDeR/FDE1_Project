@@ -110,30 +110,30 @@ export default class Game {
 
   private newSituation(stamina: number): Situation {
     switch (Game.randomInteger(0, 10)) {
-      case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
-      case 1:
-        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
-      case 2:
-        return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades)
-      case 3:
-        return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
-      case 4:
-        return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
-      case 5:
-        return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
-      case 6:
-        return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
-      case 7:
-        return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
-      case 8:
-        return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
-      case 9:
-        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
-      case 10: 
-        return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
+      // case 0:
+      //   return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+      // case 1:
+      //   return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+      // case 2:
+      //   return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades)
+      // case 3:
+      //   return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+      // case 4:
+      //   return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
+      // case 5:
+      //   return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
+      // case 6:
+      //   return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
+      // case 7:
+      //   return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
+      // case 8:
+      //   return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
+      // case 9:
+      //   return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
+      // case 10: 
+      //   return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
       default:
-        return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
+        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
     }
   }
 

@@ -7,34 +7,23 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class Crossroad extends Situation {
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
-        super(canvas, userData, upgrades)
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
-        this.props = [
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
-            new Frikandelbroodje(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
-        ]
-
-        const badCycle = new ImageProp(this.background.getXPos() - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), 0.3, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png')
-        const goodCycle = new TrackProp([
-            {
-                xPos1: this.background.getXPos() - (this.background.getWidth() / 10), yPos1: this.background.getYPos() + (this.background.getHeight() / 2),
-                xPos2: this.background.getXPos() + this.background.getWidth() / 5, yPos2: this.background.getYPos() + (this.background.getHeight() / 2),
-                xVel: 0.3, yVel: 0
-            },
-            {
-                xPos1: this.background.getXPos() + this.background.getWidth() / 5, yPos1: this.background.getYPos() + (this.background.getHeight() / 2),
-                xPos2: this.background.getXPos() + (this.background.getWidth() / 2), yPos2: this.background.getYPos() + (this.background.getHeight() / 2),
-                xVel: 0.0000000000000000000000001, yVel: 0
-            },
-        ], this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png')
-
-        Game.randomInteger(0, 1) === 1 ? this.props.push(badCycle) : this.props.push(goodCycle)
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20,this.background.getHeight() / 8, stamina)
+    public constructor(
+        canvas: HTMLCanvasElement,
+        userData: UserData,
+        stamina: number,
+        upgrades: {
+            stamina_resistance: {
+                level: number,
+                price: number
+            }, stamina_gain: {
+                level: number,
+                price: number
+            }
+        }) {
 
         super(canvas, userData, upgrades)
 
-        // Situation background properties
+        // Background properties
         this.background = new ImageProp(
             canvas.width / 3,
             -canvas.height,
@@ -42,21 +31,37 @@ export default class Crossroad extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntZebraPad.png'
+            './assets/img/objects/KruispuntZebraPad.png',
+            false
         )
 
-        // Create props in situation
+        // Create new props
         this.props = [
-            // Add bicyclist
+            // Add car
             new ImageProp(
-                0 - (this.background.getWidth() / 10),
-                this.background.getYPos() + (this.background.getHeight() / 2),
-                (Game.randomInteger(1, 15) / 10),
+                this.background.getXPos() + (this.background.getWidth() / 3),
+                this.background.getYPos(),
                 0,
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
+                0.05,
+                this.background.getWidth() / 16,
+                this.background.getHeight() / 9,
+                './assets/img/objects/car.png'
             ),
+            // Add stamina booster
+            new Frikandelbroodje(
+                this.background.getXPos() + (this.background.getWidth() / 2),
+                this.background.getYPos() + (this.background.getHeight() / 2),
+                0,
+                0,
+                this.background.getWidth() / 16,
+                this.background.getHeight() / 9,
+                './assets/img/objects/frikandelbroodje.png',
+                10
+            )
+        ]
+
+         // Create props in situation
+         this.props = [
             // Add car
             new ImageProp(
                 this.background.getXPos() + (this.background.getWidth() / 3),
@@ -79,6 +84,74 @@ export default class Crossroad extends Situation {
                 10
             )
         ]
+
+        // Cyclist who does not give you the right of way
+        const badCycle = new ImageProp(
+            this.background.getXPos() - (this.background.getWidth() / 10),
+            this.background.getYPos() + (this.background.getHeight() / 2),
+            0.3,
+            0,
+            this.background.getWidth() / 16,
+            this.background.getHeight() / 9,
+            './assets/img/players/fiets1.png'
+        )
+        // Cyclist who does give you the right of way
+        const goodCycle = new TrackProp([
+            {
+                // Starting position
+                xPos1: this.background.getXPos() - (this.background.getWidth() / 10),
+                yPos1: this.background.getYPos() + (this.background.getHeight() / 2),
+                // Target position
+                xPos2: this.background.getXPos() + this.background.getWidth() / 5,
+                yPos2: this.background.getYPos() + (this.background.getHeight() / 2),
+                // Velocities between start and target position
+                xVel: 0.3,
+                yVel: 0
+            },
+            {
+                // Starting position
+                xPos1: this.background.getXPos() + this.background.getWidth() / 5,
+                yPos1: this.background.getYPos() + (this.background.getHeight() / 2),
+                // Target position
+                xPos2: this.background.getXPos() + (this.background.getWidth() / 2),
+                yPos2: this.background.getYPos() + (this.background.getHeight() / 2),
+                // Velocities between start and target position
+                xVel: 0.0000000000000000000000001,
+                yVel: 0
+            },
+        ],
+            // Bicycle image properties
+            this.background.getWidth() / 16,
+            this.background.getHeight() / 9,
+            './assets/img/players/fiets1.png'
+        )
+
+        // Choose between good and bad cyclist
+        Game.randomInteger(0, 1) === 1
+            ? this.props.push(badCycle)
+            : this.props.push(goodCycle)
+
+        // Create player
+        this.player = new Player(
+            this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2),
+            this.background.getWidth() / 1.2,
+            0,
+            0,
+            this.background.getWidth() / 20,
+            this.background.getHeight() / 8,
+            stamina
+        )
+
+        // Situation background properties
+        this.background = new ImageProp(
+            canvas.width / 3,
+            -canvas.height,
+            0,
+            0,
+            canvas.width / 2,
+            canvas.height,
+            './assets/img/objects/KruispuntZebraPad.png'
+        )
 
         // Create player
         this.player = new Player(
