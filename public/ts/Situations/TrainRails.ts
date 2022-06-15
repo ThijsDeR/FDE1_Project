@@ -56,7 +56,7 @@ export default class TrainRails extends Situation {
             0,
             this.background.getWidth() / 16,
             this.background.getHeight(),
-            './assets/img/players/fiets1.png'
+            './assets/img/players/Trein.png'
         )
 
         // Decide whether or not the train should spawn
