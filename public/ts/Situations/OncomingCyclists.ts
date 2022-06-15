@@ -1,4 +1,3 @@
-import Game from "../Game.js";
 import Player from "../Player.js";
 import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";

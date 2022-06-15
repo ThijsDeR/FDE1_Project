@@ -16,7 +16,8 @@ export default class TractorIncoming extends Situation {
         // Create player
         this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
     }
-    handleCollission(prop, propIndex, elapsed) {
+    // 
+    handleCollission(prop, propIndex) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {

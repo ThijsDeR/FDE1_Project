@@ -1,6 +1,5 @@
 import Player from "../Player.js";
 import ImageProp from "../Props/ImageProp.js";
-import Prop from "../Props/Prop.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
@@ -59,7 +58,8 @@ export default class TractorIncoming extends Situation {
         )
     }
 
-    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number): boolean {
+    // 
+    protected handleCollission(prop: ImageProp, propIndex: number): boolean {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
