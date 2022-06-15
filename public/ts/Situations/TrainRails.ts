@@ -51,12 +51,12 @@ export default class TrainRails extends Situation {
         // Train prop variables
         const train = new ImageProp(
             this.background.getXPos() - (this.background.getWidth() / 10),
-            this.background.getYPos() - (this.background.getHeight() / 4),
+            this.background.getYPos() - (this.background.getHeight() / 1.38),
             0.3,
             0,
-            this.background.getWidth() / 16,
-            this.background.getHeight(),
-            './assets/img/players/Trein.png'
+            this.background.getWidth() / 5,
+            this.background.getHeight() * 2,
+            './assets/img/objects/Trein.png'
         )
 
         // Decide whether or not the train should spawn
