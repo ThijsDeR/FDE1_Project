@@ -13,7 +13,15 @@ export default abstract class StaminaBooster extends ImageProp {
         imageUrl: string,
         staminaBoostAmount: number
     ) {
-        super(xPos, yPos, xVel, yVel, width, height, imageUrl);
+        super(
+            xPos,
+            yPos,
+            xVel,
+            yVel,
+            width,
+            height,
+            imageUrl
+        )
         this.staminaBoostAmount = staminaBoostAmount;
     }
 

@@ -8,18 +8,35 @@ export default class ImageProp extends Prop {
 
     protected type: 'normal' | 'turning';
 
-    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, imageUrl: string){
-        super(xPos, yPos, xVel, yVel, width, height);
+    public constructor(
+        xPos: number,
+        yPos: number,
+        xVel: number,
+        yVel: number,
+        width: number,
+        height: number,
+        imageUrl: string
+    ) {
+        super(
+            xPos,
+            yPos,
+            xVel,
+            yVel,
+            width,
+            height
+        )
         this.image = Game.loadNewImage(imageUrl);
     }
-
 
     public getImage() {
         return this.image;
     }
 
-
-    public draw(ctx: CanvasRenderingContext2D, offsetX: number = 0, offsetY: number = 0) {
+    public draw(
+        ctx: CanvasRenderingContext2D,
+        offsetX: number = 0,
+        offsetY: number = 0
+    ) {
         // ctx.drawImage(
         //     this.image,
         //     this.xPos,
@@ -41,7 +58,6 @@ export default class ImageProp extends Prop {
             this.height
         );
         ctx.restore();
-
     }
 
     private calculateDirection() {

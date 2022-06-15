@@ -12,7 +12,15 @@ export default class StopSign extends ImageProp {
         height: number,
         imageUrl: string,
     ) {
-        super(xPos, yPos, xVel, yVel, width, height, imageUrl);
+        super(
+            xPos,
+            yPos,
+            xVel,
+            yVel,
+            width,
+            height,
+            imageUrl
+        )
         this.timeStopped = 0;
     }
 

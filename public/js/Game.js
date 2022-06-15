@@ -3,6 +3,14 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
+// Import situations
+import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
+import Crossroad from './Situations/Crossroad.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
+import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+import TractorIncoming from './Situations/TractorIncoming.js';
+import CarDriveway from './Situations/CarDriveway.js';
+import PrioritySameRoad from './Situations/PrioritySameRoad.js';
 import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 /**
  * Main class of this Game.
@@ -54,19 +62,23 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 6)) {
-            // case 0:
-            //   return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
-            // case 1:
-            //   return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
-            // case 2:
-            //   return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades)
-            // case 3:
-            //   return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
-            // case 4:
-            //   return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
-            // case 5:
-            //   return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
+        switch (Game.randomInteger(0, 7)) {
+            case 0:
+                return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
+            case 1:
+                return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
+            case 2:
+                return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades);
+            case 3:
+                return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades);
+            case 4:
+                return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades);
+            case 5:
+                return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades);
+            case 6:
+                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
+            case 7:
+                return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades);
             default:
                 return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades);
         }
