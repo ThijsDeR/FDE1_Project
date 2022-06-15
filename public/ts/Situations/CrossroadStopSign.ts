@@ -25,61 +25,14 @@ export default class CrossroadStopSign extends Situation {
         }) {
 
         super(canvas, userData, upgrades)
-
-        // Situation background properties
-        this.background = new ImageProp(
-            canvas.width / 3,
-            -canvas.height,
-            0,
-            0, canvas.width / 2,
-            canvas.height,
-            './assets/img/objects/Kruispunt_2.png'
-        )
-
-        // Create props in situation
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt_2.png', false);
         this.props = [
-            // Create bicyclist
-            new ImageProp(
-                0 - (this.background.getWidth() / 10),
-                this.background.getYPos() + (this.background.getHeight() / 2),
-                Game.randomInteger(1, 15) / 10,
-                0,
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
-            ),
-            // Create car
-            new ImageProp(
-                this.background.getXPos() + this.background.getWidth() / 3,
-                this.background.getYPos(),
-                0,
-                0.05,
-                this.background.getWidth() / 16,
-                this.background.getHeight() / 9,
-                './assets/img/objects/car.png'
-            ),
-            // Create booster
-            new Frikandelbroodje(
-                this.background.getXPos() + this.background.getWidth() / 2,
-                this.background.getYPos() + (this.background.getHeight() / 2),
-                0,
-                0,
-                this.background.getWidth() / 16,
-                this.background.getHeight() / 9,
-                './assets/img/objects/frikandelbroodje.png',
-                10
-            ),
-            // Create stop sign
-            new StopSign(
-                this.background.getXPos() + this.background.getWidth() / 1.9,
-                this.background.getYPos() + (this.background.getHeight() / 1.1),
-                0,
-                0,
-                this.background.getWidth() / 16,
-                this.background.getHeight() / 9,
-                './assets/img/objects/stopbord.png'
-            )
+            new ImageProp(0 - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), (Game.randomInteger(1, 15) / 10), 0, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
+            new Frikandelbroodje(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
+            new StopSign(this.background.getXPos() + this.background.getWidth() / 1.9, this.background.getYPos() + (this.background.getHeight() / 1.1), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/stopbord.png', false                     )
         ]
+        
 
         // Create player
         this.player = new Player(
@@ -93,9 +46,9 @@ export default class CrossroadStopSign extends Situation {
         )
     }
 
-    protected handleCollission(prop: Prop, propIndex: number, elapsed: number): boolean {
+    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number): boolean {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
@@ -107,7 +60,6 @@ export default class CrossroadStopSign extends Situation {
 
             else {
                 gameOver = true;
-                this.crashSound.play();
             }
         }
 
@@ -133,5 +85,10 @@ export default class CrossroadStopSign extends Situation {
         this.props.forEach((prop) => {
             prop.draw(ctx)
         })
+    }
+    
+    // Set boundaries to the player's movements
+    public processInput() {
+        this.player.processInput(this.canvas, this.background.getXPos() + this.background.getWidth() / 3, this.background.getXPos() + (this.background.getWidth() / 3) * 2);
     }
 }

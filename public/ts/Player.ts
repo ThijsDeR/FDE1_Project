@@ -95,6 +95,7 @@ export default class Player extends AnimatedProp {
   }
 
   public update(elapsed: number) {
+    super.update(elapsed)
     this.advance(elapsed);
   }
 

@@ -26,7 +26,7 @@ export default class UserData {
   }
 
   public async getPlayerData() {
-    const rawResponse = await fetch('./players/' + this.token, {
+    const rawResponse = await fetch('/players/' + this.token, {
       headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
       }
@@ -36,7 +36,7 @@ export default class UserData {
   }
 
   private async setHighscore(data: {highscore: number}) {
-    const response = await fetch('./players/' + this.token, {
+    const response = await fetch('/players/' + this.token, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -51,7 +51,7 @@ export default class UserData {
   }
 
   public async addVP(vp: number) {
-    const response = await fetch('./players/addVP/' + this.token, {
+    const response = await fetch('/players/addVP/' + this.token, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -82,7 +82,7 @@ export default class UserData {
 
 
   public async getUpgrade(upgrade: string) {
-    const rawResponse = await fetch(`./profile/getUpgrade/${upgrade}/${this.token}`, {
+    const rawResponse = await fetch(`/profile/getUpgrade/${upgrade}/${this.token}`, {
       headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
       }
@@ -92,7 +92,7 @@ export default class UserData {
   }
 
   public async upgrade(upgrade: string) {
-    const response = await fetch(`./profile/upgrade/${this.token}`, {
+    const response = await fetch(`/profile/upgrade/${this.token}`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',

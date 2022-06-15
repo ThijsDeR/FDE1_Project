@@ -79,6 +79,7 @@ export default class Player extends AnimatedProp {
         this.xPos += this.xVel * elapsed;
     }
     update(elapsed) {
+        super.update(elapsed);
         this.advance(elapsed);
     }
     isStopped() {

@@ -6,7 +6,7 @@ export default class OncomingCyclist extends Situation {
     constructor(canvas, userData, stamina, upgrades) {
         super(canvas, userData, upgrades);
         // Create situation background
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png', false);
         // Create props in situation
         this.props = [
             // Create bicyclist

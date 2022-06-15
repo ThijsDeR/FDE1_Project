@@ -1,3 +1,4 @@
+import Game from "./Game.js";
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
 import Prop from "./Props/Prop.js";
@@ -23,11 +24,14 @@ export default abstract class Situation extends Scene {
 
     protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
 
+    protected mist: boolean
+
     public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
         super(canvas, userData)
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3')
         this.crashSound.volume = 0.7
+        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
     }
 
     public render() {
@@ -36,6 +40,11 @@ export default abstract class Situation extends Scene {
             prop.draw(this.ctx);
         })
         this.player.draw(this.ctx);
+
+        if (this.mist) {
+            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
+            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight())
+        }
     }
 
     public processInput() {
@@ -77,6 +86,9 @@ export default abstract class Situation extends Scene {
         this.props.forEach((prop, propIndex) => {
             if (this.movePropsCheck()) {
                 prop.move(elapsed)
+                if (prop instanceof TrackProp || prop instanceof ImageProp) {
+                    prop.update(elapsed)
+                }
             }
 
             prop.scroll(elapsed, this.player.getYVel())
@@ -84,9 +96,7 @@ export default abstract class Situation extends Scene {
             let propCollission = this.handleCollission(prop, propIndex, elapsed)
             if (propCollission) gameOver = true;
 
-            if (prop instanceof TrackProp) {
-                prop.update()
-            }
+            
 
             let extraPropHandling = this.extraPropHandling(prop, propIndex)
             if (extraPropHandling) gameOver = true
@@ -99,9 +109,10 @@ export default abstract class Situation extends Scene {
         return this.background.getYPos() + (this.background.getHeight() / 2) > 0
     }
 
-    protected handleCollission(prop: Prop, propIndex: number, elapsed: number) {
+    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number) {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
+            console.log('gay')
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {

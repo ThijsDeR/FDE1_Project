@@ -1,3 +1,5 @@
+import Game from "./Game.js";
+import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
@@ -7,6 +9,7 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
+        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
     }
     render() {
         this.background.draw(this.ctx);
@@ -14,6 +17,10 @@ export default class Situation extends Scene {
             prop.draw(this.ctx);
         });
         this.player.draw(this.ctx);
+        if (this.mist) {
+            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
+            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight());
+        }
     }
     processInput() {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
@@ -47,14 +54,14 @@ export default class Situation extends Scene {
         this.props.forEach((prop, propIndex) => {
             if (this.movePropsCheck()) {
                 prop.move(elapsed);
+                if (prop instanceof TrackProp || prop instanceof ImageProp) {
+                    prop.update(elapsed);
+                }
             }
             prop.scroll(elapsed, this.player.getYVel());
             let propCollission = this.handleCollission(prop, propIndex, elapsed);
             if (propCollission)
                 gameOver = true;
-            if (prop instanceof TrackProp) {
-                prop.update();
-            }
             let extraPropHandling = this.extraPropHandling(prop, propIndex);
             if (extraPropHandling)
                 gameOver = true;
@@ -66,7 +73,8 @@ export default class Situation extends Scene {
     }
     handleCollission(prop, propIndex, elapsed) {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
+            console.log('gay');
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex);
             }

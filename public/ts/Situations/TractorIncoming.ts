@@ -31,7 +31,8 @@ export default class TractorIncoming extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/Polderweg.png'
+            './assets/img/Polderweg.png',
+            false
         )
 
         // Create props in situation
@@ -58,10 +59,9 @@ export default class TractorIncoming extends Situation {
         )
     }
 
-    // Handle prop collision
-    protected handleCollission(prop: Prop, propIndex: number): boolean {
+    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number): boolean {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {

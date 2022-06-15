@@ -14,11 +14,18 @@
     text-align: center;
 }
 
-
-button.buy.error {
-    color: red
+#shops {
+    margin-top: 10vh;
+    display: flex;
+    justify-content: space-around;
 }
 
-button.buy.bought {
-    color: green
+#shops a {
+    background-color: blue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
 }

@@ -27,7 +27,8 @@ export default class PrioritySameRoad extends Situation {
             0,
             0, this.canvas.width / 2,
             canvas.height,
-            './assets/img/Oprit.png'
+            './assets/img/Oprit.png',
+            false
         )
         
         // Create props in situation

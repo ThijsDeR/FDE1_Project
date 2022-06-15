@@ -1,7 +1,7 @@
 import Animator from "../Animator.js";
-import Prop from "./Prop.js";
+import ImageProp from "./ImageProp.js";
 
-export default class AnimatedProp extends Prop {
+export default class AnimatedProp extends ImageProp {
     protected animator: Animator;
 
     public constructor(
@@ -11,22 +11,12 @@ export default class AnimatedProp extends Prop {
         yVel: number,
         width: number,
         height: number,
-        images: {
-            image: HTMLImageElement,
-            duration: number
-        }[]
-    ) {
-        super(
-            xPos,
-            yPos,
-            xVel,
-            yVel,
-            width,
-            height
-        )
+        images: {image: HTMLImageElement, duration: number}[],
+        turning: boolean = true
+    ){
+        super(xPos, yPos, xVel, yVel, width, height, images[0].image.src, turning);
         this.animator = new Animator(images);
     }
-
 
     public getImage() {
         return this.animator.getImage();
