@@ -13,7 +13,7 @@ export default class TrainRails extends Situation {
             new Frikandelbroodje(this.background.getXPos() + (this.background.getWidth() / 1.6), this.background.getYPos() + (this.background.getHeight() / 5), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
         ]
 
-        const train = new ImageProp(this.background.getXPos() - (this.background.getWidth() / 10), this.background.getYPos() - (this.background.getHeight() / 4) , 0.3, 0, this.background.getWidth() / 16, this.background.getHeight() , './assets/img/players/fiets1.png')
+        const train = new ImageProp(this.background.getXPos() - (this.background.getWidth() / 10), this.background.getYPos() - (this.background.getHeight() / 1.38) , 0.3, 0, this.background.getWidth() / 5, this.background.getHeight() * 2 , './assets/img/objects/Trein.png')
     
         if (Game.randomInteger(0, 1) === 1) {
             this.props.push(train)
