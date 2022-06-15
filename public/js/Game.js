@@ -64,9 +64,9 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 10)) {
+        switch (Game.randomInteger(0, 0)) {
             case 0:
-                return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades);
+                return new Obstacles(this.canvas, this.userData, stamina, this.upgrades);
             case 1:
                 return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
             case 2:

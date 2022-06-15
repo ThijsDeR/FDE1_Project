@@ -12,14 +12,14 @@ export default class Obstacles extends Situation {
             //    new ImageProp(this.background.getXPos() + (this.background.getWidth() / 1.7), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png'),
         ];
         const obstacle1 = [
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.4), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.4), this.background.getYPos() + (this.background.getHeight() / 2.4), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png'),
             new ImageProp(this.background.getXPos() + (this.background.getWidth() / 1.7), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png'),
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png')
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/tak2.png')
         ];
         const obstacle2 = [
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.4), this.background.getYPos() + (this.background.getHeight() / 1.6), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png'),
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.5), this.background.getYPos(), 0, 0.27, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/objects/car.png'),
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2.5), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/bier.png')
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.4), this.background.getYPos() + (this.background.getHeight() / 1.6), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/tak.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.5), this.background.getYPos(), 0, 0.295, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/objects/car.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2.5), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 17, './assets/img/objects/tak3.png')
         ];
         Game.randomInteger(0, 1) === 1 ? obstacle1.forEach(obstacle1 => {
             this.props.push(obstacle1);
