@@ -3,8 +3,6 @@ import ImageProp from "./ImageProp.js";
 
 export default class AnimatedProp extends ImageProp {
     protected animator: Animator;
-  
-
 
     public constructor(
         xPos: number,
@@ -18,8 +16,6 @@ export default class AnimatedProp extends ImageProp {
     ){
         super(xPos, yPos, xVel, yVel, width, height, images[0].image.src, turning);
         this.animator = new Animator(images);
-
-
     }
 
     public getImage() {

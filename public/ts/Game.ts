@@ -2,7 +2,6 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import PrioritySameRoad from './Situations/PrioritySameRoad.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -14,6 +13,8 @@ import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
+import PrioritySameRoad from './Situations/PrioritySameRoad.js';
+import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
@@ -76,9 +77,7 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
-
-    // this.situation = this.newSituation(100)
+    this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
@@ -131,8 +130,10 @@ export default class Game {
         return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
       case 9:
         return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
+      case 10: 
+        return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
       default:
-        return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
+        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
     }
   }
 
