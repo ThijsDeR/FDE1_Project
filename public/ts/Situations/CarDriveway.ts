@@ -59,7 +59,7 @@ export default class CarDriveway extends Situation {
         else xPos = this.background.getXPos() + this.background.getWidth() / 2
         if (xPos < this.background.getWidth() * 1.18) xPos = this.background.getWidth() * 1.18
         else if (xPos > (this.background.getWidth() * 1.384)) xPos = (this.background.getWidth() * 1.384)
-        this.player = new Player(xPos, canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, playerData.stamina)
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
     }
 
     // Set boundaries to the player's movements
