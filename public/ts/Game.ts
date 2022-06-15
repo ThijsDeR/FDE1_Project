@@ -17,6 +17,7 @@ import CarDriveway from './Situations/CarDriveway.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 
 /**
  * Main class of this Game.
@@ -128,6 +129,8 @@ export default class Game {
         return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
       case 8:
         return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
+      case 9:
+        return new ClosedBicycleLane(this.canvas, this.userData, stamina, this.upgrades)
       default:
         return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
     }
