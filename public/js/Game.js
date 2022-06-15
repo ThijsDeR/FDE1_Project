@@ -3,7 +3,8 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
-import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+// Import situations
+import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 /**
  * Main class of this Game.
  */
@@ -78,7 +79,7 @@ export default class Game {
             // case 10: 
             //   return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
             default:
-                return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades);
+                return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
         }
     }
     /**
