@@ -4,7 +4,7 @@ import Player from "../Player.js";
 import TrackProp from "../Props/TrackProp.js";
 import Game from "../Game.js";
 export default class CarDriveway extends Situation {
-    constructor(canvas, userData, stamina, upgrades) {
+    constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png', false);
         const carVectors = [];
@@ -43,7 +43,16 @@ export default class CarDriveway extends Situation {
         this.props = [
             new TrackProp(carVectors, canvas.width / 15, canvas.height / 7, './assets/img/objects/car.png'),
         ];
-        this.player = new Player((canvas.width / 1.55), canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
+        let xPos;
+        if (playerData.xPos)
+            xPos = playerData.xPos;
+        else
+            xPos = this.background.getXPos() + this.background.getWidth() / 2;
+        if (xPos < this.background.getWidth() * 1.18)
+            xPos = this.background.getWidth() * 1.18;
+        else if (xPos > (this.background.getWidth() * 1.384))
+            xPos = (this.background.getWidth() * 1.384);
+        this.player = new Player(xPos, canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

@@ -95,6 +95,9 @@ export default class Situation extends Scene {
     extraPropHandling(prop, propIndex) {
         return false;
     }
+    getPlayer() {
+        return this.player;
+    }
 }
 Situation.NOT_DONE = 0;
 Situation.GAME_OVER = 1;

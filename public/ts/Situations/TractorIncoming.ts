@@ -11,7 +11,7 @@ import UserData from "../UserData.js";
 export default class TractorIncoming extends Situation {
 
 
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
         super(canvas, userData, upgrades)
 
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
@@ -20,7 +20,12 @@ export default class TractorIncoming extends Situation {
         ]
         this.canvas = canvas;
 
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina)
+        let xPos
+        if (playerData.xPos) xPos = playerData.xPos
+        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
+        if (xPos < this.background.getXPos() + (this.background.getWidth() / 4)) xPos = this.background.getXPos() + (this.background.getWidth() / 4)
+        else if (xPos > this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5)) xPos = this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5)
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
 
 
     }

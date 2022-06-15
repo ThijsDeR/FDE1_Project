@@ -136,4 +136,8 @@ export default abstract class Situation extends Scene {
     protected extraPropHandling(prop: Prop, propIndex: number) {
         return false;
     }
+
+    public getPlayer() {
+        return this.player;
+    }
 }

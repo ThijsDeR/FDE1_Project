@@ -4,14 +4,23 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
-    constructor(canvas, userData, stamina, upgrades) {
+    constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
         this.props = [
             new Tractor(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5),
         ];
         this.canvas = canvas;
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
+        let xPos;
+        if (playerData.xPos)
+            xPos = playerData.xPos;
+        else
+            xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2);
+        if (xPos < this.background.getXPos() + (this.background.getWidth() / 4))
+            xPos = this.background.getXPos() + (this.background.getWidth() / 4);
+        else if (xPos > this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5))
+            xPos = this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5);
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     handleCollission(prop, propIndex, elapsed) {
         let gameOver = false;

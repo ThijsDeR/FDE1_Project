@@ -5,7 +5,7 @@ import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
-    constructor(canvas, userData, stamina, upgrades) {
+    constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/MainRoadFixed.png', false);
         this.props = [
@@ -18,7 +18,16 @@ export default class CyclingPathIncomingTraffic extends Situation {
             { xPos1: (this.background.getWidth() / 4) + (canvas.width / 3), yPos1: this.background.getYPos() + this.background.getHeight() / 2, xPos2: (this.background.getWidth() / 4) + (canvas.width / 3), yPos2: this.background.getYPos() + this.background.getHeight() * 2, xVel: 0, yVel: 0.15 },
         ], canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png');
         Game.randomInteger(0, 1) === 1 ? this.props.push(cycle) : '';
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
+        let xPos;
+        if (playerData.xPos)
+            xPos = playerData.xPos;
+        else
+            xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2);
+        if (xPos < this.background.getXPos() + this.background.getWidth() / 3)
+            xPos = this.background.getXPos() + this.background.getWidth() / 3;
+        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
+            xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {
