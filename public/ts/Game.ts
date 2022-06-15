@@ -133,7 +133,7 @@ export default class Game {
       // case 10: 
       //   return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
       default:
-        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+        return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
     }
   }
 
