@@ -19,21 +19,23 @@
                 </div>
             @endif
             <div id="input-container">
-                <label for="username">Gebruikersnaam</label>
+                <label id="username" for="username">Gebruikersnaam</label>
                 <input type="text" id="username" name="username">
             </div>
 
             <hr/>
 
             <div id="input-container">
-                <label for="password">Wachtwoord</label>
+                <label id="password" for="password">Wachtwoord</label>
                 <input type="password" id="password" name="password">
             </div>
 
             <hr/>
 
             <div id="submit-container"> 
-                <button type="submit" class="nice-button">Registreer</button>
+                <div id="button-container">
+                    <button type="submit" class="nice-button buttons">Registreer</button>
+                </div>
             </div>
         </form>
     </div>
