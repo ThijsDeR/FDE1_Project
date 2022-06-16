@@ -20,6 +20,20 @@
     display: block;
 }
 
+.goal h1 {
+    left: 20%;
+    position: relative;
+    top: 50%;
+    color: white;
+}
+.goal p {
+    left: 10%;
+    position: relative;
+    top: 10%;
+    font-size: large;
+}
+
+
 
 div.mute-button {
     position: absolute;
