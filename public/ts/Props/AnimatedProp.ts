@@ -1,19 +1,22 @@
 import Animator from "../Animator.js";
-import Game from "../Game.js";
-import Prop from "./Prop.js";
+import ImageProp from "./ImageProp.js";
 
-export default class AnimatedProp extends Prop {
+export default class AnimatedProp extends ImageProp {
     protected animator: Animator;
-  
 
-
-    public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, images: {image: HTMLImageElement, duration: number}[]){
-        super(xPos, yPos, xVel, yVel, width, height);
+    public constructor(
+        xPos: number,
+        yPos: number,
+        xVel: number,
+        yVel: number,
+        width: number,
+        height: number,
+        images: {image: HTMLImageElement, duration: number}[],
+        turning: boolean = true
+    ){
+        super(xPos, yPos, xVel, yVel, width, height, images[0].image.src, turning);
         this.animator = new Animator(images);
-
-
     }
-
 
     public getImage() {
         return this.animator.getImage();

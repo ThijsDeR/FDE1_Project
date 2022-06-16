@@ -1,4 +1,5 @@
 import Game from "./Game.js";
+import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
@@ -53,8 +54,8 @@ export default class Situation extends Scene {
         this.props.forEach((prop, propIndex) => {
             if (this.movePropsCheck()) {
                 prop.move(elapsed);
-                if (prop instanceof TrackProp) {
-                    prop.update();
+                if (prop instanceof TrackProp || prop instanceof ImageProp) {
+                    prop.update(elapsed);
                 }
             }
             prop.scroll(elapsed, this.player.getYVel());
@@ -72,7 +73,8 @@ export default class Situation extends Scene {
     }
     handleCollission(prop, propIndex, elapsed) {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
+            console.log('gay');
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex);
             }

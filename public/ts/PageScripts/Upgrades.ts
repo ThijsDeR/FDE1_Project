@@ -1,6 +1,6 @@
 import UserData from "../UserData.js"
 
-const upgrades = document.querySelectorAll('ul#upgrades > li')
+const upgrades = document.querySelectorAll('.upgrade')
 
 const userdata = new UserData();
 

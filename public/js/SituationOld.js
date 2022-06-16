@@ -27,9 +27,9 @@ export default class SituationOld extends ImageProp {
                 this.newButton();
         }
     }
-    update(elapsed) {
-        this.timeSinceLastPress += elapsed;
-    }
+    // public update(elapsed: number) {
+    //     this.timeSinceLastPress += elapsed;
+    // }
     draw(ctx) {
         super.draw(ctx);
         this.button.draw(ctx);

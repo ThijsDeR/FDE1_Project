@@ -1,7 +1,15 @@
 import ImageProp from "./ImageProp.js"
 
 export default class TrackProp extends ImageProp {
-    private vectors: {xPos1: number, yPos1: number, xPos2: number, yPos2: number, xVel: number, yVel: number}[];
+    private vectors:
+        {
+            xPos1: number,
+            yPos1: number,
+            xPos2: number,
+            yPos2: number,
+            xVel: number,
+            yVel: number
+        }[]
 
     private currentVector: number;
 
@@ -10,7 +18,6 @@ export default class TrackProp extends ImageProp {
 
         this.vectors = vectors;
         this.currentVector = 0;
-
     }
 
     // public move(elapsed: number): void {
@@ -26,8 +33,8 @@ export default class TrackProp extends ImageProp {
     //         ) this.yPos += vector.yVel * elapsed
     // }
 
-    public update() {
-
+    public update(elapsed: number) {
+        super.update(elapsed)
         if (this.isDoneXVel() && this.isDoneYVel()) {
             if (this.vectors.length > this.currentVector + 1) {
                 this.currentVector += 1
@@ -47,16 +54,16 @@ export default class TrackProp extends ImageProp {
         const vector = this.vectors[this.currentVector]
 
         return ((vector.xPos1 < vector.xPos2 && this.xPos >= vector.xPos2)
-        || (vector.xPos1 > vector.xPos2 && this.xPos <= vector.xPos2)
-        || (this.xPos === vector.xPos2))
+            || (vector.xPos1 > vector.xPos2 && this.xPos <= vector.xPos2)
+            || (this.xPos === vector.xPos2))
     }
 
     private isDoneYVel() {
         const vector = this.vectors[this.currentVector]
 
         return ((vector.yPos1 < vector.yPos2 && this.yPos >= vector.yPos2)
-        || (vector.yPos1 > vector.yPos2 && this.yPos <= vector.yPos2)
-        || (this.yPos === vector.yPos2))
+            || (vector.yPos1 > vector.yPos2 && this.yPos <= vector.yPos2)
+            || (this.yPos === vector.yPos2))
     }
 
     public scroll(elapsed: number, scrollSpeed: number): void {

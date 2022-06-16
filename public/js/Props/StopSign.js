@@ -1,7 +1,7 @@
 import ImageProp from "./ImageProp.js";
 export default class StopSign extends ImageProp {
-    constructor(xPos, yPos, xVel, yVel, width, height, imageUrl) {
-        super(xPos, yPos, xVel, yVel, width, height, imageUrl);
+    constructor(xPos, yPos, xVel, yVel, width, height, imageUrl, turning = false) {
+        super(xPos, yPos, xVel, yVel, width, height, imageUrl, turning);
         this.timeStopped = 0;
     }
     isActive() {

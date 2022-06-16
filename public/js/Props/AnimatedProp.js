@@ -1,8 +1,8 @@
 import Animator from "../Animator.js";
-import Prop from "./Prop.js";
-export default class AnimatedProp extends Prop {
-    constructor(xPos, yPos, xVel, yVel, width, height, images) {
-        super(xPos, yPos, xVel, yVel, width, height);
+import ImageProp from "./ImageProp.js";
+export default class AnimatedProp extends ImageProp {
+    constructor(xPos, yPos, xVel, yVel, width, height, images, turning = true) {
+        super(xPos, yPos, xVel, yVel, width, height, images[0].image.src, turning);
         this.animator = new Animator(images);
     }
     getImage() {

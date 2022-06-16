@@ -86,8 +86,8 @@ export default abstract class Situation extends Scene {
         this.props.forEach((prop, propIndex) => {
             if (this.movePropsCheck()) {
                 prop.move(elapsed)
-                if (prop instanceof TrackProp) {
-                    prop.update()
+                if (prop instanceof TrackProp || prop instanceof ImageProp) {
+                    prop.update(elapsed)
                 }
             }
 
@@ -109,9 +109,10 @@ export default abstract class Situation extends Scene {
         return this.background.getYPos() + (this.background.getHeight() / 2) > 0
     }
 
-    protected handleCollission(prop: Prop, propIndex: number, elapsed: number) {
+    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number) {
         let gameOver = false;
-        if (prop.collidesWithOtherProp(this.player)) {
+        if (prop.collidesWithOtherImageProp(this.player)) {
+            console.log('gay')
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {
