@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Player from './Player.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -136,8 +137,7 @@ export default class Game {
       case 9:
         return new TrainRails(...data)
       default:
-        return new OncomingCyclist(...data)
-
+        return new TrainRails(...data)
     }
   }
 
@@ -147,6 +147,8 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.situation.processInput()
+    // Pause game if esc is pressed
+    this.situation.isPaused()
   }
 
   /**
@@ -170,7 +172,6 @@ export default class Game {
     // Spawn a new scoring object every 45 frames
 
     this.scrollBackground(elapsed);
-
 
     const result = this.situation.update(elapsed);
     if (result === Situation.GAME_OVER) {

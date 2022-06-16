@@ -37,7 +37,9 @@ export default class PedestrianCrossingVan extends Situation {
                 xVel: -0.1,
                 yVel: 0
             },
-        ], this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+        ], 
+        // Pedestrian image parameters
+        this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
         Game.randomInteger(0, 1) === 1 ? this.props.push(personWalking) : '';
         let xPos;
         if (playerData.xPos)
@@ -48,7 +50,7 @@ export default class PedestrianCrossingVan extends Situation {
             xPos = this.background.getXPos() + this.background.getWidth() / 3;
         else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
             xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
-        this.player = new Player(xPos, this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

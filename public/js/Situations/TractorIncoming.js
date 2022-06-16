@@ -24,7 +24,6 @@ export default class TractorIncoming extends Situation {
         else if (xPos > this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5))
             xPos = this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5);
         this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
-
     }
     // 
     handleCollission(prop, propIndex) {

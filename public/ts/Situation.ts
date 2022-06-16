@@ -14,19 +14,21 @@ export default abstract class Situation extends Scene {
 
     public static readonly FINISHED: number = 2;
 
+    public static readonly PAUSED: number = 3;
+
     protected crashSound: HTMLAudioElement;
 
     protected player: Player;
-    
+
     protected props: ImageProp[];
 
     protected background: ImageProp;
 
-    protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+    protected upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
 
     protected mist: boolean
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
         super(canvas, userData)
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3')
@@ -51,6 +53,12 @@ export default abstract class Situation extends Scene {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
 
+    public isPaused() {
+        if (this.player.isPausing() === true) {
+            return Situation.PAUSED;
+        }
+    }
+
     public getPlayerYVel() {
         return this.player.getYVel();
     }
@@ -63,7 +71,7 @@ export default abstract class Situation extends Scene {
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
-        this.background.scroll(elapsed, this.player.getYVel())     
+        this.background.scroll(elapsed, this.player.getYVel())
 
         if (this.finishedCheck()) {
             return Situation.FINISHED;
@@ -71,7 +79,7 @@ export default abstract class Situation extends Scene {
 
         let gameOver = this.handleProps(elapsed)
 
-        if(this.player.getStamina() >= 0) this.handleStaminaDepletion()
+        if (this.player.getStamina() >= 0) this.handleStaminaDepletion()
         else gameOver = true;
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
@@ -96,7 +104,7 @@ export default abstract class Situation extends Scene {
             let propCollission = this.handleCollission(prop, propIndex, elapsed)
             if (propCollission) gameOver = true;
 
-            
+
 
             let extraPropHandling = this.extraPropHandling(prop, propIndex)
             if (extraPropHandling) gameOver = true

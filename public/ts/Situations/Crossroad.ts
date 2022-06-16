@@ -127,7 +127,7 @@ export default class Crossroad extends Situation {
             0,
             this.background.getWidth() / 20,
             this.background.getHeight() / 8,
-            stamina
+            playerData.stamina
         )
 
         Game.randomInteger(0, 1) === 1 ? this.props.push(badCycle) : this.props.push(goodCycle)

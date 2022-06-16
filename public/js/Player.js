@@ -75,6 +75,15 @@ export default class Player extends AnimatedProp {
         else
             this.yVel = Player.MAX_SPEED / 4;
     }
+    isPausing() {
+        if (this.keyListener.isKeyDown(KeyListener.KEY_ESC)) {
+            console.log('pause');
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     move(elapsed) {
         this.xPos += this.xVel * elapsed;
     }

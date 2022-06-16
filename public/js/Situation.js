@@ -25,6 +25,11 @@ export default class Situation extends Scene {
     processInput() {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
+    isPaused() {
+        if (this.player.isPausing() === true) {
+            return Situation.PAUSED;
+        }
+    }
     getPlayerYVel() {
         return this.player.getYVel();
     }
@@ -102,3 +107,4 @@ export default class Situation extends Scene {
 Situation.NOT_DONE = 0;
 Situation.GAME_OVER = 1;
 Situation.FINISHED = 2;
+Situation.PAUSED = 3;
