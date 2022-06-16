@@ -1,8 +1,5 @@
-import Game from "../Game.js";
 import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
-import Prop from "../Props/Prop.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
@@ -12,11 +9,31 @@ export default class TractorIncoming extends Situation {
 
 
     public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+
         super(canvas, userData, upgrades)
 
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
+        // Create situation background
+        this.background = new ImageProp(
+            canvas.width / 3,
+            -canvas.height,
+            0,
+            0,
+            canvas.width / 2,
+            canvas.height,
+            './assets/img/Polderweg.png',
+            false
+        )
+
+        // Create props in situation
         this.props = [
-            new Tractor(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5),
+            // Create tractor
+            new Tractor(
+                this.background.getXPos() + (this.background.getWidth() / 2.7),
+                this.background.getYPos(),
+                0,
+                0.05,
+                this.background.getWidth() / 5,
+                this.background.getHeight() / 5),
         ]
         this.canvas = canvas;
 
@@ -30,7 +47,8 @@ export default class TractorIncoming extends Situation {
 
     }
 
-    protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number): boolean {
+    // 
+    protected handleCollission(prop: ImageProp, propIndex: number): boolean {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
@@ -41,20 +59,23 @@ export default class TractorIncoming extends Situation {
             }
         }
 
+        // Fail player if speeding past tractor
         if (prop instanceof Tractor) {
             if (this.player.getYVel() === Player.MAX_SPEED_X &&
-            this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
-            this.player.getYPos() <= prop.getYPos()) {
+                this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
+                this.player.getYPos() <= prop.getYPos()) {
                 gameOver = true;
             }
         }
-
         return gameOver
-
-
     }
 
+    // Set boundaries to the player's movements
     public processInput() {
-        this.player.processInput(this.canvas, this.background.getXPos() + (this.background.getWidth() / 4), this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5));
+        this.player.processInput(
+            this.canvas,
+            this.background.getXPos() + (this.background.getWidth() / 4),
+            this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5)
+        )
     }
 }

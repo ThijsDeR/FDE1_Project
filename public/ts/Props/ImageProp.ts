@@ -19,7 +19,6 @@ export default class ImageProp extends Prop {
         this.degrees = this.calculateDirection()
     }
 
-
     public getImage() {
         return this.image;
     }

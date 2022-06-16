@@ -6,32 +6,48 @@ import Situation from "../Situation.js";
 export default class SchoolStreet extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
+        // Situation background parameters
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
+        // Add props to situation
         this.props = [];
+        // Create multiple identical props
         for (let i = 0; i < 20; i++) {
             let yPos = this.background.getYPos() + (this.background.getHeight() / 20) * i;
+            // Pedestrian walking towards the left
             const personWalkingLeft = new TrackProp([
                 {
-                    xPos1: this.background.getXPos() + (this.background.getWidth() / 3) * 2, yPos1: yPos,
-                    xPos2: this.background.getXPos(), yPos2: yPos,
-                    xVel: -Game.randomInteger(0, 50) / 100, yVel: 0
+                    xPos1: this.background.getXPos() + (this.background.getWidth() / 3) * 2,
+                    yPos1: yPos,
+                    xPos2: this.background.getXPos(),
+                    yPos2: yPos,
+                    xVel: -Game.randomInteger(0, 50) / 100,
+                    yVel: 0
                 },
-            ], this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+            ], 
+            // Properties of personWalkingLeft image
+            this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+            // Pedestrian walking towards the right
             const personWalkingRight = new TrackProp([
                 {
-                    xPos1: this.background.getXPos(), yPos1: yPos,
-                    xPos2: this.background.getXPos() + (this.background.getWidth() / 3) * 2, yPos2: yPos,
-                    xVel: Game.randomInteger(0, 50) / 100, yVel: 0
+                    xPos1: this.background.getXPos(),
+                    yPos1: yPos,
+                    xPos2: this.background.getXPos() + (this.background.getWidth() / 3) * 2,
+                    yPos2: yPos,
+                    xVel: Game.randomInteger(0, 50) / 100,
+                    yVel: 0
                 },
-            ], this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
-            switch (Game.randomInteger(0, 2)) {
+            ], 
+            // Properties of personWalkingLeft image
+            this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+            // Decide which props to create
+            switch (Game.randomInteger(0, 1)) {
                 case 0:
                     this.props.push(personWalkingLeft);
-                    break;
                 case 1:
                     this.props.push(personWalkingRight);
             }
         }
+
         let xPos;
         if (playerData.xPos)
             xPos = playerData.xPos;

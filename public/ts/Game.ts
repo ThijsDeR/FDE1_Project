@@ -2,7 +2,6 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import PrioritySameRoad from './Situations/PrioritySameRoad.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -14,9 +13,12 @@ import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
+import PrioritySameRoad from './Situations/PrioritySameRoad.js';
+import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
 
 /**
@@ -135,6 +137,7 @@ export default class Game {
         return new TrainRails(...data)
       default:
         return new OncomingCyclist(...data)
+
     }
   }
 

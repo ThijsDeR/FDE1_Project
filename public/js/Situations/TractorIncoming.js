@@ -6,8 +6,11 @@ import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
+        // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
+        // Create props in situation
         this.props = [
+            // Create tractor
             new Tractor(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.05, this.background.getWidth() / 5, this.background.getHeight() / 5),
         ];
         this.canvas = canvas;
@@ -21,8 +24,10 @@ export default class TractorIncoming extends Situation {
         else if (xPos > this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5))
             xPos = this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5);
         this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
+
     }
-    handleCollission(prop, propIndex, elapsed) {
+    // 
+    handleCollission(prop, propIndex) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
@@ -33,6 +38,7 @@ export default class TractorIncoming extends Situation {
                 gameOver = true;
             }
         }
+        // Fail player if speeding past tractor
         if (prop instanceof Tractor) {
             if (this.player.getYVel() === Player.MAX_SPEED_X &&
                 this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
@@ -42,6 +48,7 @@ export default class TractorIncoming extends Situation {
         }
         return gameOver;
     }
+    // Set boundaries to the player's movements
     processInput() {
         this.player.processInput(this.canvas, this.background.getXPos() + (this.background.getWidth() / 4), this.background.getXPos() + this.background.getWidth() - (this.background.getWidth() / 3.5));
     }
