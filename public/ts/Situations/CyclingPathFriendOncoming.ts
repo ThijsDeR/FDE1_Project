@@ -11,16 +11,8 @@ export default class CyclingPathFriendOncoming extends Situation {
         canvas: HTMLCanvasElement,
         userData: UserData,
         stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            },
-            stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
+        upgrades: Upgrades
+    ) {
 
         super(canvas, userData, upgrades)
 

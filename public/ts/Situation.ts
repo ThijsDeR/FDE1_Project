@@ -22,16 +22,20 @@ export default abstract class Situation extends Scene {
 
     protected background: ImageProp;
 
-    protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+    protected upgrades: Upgrades;
 
-    protected mist: boolean
+    protected isMist: boolean
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+    protected currentMist: number;
+
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades) {
         super(canvas, userData)
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3')
         this.crashSound.volume = 0.7
-        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
+        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        this.currentMist = 0
+
     }
 
     public render() {
@@ -41,9 +45,10 @@ export default abstract class Situation extends Scene {
         })
         this.player.draw(this.ctx);
 
-        if (this.mist) {
-            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
-            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight())
+        if (this.isMist) {
+            const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 1000), 0) + 0.05
+            this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
+            this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10)
         }
     }
 
@@ -63,7 +68,12 @@ export default abstract class Situation extends Scene {
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
-        this.background.scroll(elapsed, this.player.getYVel())     
+        this.background.scroll(elapsed, this.player.getYVel())
+        if (this.isMist) {
+            if (!this.vanishMist()) {
+                if (this.currentMist <= 0.85) this.currentMist += Math.min(elapsed / 1000, 0.004)
+            } else this.currentMist -= Math.min(elapsed / 400, 0.01)
+        }
 
         if (this.finishedCheck()) {
             return Situation.FINISHED;
@@ -75,6 +85,10 @@ export default abstract class Situation extends Scene {
         else gameOver = true;
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
+    }
+
+    protected vanishMist() {
+        return this.player.getYPos() < this.background.getYPos() - (this.background.getHeight() / 2)
     }
 
     protected finishedCheck() {
@@ -112,7 +126,6 @@ export default abstract class Situation extends Scene {
     protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
-            console.log('gay')
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {
