@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\ExplanationController;
 use App\Models\Player;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::get('/', function () {
 
 Route::get('/localstorage', [GameController::class, 'localstorage'])->name('localstorage')->middleware('auth');
 Route::get('/game', [GameController::class, 'game'])->name('game')->middleware('auth');
+Route::get('/explanation', [ExplanationController::class, 'explantion'])->name('explantion')->middleware('auth');
 
 Route::get('/login', [AuthController::class, 'show'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -41,3 +43,4 @@ Route::put('/players/addVP/{token}', [PlayerController::class, 'addVP'])->name('
 
 Route::put('/profile/upgrade/{token}', [PlayerController::class, 'upgrade'])->name('player.upgrade');
 Route::get('/profile/getUpgrade/{name}/{token}', [PlayerController::class, 'getUpgrade'])->name('player.getUpgrade');
+
