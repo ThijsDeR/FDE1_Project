@@ -56,9 +56,7 @@ export default class ParkingSpotCar extends Situation {
             xVel: 0,
             yVel: -1
         }) : '';
-        // Add car
         const car = new TrackProp(carVectors, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png');
-        // Decide whether or not to spawn a car
         Game.randomInteger(0, 5) === 1 ? '' : this.props.push(car);
         let xPos;
         if (playerData.xPos)
@@ -69,8 +67,7 @@ export default class ParkingSpotCar extends Situation {
             xPos = this.background.getXPos() + this.background.getWidth() / 3;
         else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
             xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
-        this.player = new Player(xPos, this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
-
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

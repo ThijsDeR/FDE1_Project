@@ -6,17 +6,15 @@ import GameOverScene from './GameOverScene.js';
 // Import situations
 import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 import Crossroad from './Situations/Crossroad.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
 import PrioritySameRoad from './Situations/PrioritySameRoad.js';
-import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
-import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
-
 /**
  * Main class of this Game.
  */
@@ -46,7 +44,6 @@ export default class Game {
         this.gameOver = false;
         this.upgrades = upgrades;
         // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
-
         this.situation = this.newSituation(100);
         this.cutScene = null;
     }
@@ -91,12 +88,9 @@ export default class Game {
             case 8:
                 return new SchoolStreet(...data);
             case 9:
-
-                return new TrainRails(this.canvas, this.userData, stamina, this.upgrades);
-            case 10:
-                return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades);
+                return new TrainRails(...data);
             default:
-                return new TrainRails(this.canvas, this.userData, stamina, this.upgrades);
+                return new OncomingCyclist(...data);
         }
     }
     /**

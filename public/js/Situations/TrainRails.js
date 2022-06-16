@@ -28,7 +28,7 @@ export default class TrainRails extends Situation {
             xPos = this.background.getXPos() + this.background.getWidth() / 3;
         else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
             xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
-        this.player = new Player(xPos, this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {
