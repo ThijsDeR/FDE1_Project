@@ -5,7 +5,7 @@ import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class Crossroad extends Situation {
-    constructor(canvas, userData, stamina, upgrades) {
+    constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData, upgrades);
         // Background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
@@ -49,19 +49,19 @@ export default class Crossroad extends Situation {
                 xVel: 0.0000000000000000000000001,
                 yVel: 0
             },
-        ], 
-        // Bicycle image properties
-        this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png');
-        // Choose between good and bad cyclist
-        Game.randomInteger(0, 1) === 1
-            ? this.props.push(badCycle)
-            : this.props.push(goodCycle);
-        // Create player
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
-        // Situation background properties
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png');
-        // Create player
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina);
+        ], this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png');
+        Game.randomInteger(0, 1) === 1 ? this.props.push(badCycle) : this.props.push(goodCycle);
+        let xPos;
+        if (playerData.xPos)
+            xPos = playerData.xPos;
+        else
+            xPos = this.background.getXPos() + this.background.getWidth() / 2;
+        if (xPos < this.background.getXPos() + this.background.getWidth() / 3)
+            xPos = this.background.getXPos() + this.background.getWidth() / 3;
+        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
+            xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
+        this.player = new Player(xPos, this.background.getWidth() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
+
     }
     // Set boundaries to the player's movements
     processInput() {

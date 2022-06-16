@@ -6,18 +6,8 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class PrioritySameRoad extends Situation {
-    public constructor(canvas: HTMLCanvasElement,
-        userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            }, stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+
         super(canvas, userData, upgrades)
 
         // Create situation background
@@ -86,17 +76,13 @@ export default class PrioritySameRoad extends Situation {
                 10
             )
         ]
+        let xPos
+        if (playerData.xPos) xPos = playerData.xPos
+        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
+        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
+        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
 
-        // Create player
-        this.player = new Player(
-            this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2),
-            this.background.getHeight() / 1.2,
-            0,
-            0,
-            this.background.getWidth() / 20,
-            this.background.getHeight() / 8,
-            stamina
-        )
     }
 
     // Set boundaries to the player's movements
