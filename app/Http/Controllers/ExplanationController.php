@@ -11,6 +11,6 @@ class ExplanationController extends Controller
     }
 
     public function explanation() {
-        return view('explantion');
+        return view('explanation');
     }
 }

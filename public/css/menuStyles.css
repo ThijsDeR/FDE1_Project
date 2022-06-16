@@ -9,14 +9,17 @@
 }
 
 .big-button-container a {
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
+    bottom: 150%;
     transform: translate(-50%, -50%);
     font-size: calc(2.5vw + 2.5vh);
     width: 40vw;
     height: 20vh;
+    display: block;
 }
+
 
 div.mute-button {
     position: absolute;
@@ -27,7 +30,7 @@ div.mute-button {
     background-image: url('/assets/volume-on.png');
     background-size: 50px 50px;
 }
-  
+
 div.mute-button.active {
     background-image: url('/assets/volume-off.png');
 }
