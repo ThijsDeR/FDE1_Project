@@ -1,20 +1,17 @@
 import CutScene from "./CutScene.js";
-import KeyListener from "./KeyListener.js";
 import Button from "./Props/Button.js";
 import Scene from "./Scene.js";
-export default class GameOverScene extends CutScene {
+export default class PauseScene extends CutScene {
     constructor(canvas, userData) {
         super(canvas, userData);
-        this.keyListener = KeyListener;
         this.update = (elapsed) => this.paused;
         const buttonWidth = (this.canvas.width / 4);
         const buttonHeight = (this.canvas.height / 6);
         const betweenButtonHeight = (this.canvas.height / 10);
+        this.paused = true;
         this.props = [
-            // TODO: Continue button
             new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight), buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Continue', this.canvas.height / 20, 'fill', 'continue'),
-            // Menu button
-            new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight) * 2, buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Menu', this.canvas.height / 20, 'fill', 'menu')
+            new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight) * 2, buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Menu', this.canvas.height / 20, 'fill', 'menu'),
         ];
         const hoverFunction = (event) => {
             this.props.forEach((prop) => {
@@ -50,7 +47,7 @@ export default class GameOverScene extends CutScene {
         this.props.forEach((prop) => {
             prop.draw(this.ctx);
         });
-        Scene.writeTextToCanvas(this.ctx, 'Game Over!', this.canvas.width / 2, this.canvas.height / 8, 30);
+        Scene.writeTextToCanvas(this.ctx, 'The game is paused.', this.canvas.width / 2, this.canvas.height / 8, 30);
     }
     processInput() {
     }

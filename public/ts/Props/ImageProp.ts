@@ -56,7 +56,6 @@ export default class ImageProp extends Prop {
 
     public update(elapsed: number) {
         this.changeDirection(elapsed)
-        console.log(this.degrees)
     }
 
     public collidesWithOtherImageProp(prop: ImageProp) {

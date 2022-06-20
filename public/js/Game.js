@@ -14,6 +14,7 @@ import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
+import PauseScene from './PauseScene.js';
 /**
  * Main class of this Game.
  */
@@ -131,11 +132,13 @@ export default class Game {
             if (result === Situation.FINISHED)
                 this.situation = this.newSituation(this.situation.getPlayerStamina());
             if (result === Situation.PAUSED) {
-                this.cutScene = new GameOverScene(this.canvas, this.userData);
+                this.cutScene = new PauseScene(this.canvas, this.userData);
             }
         }
         else {
-            this.cutScene.update(elapsed);
+            const paused = this.cutScene.update(elapsed);
+            if (!paused)
+                this.cutScene = null;
         }
         return false;
     }

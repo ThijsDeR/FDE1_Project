@@ -33,7 +33,6 @@ export default class ImageProp extends Prop {
     }
     update(elapsed) {
         this.changeDirection(elapsed);
-        console.log(this.degrees);
     }
     collidesWithOtherImageProp(prop) {
         let prop1Width = this.width;
