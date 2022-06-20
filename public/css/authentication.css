@@ -29,6 +29,7 @@
 #register-button {
     text-decoration: none;
     background-color: aquamarine;
+    margin-bottom: 100vh;
 }
 
 #register-button:hover {
@@ -47,21 +48,14 @@
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: calc(0.8vw + 0.8vh);
 }
-#no-account {
-    text-align: center;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: calc(0.8vw + 0.8vh);
-    margin-top: 5vh;
-}
+
 
 #button-container {
     width: 100%;
     height: 50vh;
+    display: grid;
 }
 
 .buttons {
-    margin-top: 10px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
+    margin: 1vh 1vw 1vh 1vw;
 }

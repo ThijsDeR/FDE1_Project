@@ -13,7 +13,7 @@
             <div id="leftupgrade">
                 <div class="upgrade" id="stamina_resistance">
                     <p>Stamina<br> Weerstand: <strong><span class="level"></span></strong></p> 
-                    <button class="buy"><span class="price"></span> VP</button>
+                    <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
                 </div>
             </div>
             <div class="info">
@@ -25,12 +25,12 @@
             <div id="rightupgrade">
                 <div class="upgrade" id="stamina_gain">
                     <p>Stamina<br> Verkrijgen: <strong><span class="level"></strong></span></p> 
-                    <button class="buy"><span class="price"></span> VP</button>
+                    <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
                 </div>
             </div>
         </div>
         <div>
-            <a href="{{route('profile')}}" id="backButton">Back</a>
+            <a href="{{route('profile')}}" class= "nice-button buttons" id="backButton">Back</a>
         </div>
     </div>
 @endsection

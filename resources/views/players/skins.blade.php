@@ -17,7 +17,7 @@
             </div>
         </div>
         <div>
-            <a href="{{route('profile')}}" id="backButton">Back</a>
+            <a href="{{route('profile')}}" class="nice-button" id="backButton">Back</a>
         </div>
         
     </div>

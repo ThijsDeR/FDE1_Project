@@ -23,14 +23,10 @@
                 <input type="text" id="username" name="username">
             </div>
 
-            <hr/>
-
             <div id="input-container">
                 <label id="password" for="password">Wachtwoord</label>
                 <input type="password" id="password" name="password">
             </div>
-
-            <hr/>
 
             <div id="submit-container"> 
                 <div id="button-container">
