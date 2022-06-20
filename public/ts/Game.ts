@@ -168,19 +168,29 @@ export default class Game {
       return false;
     }
 
-    this.totalScore += this.situation.getPlayerYVel()
-    // Spawn a new scoring object every 45 frames
+   
 
-    this.scrollBackground(elapsed);
+    
 
-    const result = this.situation.update(elapsed);
-    if (result === Situation.GAME_OVER) {
-      this.userData.changeHighScore(this.totalScore);
-      this.userData.addVP(this.totalScore);
-      this.cutScene = new GameOverScene(this.canvas, this.userData)
-      this.gameOver = true;
+    if (!this.cutScene) {
+      this.totalScore += this.situation.getPlayerYVel()
+      
+      this.scrollBackground(elapsed);
+      const result = this.situation.update(elapsed);
+      if (result === Situation.GAME_OVER) {
+        this.userData.changeHighScore(this.totalScore);
+        this.userData.addVP(this.totalScore);
+        this.cutScene = new GameOverScene(this.canvas, this.userData)
+        this.gameOver = true;
+      }
+      if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
+  
+      if (result === Situation.PAUSED) {
+        this.cutScene = new GameOverScene(this.canvas, this.userData)
+      }
+    } else {
+      this.cutScene.update(elapsed)
     }
-    if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
 
 
     return false;

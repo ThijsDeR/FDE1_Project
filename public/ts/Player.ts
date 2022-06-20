@@ -90,15 +90,6 @@ export default class Player extends AnimatedProp {
     } else this.yVel = Player.MAX_SPEED / 4;
   }
 
-  public isPausing(): boolean {
-    if (this.keyListener.isKeyDown(KeyListener.KEY_ESC)) {
-      console.log('pause')
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public move(elapsed: number) {
     this.xPos += this.xVel * elapsed;
   }
@@ -110,5 +101,9 @@ export default class Player extends AnimatedProp {
 
   public isStopped() {
     return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+  }
+
+  public isPausing() {
+    return this.keyListener.isKeyDown(KeyListener.KEY_ESC);
   }
 }

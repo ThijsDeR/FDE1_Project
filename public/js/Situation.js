@@ -49,6 +49,9 @@ export default class Situation extends Scene {
             this.handleStaminaDepletion();
         else
             gameOver = true;
+        if (this.isPaused()) {
+            return Situation.PAUSED;
+        }
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
     finishedCheck() {
