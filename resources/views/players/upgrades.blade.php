@@ -17,7 +17,7 @@
                 </div>
                 <div class="upgrade" id="stamina_gain">
                     <p>Stamina<br> Verkrijgen: <strong><span class="level"></strong></span></p> 
-                    <button class="buy"><span class="price"></span> VP</button>
+                    <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
                 </div>
             </div>
             <div class="info">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="upgrade" id="lamp_power">
                     <p>Lamp<br> Kracht: <strong><span class="level"></strong></span></p> 
-                    <button class="buy"><span class="price"></span> VP</button>
+                    <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
 
                 </div>
             </div>
