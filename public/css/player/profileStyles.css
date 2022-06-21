@@ -3,11 +3,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50vw;
-    height: 50vh;
+    width: 75vw;
+    height: 75vh;
     background-color: white;
     border-radius: 50px;
     padding: 1vh 1vw;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 #profile-container h2{
@@ -15,17 +17,46 @@
 }
 
 #shops {
-    margin-top: 10vh;
+    margin-top: 2vh;
     display: flex;
+    height: 10vh;
     justify-content: space-around;
+    width: 100%;
+    height: 50vh;
 }
 
 #shops a {
-    background-color: blue;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    text-decoration: none;
+    background-color: aquamarine;
+
+}
+
+#skins {
+    display: flex;
+    justify-content: space-around;
+    height: 30vh;
+}
+
+#skins #bicycleSkin, #skins #staminaSkin {
+    display: grid;
+    grid-template-rows: 70% 30%;
+    justify-content: space-between;
+}
+
+#skins img {
+    width: 20%;
+    height: auto;
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.buttons button{
+    margin: 0.5vh 1vw;
+    width: 10vw;
+    height: 7.5vh;
+
 }

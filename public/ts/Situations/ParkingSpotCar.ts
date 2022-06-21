@@ -9,18 +9,12 @@ export default class ParkingSpotCar extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            }, stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, upgrades, skins)
 
         // Situation background parameters
         this.background = new ImageProp(
@@ -85,27 +79,17 @@ export default class ParkingSpotCar extends Situation {
             },
         ) : ''
 
-        // Add car
-        const car = new TrackProp(
-            carVectors,
-            this.background.getWidth() / 10,
-            this.background.getHeight() / 5,
-            './assets/img/objects/car.png'
-        )
-
-        // Decide whether or not to spawn a car
+        const car = new TrackProp(carVectors, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png')
         Game.randomInteger(0, 5) === 1 ? '' : this.props.push(car)
 
-        // Add player
-        this.player = new Player(
-            this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2),
-            this.background.getWidth() / 1.2,
-            0,
-            0,
-            this.background.getWidth() / 20,
-            this.background.getHeight() / 8,
-            stamina
-        )
+        let xPos
+        if (playerData.xPos) xPos = playerData.xPos
+        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
+        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
+        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20,this.background.getHeight() / 8, playerData.stamina)
+
+
     }
 
     // Set boundaries to the player's movements

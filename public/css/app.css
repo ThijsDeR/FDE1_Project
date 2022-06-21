@@ -99,3 +99,10 @@ button.is-light {
   padding: 1rem;
   width: 10%;
 }
+
+input[type=text], input[type=password], select {
+  display: inline-block;
+  border: 0.2vh solid #ccc;
+  border-radius: 1vh;
+  box-sizing: border-box;
+}

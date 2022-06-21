@@ -20,22 +20,20 @@
             @endif
             
             <div id="input-container">
-                <label for="username">Gebruikernaam</label>
+                <label id="username" for="username">Gebruikersnaam</label>
                 <input type="text" id="username" name="username">
             </div>
 
-            <hr/>
-
             <div id="input-container">
-                <label for="password">Wachtwoord</label>
+                <label id="password" for="password">Wachtwoord</label>
                 <input type="password" id="password" name="password">
             </div>
 
-            <hr/>
-
             <div id="submit-container"> 
-                <button type="submit" class="nice-button">Login</button>
-                <a href="{{route('register')}}" id="register-button">Nog geen Account? Registreer</a>
+                <div id="button-container">
+                    <button type="submit" class="nice-button buttons" >Login</button>
+                    <a href="{{route('register')}}" class= "nice-button buttons" id="register-button" >Registreer</a>
+                </div>
             </div>
         </form>
     </div>

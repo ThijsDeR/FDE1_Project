@@ -12,6 +12,8 @@ nav#navbar {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 nav#navbar h2 {

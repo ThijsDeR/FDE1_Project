@@ -82,6 +82,48 @@ export default class UserData {
             }
         });
     }
+    buySkin(skin_type, skin_id) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`/profile/skins/${this.token}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ skin_type: skin_type, skin_id: skin_id })
+            });
+            return response;
+        });
+    }
+    getSkin(skin_type) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const rawResponse = yield fetch(`/profile/getSkin/${skin_type}/${this.token}`, {
+                headers: {
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                }
+            });
+            const response = yield rawResponse.json();
+            return response;
+        });
+    }
+    changeSkin(skin_type, amount) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`/profile/changeSkin/${skin_type}/${this.token}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
+                },
+                body: JSON.stringify({ amount: amount })
+            });
+            return response;
+        });
+    }
     getUpgrade(upgrade) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
