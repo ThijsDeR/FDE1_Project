@@ -8,6 +8,8 @@
     background-color: white;
     border-radius: 50px;
     padding: 1vh 1vw;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 #title {
