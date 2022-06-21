@@ -45,7 +45,14 @@ export default class Button extends Prop {
         style: string,
         id: string,
     ) {
-        super(xPos, yPos, 0, 0, width, height);
+        super(
+            xPos,
+            yPos,
+            0,
+            0,
+            width,
+            height
+        )
 
         this.color = color;
         this.originalColor = color;

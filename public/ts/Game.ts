@@ -2,7 +2,6 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import PrioritySameRoad from './Situations/PrioritySameRoad.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -14,9 +13,12 @@ import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
+import PrioritySameRoad from './Situations/PrioritySameRoad.js';
+import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
 
 /**
@@ -41,7 +43,7 @@ export default class Game {
 
   private gameOver: boolean;
 
-  private upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
+  private upgrades: Upgrades;
 
   private cutScene: CutScene | null;
 
@@ -50,7 +52,7 @@ export default class Game {
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+  public constructor(canvas: HTMLElement, upgrades: Upgrades) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -76,9 +78,9 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
+    // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
 
-    // this.situation = this.newSituation(100)
+    this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
@@ -110,29 +112,32 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
+    const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades]
     switch (Game.randomInteger(0, 10)) {
       case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+        return new CyclingPathIncomingTraffic(...data)
       case 1:
-        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+        return new Crossroad(...data)
       case 2:
-        return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades)
+        return new CarDriveway(...data)
       case 3:
-        return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+        return new CrossroadStopSign(...data)
       case 4:
-        return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
+        return new TractorIncoming(...data)
       case 5:
-        return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
+        return new PrioritySameRoad(...data)
       case 6:
-        return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
+        return new ParkingSpotCar(...data)
       case 7:
-        return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
+        return new PedestrianCrossingVan(...data)
       case 8:
-        return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
+        return new SchoolStreet(...data)
       case 9:
-        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
+        return new TrainRails(...data)
       default:
-        return new OncomingCyclist(this.canvas, this.userData, stamina, this.upgrades)
+        return new OncomingCyclist(...data)
+
     }
   }
 

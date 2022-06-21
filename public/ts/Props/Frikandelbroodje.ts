@@ -11,6 +11,15 @@ export default class Frikandelbroodje extends StaminaBooster {
         imageUrl: string,
         staminaBoostAmount: number
     ) {
-        super(xPos, yPos, xVel, yVel, width, height, imageUrl, staminaBoostAmount);
+        super(
+            xPos,
+            yPos,
+            xVel,
+            yVel,
+            width,
+            height,
+            imageUrl,
+            staminaBoostAmount
+        )
     }
 }

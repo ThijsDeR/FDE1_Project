@@ -6,16 +6,20 @@ export default class Prop {
   protected width: number;
   protected height: number;
 
-
-
-  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number) {
+  public constructor(
+    xPos: number,
+    yPos: number,
+    xVel: number,
+    yVel: number,
+    width: number,
+    height: number
+  ) {
     this.xPos = xPos;
     this.yPos = yPos;
     this.xVel = xVel;
     this.yVel = yVel;
     this.width = width;
     this.height = height;
-
   }
 
   public getXPos() {
@@ -42,9 +46,11 @@ export default class Prop {
     return this.height
   }
 
-
-
-  public move(elapsed: number, xVel: number | null = null, yVel: number | null = null) {
+  public move(
+    elapsed: number,
+    xVel: number | null = null,
+    yVel: number | null = null
+  ) {
     xVel ? this.xPos += xVel * elapsed : this.xPos += this.xVel * elapsed;
     yVel ? this.yPos += yVel * elapsed : this.yPos += this.yVel * elapsed;
   }

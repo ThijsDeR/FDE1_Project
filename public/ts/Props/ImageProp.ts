@@ -19,7 +19,6 @@ export default class ImageProp extends Prop {
         this.degrees = this.calculateDirection()
     }
 
-
     public getImage() {
         return this.image;
     }
@@ -57,7 +56,6 @@ export default class ImageProp extends Prop {
 
     public update(elapsed: number) {
         this.changeDirection(elapsed)
-        console.log(this.degrees)
     }
 
     public collidesWithOtherImageProp(prop: ImageProp) {
@@ -92,22 +90,6 @@ export default class ImageProp extends Prop {
                 prop2Width = prop.getHeight()
                 prop2Height = this.getWidth()
             }
-
-            console.log(`
-                prop1:
-                xPos: ${prop1XPos}
-                yPos: ${prop1YPos}
-                width: ${prop1Width} 
-                height: ${prop1Height}
-            `)
-
-            console.log(`
-                prop2:
-                xPos: ${prop2XPos}
-                yPos: ${prop2YPos}
-                width: ${prop2Width} 
-                height: ${prop2Height}
-            `)
             if (
                 prop1XPos < prop2XPos + prop2Width
                 && prop1XPos + prop1Width > prop2XPos

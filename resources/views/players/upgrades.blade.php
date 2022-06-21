@@ -15,6 +15,10 @@
                     <p>Stamina<br> Weerstand: <strong><span class="level"></span></strong></p> 
                     <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
                 </div>
+                <div class="upgrade" id="stamina_gain">
+                    <p>Stamina<br> Verkrijgen: <strong><span class="level"></strong></span></p> 
+                    <button class="buy"><span class="price"></span> VP</button>
+                </div>
             </div>
             <div class="info">
                 <div id="imgContainer">
@@ -23,9 +27,15 @@
                 <p>Verkeers Punten: <strong><span id="vp">{{auth()->user()->player->vp}}</span></strong></p>            
             </div>
             <div id="rightupgrade">
+
                 <div class="upgrade" id="stamina_gain">
                     <p>Stamina<br> Verkrijgen: <strong><span class="level"></strong></span></p> 
                     <button class="upgrade-button nice-button buy"><span class="price"></span> VP</button>
+                </div>
+                <div class="upgrade" id="lamp_power">
+                    <p>Lamp<br> Kracht: <strong><span class="level"></strong></span></p> 
+                    <button class="buy"><span class="price"></span> VP</button>
+
                 </div>
             </div>
         </div>
