@@ -83,7 +83,7 @@ export default class Game {
     this.upgrades = upgrades;
     this.skins = skins;
 
-    // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
+    // this.situation = this.specificSituation(100)
 
     this.situation = this.newSituation(100)
 
@@ -144,6 +144,13 @@ export default class Game {
       default:
         return new TrainRails(...data)
     }
+  }
+
+  private specificSituation(stamina: number) {
+    const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+
+    return new CrossroadStopSign(...data);
   }
 
   /**

@@ -1,6 +1,5 @@
 import Game from "../Game.js";
 import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import Prop from "../Props/Prop.js";
 import StaminaBooster from "../Props/StaminaBooster.js";

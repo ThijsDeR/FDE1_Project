@@ -50,7 +50,7 @@ class PlayerSkin extends Model
                 }
 
                 if (!$owned) {
-                    array_push($playerStaminaSkins, ["id" => $stamina->id, "name" => $stamina->name, "src" => $stamina->src]);
+                    array_push($playerStaminaSkins, ["id" => $stamina->id, "name" => $stamina->name, "src" => $stamina->src, "baseStamina" => $stamina->baseStamina]);
 
 
                     $this->ownedStaminaSkins = json_encode($playerStaminaSkins);

@@ -8,7 +8,7 @@
                 <li><a href="{{route('profile')}}" class="nice-button">Profiel</a></li>
                 <li><a href="{{route('highscores')}}" class="nice-button">High Scores</a></li>
                 @if (auth()->user())
-                    <li><a href="./game" id="nice-button" class="nice-button" role="button">Start</a></li>
+                    <li><a href="/game" id="nice-button" class="nice-button" role="button">Start</a></li>
                 @endif
             </ul>
         </div>
