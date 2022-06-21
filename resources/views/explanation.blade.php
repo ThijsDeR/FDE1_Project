@@ -6,6 +6,8 @@
 @endsection
 
 @section('content')
+<div class="container">
+<div class="color-container">
 <div class="text-container">
     <h1>Uitleg</h1>
   <ul>
@@ -18,5 +20,7 @@
 </div>
 <img style="margin-top: 4vh;" src="./assets/img/objects/frikandelbroodje.png">
 <h3 style="margin-top: 0vh;">Probeer de frikandelbroodjes te verzamelen voor meer stamina</h3>
+</div>
+</div>
 </div>
 @endsection
