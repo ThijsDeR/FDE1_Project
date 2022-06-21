@@ -44,6 +44,14 @@ export default class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
+        if (this.isMist) {
+            if (!this.vanishMist()) {
+                if (this.currentMist <= 0.85)
+                    this.currentMist += Math.min(elapsed / 1000, 0.004);
+            }
+            else
+                this.currentMist -= Math.min(elapsed / 400, 0.01);
+        }
         if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
