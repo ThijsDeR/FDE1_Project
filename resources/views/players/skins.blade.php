@@ -7,17 +7,38 @@
 
 @section('content')
     <div id="shop-container">
-        <div id="upgrades">
-            <div id="leftupgrade">
-                
+        
+        <div id="skins">
+            <div id="leftskins">
+                @foreach($bicycleSkins as $bicycleSkin)
+                    @if(!$bicycleSkin->ownedByPlayer(auth()->user()->player))
+                        <div class="skin" id="{{$bicycleSkin->id}}" type="bicycle">
+                            <p>{{$bicycleSkin->name}}</p> 
+                            <img src="{{$bicycleSkin->src}}" alt="{{$bicycleSkin->name}}">
+                            <button class="buy"><span class="price">{{$bicycleSkin->price}}</span> VP</button>
+                        </div>
+                    @endif
+                @endforeach
             </div>
-            <img src="/assets/img/players/fiets1.png" alt="Fiets">
-            <div id="rightupgrade">
-                
+            <div id="rightskins">
+                @foreach($staminaSkins as $staminaSkin)
+                    @if(!$staminaSkin->ownedByPlayer(auth()->user()->player))
+                        <div class="skin" id="{{$staminaSkin->id}}" type="stamina">
+                            <p>{{$staminaSkin->name}}: <strong><span class="level"></span></strong></p> 
+                            <p>Base Stamina: {{$staminaSkin->baseStamina}}</p>
+                            <img src="{{$staminaSkin->src}}" alt="{{$staminaSkin->name}}">
+                            <button class="buy"><span class="price">{{$staminaSkin->price}}</span> VP</button>
+                        </div>
+                    @endif
+
+                @endforeach
             </div>
         </div>
-        <div>
-            <a href="{{route('profile')}}" class="nice-button" id="backButton">Back</a>
+        <div id="back-vp">
+            <a href="{{route('profile')}}" id="backButton">Back</a>
+            
+            <p>Verkeers Punten: <strong><span id="vp">{{$user->player->vp}}</span></strong></p>
+            
         </div>
         
     </div>

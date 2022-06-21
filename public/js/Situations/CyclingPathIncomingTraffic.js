@@ -1,12 +1,12 @@
 import Game from "../Game.js";
 import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, upgrades, skins);
         // Situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/MainRoadFixed.png', false);
         // Add props to situation
@@ -14,7 +14,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             // Static cyclist
             new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
             // Stamina booster
-            new Frikandelbroodje((this.background.getWidth() / 2) + (canvas.width / 3), this.background.getYPos() + (this.background.getHeight()), 0, 0, canvas.width / 15, canvas.height / 8, './assets/img/objects/frikandelbroodje.png', 10)
+            new StaminaBooster((this.background.getWidth() / 2) + (canvas.width / 3), this.background.getYPos() + (this.background.getHeight()), 0, 0, canvas.width / 15, canvas.height / 8, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))
         ];
         // Dynamic overtaking cyclist
         const cycle = new TrackProp([

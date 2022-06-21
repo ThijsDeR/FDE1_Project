@@ -1,6 +1,6 @@
 import ImageProp from "./ImageProp.js";
 
-export default abstract class StaminaBooster extends ImageProp {
+export default class StaminaBooster extends ImageProp {
     protected staminaBoostAmount: number;
 
     public constructor(

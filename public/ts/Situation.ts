@@ -24,27 +24,23 @@ export default abstract class Situation extends Scene {
 
     protected background: ImageProp;
 
-<<<<<<< HEAD
-    protected upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
-=======
     protected upgrades: Upgrades;
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
+
+    protected skins: Skins;
 
     protected isMist: boolean
 
-<<<<<<< HEAD
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
-=======
     protected currentMist: number;
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades) {
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades, skins: Skins) {
+
         super(canvas, userData)
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3')
         this.crashSound.volume = 0.7
         Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0
+        this.skins = skins
 
     }
 
@@ -85,14 +81,12 @@ export default abstract class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed)
         this.background.scroll(elapsed, this.player.getYVel())
-<<<<<<< HEAD
-=======
+
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85) this.currentMist += Math.min(elapsed / 1000, 0.004)
             } else this.currentMist -= Math.min(elapsed / 400, 0.01)
         }
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
 
         if (this.finishedCheck()) {
             return Situation.FINISHED;

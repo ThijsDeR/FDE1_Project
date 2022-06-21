@@ -1,13 +1,12 @@
 import Game from "../Game.js";
 import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import StopSign from "../Props/StopSign.js";
 import Situation from "../Situation.js";
 export default class CrossroadStopSign extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, upgrades, skins);
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt_2.png', false);
         // Create situation props
@@ -17,7 +16,7 @@ export default class CrossroadStopSign extends Situation {
             // Car
             new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
             // Stamina booster
-            new Frikandelbroodje(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
+            new StaminaBooster(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina)),
             // Stop sign
             new StopSign(this.background.getXPos() + this.background.getWidth() / 1.9, this.background.getYPos() + (this.background.getHeight() / 1.1), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/stopbord.png', false)
         ];

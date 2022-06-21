@@ -47,6 +47,8 @@ export default class Game {
 
   private upgrades: Upgrades;
 
+  private skins: Skins;
+
   private cutScene: CutScene | null;
 
   /**
@@ -54,7 +56,7 @@ export default class Game {
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement, upgrades: Upgrades) {
+  public constructor(canvas: HTMLElement, upgrades: Upgrades, skins: Skins) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -79,6 +81,7 @@ export default class Game {
     this.gameOver = false;
 
     this.upgrades = upgrades;
+    this.skins = skins;
 
     // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
 
@@ -115,11 +118,8 @@ export default class Game {
 
   private newSituation(stamina: number): Situation {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-<<<<<<< HEAD
-    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades]
-=======
-    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades]
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+
     switch (Game.randomInteger(0, 10)) {
       case 0:
         return new CyclingPathIncomingTraffic(...data)

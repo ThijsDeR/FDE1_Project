@@ -24,7 +24,7 @@ export default class Game {
      *
      * @param canvas The canvas HTML element to render on
      */
-    constructor(canvas, upgrades) {
+    constructor(canvas, upgrades, skins) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
         this.canvas.width = window.innerWidth;
@@ -43,6 +43,7 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
+        this.skins = skins;
         // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
         this.situation = this.newSituation(100);
         this.cutScene = null;
@@ -67,7 +68,7 @@ export default class Game {
     }
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades];
+        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
         switch (Game.randomInteger(0, 10)) {
             case 0:
                 return new CyclingPathIncomingTraffic(...data);

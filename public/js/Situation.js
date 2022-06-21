@@ -4,13 +4,14 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
 export default class Situation extends Scene {
-    constructor(canvas, userData, upgrades) {
+    constructor(canvas, userData, upgrades, skins) {
         super(canvas, userData);
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
         Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
+        this.skins = skins;
     }
     render() {
         this.background.draw(this.ctx);
