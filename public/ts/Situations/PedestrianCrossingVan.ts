@@ -6,9 +6,15 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class PedestrianCrossingVan extends Situation {
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
+    public constructor(
+        canvas: HTMLCanvasElement,
+        userData: UserData,
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, upgrades, skins)
 
         // Situation background parameters
         this.background = new ImageProp(

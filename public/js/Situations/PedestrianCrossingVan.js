@@ -4,8 +4,8 @@ import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class PedestrianCrossingVan extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, upgrades, skins);
         // Situation background parameters
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
         // Add props to the situation

@@ -17,4 +17,8 @@ class Player extends Model
     public function upgrade() {
         return $this->hasOne(Upgrade::class);
     }
+
+    public function skins() {
+        return $this->hasOne(PlayerSkin::class);
+    }
 }

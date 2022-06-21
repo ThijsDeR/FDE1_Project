@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Player;
+use App\Models\PlayerSkin;
+use App\Models\Skin;
 use App\Models\Upgrade;
 use App\Models\User;
 use Exception;
@@ -63,6 +65,10 @@ class AuthController extends Controller
         ]);
 
         $upgrade = Upgrade::create([
+            'player_id' => $player->id,
+        ]);
+
+        $skins = PlayerSkin::create([
             'player_id' => $player->id,
         ]);
         

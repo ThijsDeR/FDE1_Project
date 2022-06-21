@@ -2,6 +2,7 @@
 
 @section('head-content')
     <link href="{{ asset('css/player/profileStyles.css') }}" rel="stylesheet">
+    <script type="module" src="{{ asset('js/PageScripts/Profile.js')}}"></script>
 @endsection
 
 @section('content')
@@ -14,9 +15,26 @@
             <li>Speelt sinds: <strong>{{$user->created_at}}</strong></li>
         </ul>
 
+        <div id="skins">
+            <div class="skin" id="bicycleSkin" type="bicycle">
+                <img id="bicycleSkinImage" src="{{$user->player->skins->getCurrentBicycleSkin()->src}}" alt="">
+                <div class="buttons">
+                    <button type="previous" class="nice-button">Previous</button>
+                    <button type="next" class="nice-button">Next</button>
+                </div>
+            </div>
+            <div class="skin" id="staminaSkin" type="stamina">
+                <img id="staminaSkinImage" src="{{$user->player->skins->getCurrentStaminaSkin()->src}}" alt="">
+                <div class="buttons">
+                    <button type="previous" class="nice-button">Previous</button>
+                    <button type="next" class="nice-button">Next</button>
+                </div>
+            </div>
+        </div>
+
         <div id="shops">
-            <a href="{{route('upgrades')}}" id="upgrades">Upgrades</a>
-            <a href="{{route('skins')}}" id="skins">Skins</a>
+            <a href="{{route('upgrades')}}" class="nice-button" id="upgrades">Upgrades</a>
+            <a href="{{route('skins')}}" class="nice-button" id="skinsBtn">Skins</a>
         </div>
     </div>
 @endsection

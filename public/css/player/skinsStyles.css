@@ -23,11 +23,12 @@ button.buy.bought {
     background-color: green
 }
 
-div#upgrades {
-    margin-top: 5vh;
+div#skins {
     display: grid;
-    grid-template-columns: 33% 34% 33%;
+    grid-template-columns: 50% 50%;
     justify-items: center;
+    height: 80%;
+    margin: 5% 0;
 }
 
 button, #backButton {
@@ -39,13 +40,42 @@ button, #backButton {
     cursor: pointer;
 }
 
-div#upgrades img {
+
+
+#skins #rightskins, #skins #leftskins {
+    height: 100%;
+    overflow-y: auto;
+}
+
+
+.skin {
+    border: 3px solid gray;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 2vh 2vw;
+    padding: 1vh 1vw;
+}
+
+.skin img{
     width: 10vw;
     height: 20vh;
 }
 
-#backButton {
+#back-vp{
     position: absolute;
     bottom: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#back-vp p {
+    margin-left: 2.5vh;
+}
+
+
+#backButton {
     text-decoration: none;
 }
