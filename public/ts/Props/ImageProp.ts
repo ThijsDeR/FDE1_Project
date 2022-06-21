@@ -90,6 +90,10 @@ export default class ImageProp extends Prop {
                 prop2Width = prop.getHeight()
                 prop2Height = this.getWidth()
             }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
             if (
                 prop1XPos < prop2XPos + prop2Width
                 && prop1XPos + prop1Width > prop2XPos

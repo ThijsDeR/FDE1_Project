@@ -56,7 +56,6 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle);
-        // Create player
         let xPos;
         if (playerData.xPos)
             xPos = playerData.xPos;

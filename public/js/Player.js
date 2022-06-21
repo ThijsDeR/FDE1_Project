@@ -85,6 +85,9 @@ export default class Player extends AnimatedProp {
     isStopped() {
         return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
     }
+    isPausing() {
+        return this.keyListener.isKeyDown(KeyListener.KEY_ESC);
+    }
 }
 Player.MAX_SPEED = 0.6;
 Player.MAX_SPEED_X = 0.4;
