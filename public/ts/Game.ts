@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Player from './Player.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -20,6 +21,7 @@ import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
+import PauseScene from './PauseScene.js';
 
 /**
  * Main class of this Game.
@@ -117,6 +119,7 @@ export default class Game {
   private newSituation(stamina: number): Situation {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+
     switch (Game.randomInteger(0, 10)) {
       case 0:
         return new CyclingPathIncomingTraffic(...data)
@@ -139,8 +142,7 @@ export default class Game {
       case 9:
         return new TrainRails(...data)
       default:
-        return new OncomingCyclist(...data)
-
+        return new TrainRails(...data)
     }
   }
 
@@ -150,6 +152,8 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.situation.processInput()
+    // Pause game if esc is pressed
+    this.situation.isPaused()
   }
 
   /**
@@ -169,20 +173,26 @@ export default class Game {
       return false;
     }
 
-    this.totalScore += this.situation.getPlayerYVel()
-    // Spawn a new scoring object every 45 frames
+    if (!this.cutScene) {
+      this.totalScore += this.situation.getPlayerYVel()
 
-    this.scrollBackground(elapsed);
+      this.scrollBackground(elapsed);
+      const result = this.situation.update(elapsed);
+      if (result === Situation.GAME_OVER) {
+        this.userData.changeHighScore(this.totalScore);
+        this.userData.addVP(this.totalScore);
+        this.cutScene = new GameOverScene(this.canvas, this.userData)
+        this.gameOver = true;
+      }
+      if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
 
-
-    const result = this.situation.update(elapsed);
-    if (result === Situation.GAME_OVER) {
-      this.userData.changeHighScore(this.totalScore);
-      this.userData.addVP(this.totalScore);
-      this.cutScene = new GameOverScene(this.canvas, this.userData)
-      this.gameOver = true;
+      if (result === Situation.PAUSED) {
+        this.cutScene = new PauseScene(this.canvas, this.userData)
+      }
+    } else {
+      const paused = this.cutScene.update(elapsed)
+      if (!paused) this.cutScene = null
     }
-    if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
 
 
     return false;
@@ -202,18 +212,18 @@ export default class Game {
     // create an image element
     const img = new Image(this.canvas.height, this.canvas.height);
 
-     // specify the image source relative to the html or js file
-     // when the image is in the same directory as the file
-     // only the file name is required:
+    // specify the image source relative to the html or js file
+    // when the image is in the same directory as the file
+    // only the file name is required:
 
-     img.src = "./assets/img/objects/MainRoadFixed.png";
-     img.classList.add("backgroundImage");
+    img.src = "./assets/img/objects/MainRoadFixed.png";
+    img.classList.add("backgroundImage");
 
-     // draw image 1
+    // draw image 1
 
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 2, this.canvas.height);
-     // draw image 2
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
+    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 2, this.canvas.height);
+    // draw image 2
+    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
 
     // if (this.situation) {
     //   this.situation.draw(ctx)
@@ -346,5 +356,4 @@ export default class Game {
     img.src = source;
     return img;
   }
-}
-;
+};

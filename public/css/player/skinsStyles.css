@@ -8,6 +8,8 @@
     background-color: white;
     border-radius: 50px;
     padding: 1vh 1vw;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 #shop-container h2{
@@ -31,13 +33,13 @@ div#skins {
     margin: 5% 0;
 }
 
-button, #backButton {
-    background-color: blue;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
+#backButton {
+    background-color: aquamarine;
+}
+
+#backButton:hover {
+    color: black;
+    background-color: rgb(109, 218, 181);
 }
 
 

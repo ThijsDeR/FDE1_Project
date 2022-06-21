@@ -28,6 +28,11 @@ export default class Situation extends Scene {
     processInput() {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
+    isPaused() {
+        if (this.player.isPausing() === true) {
+            return Situation.PAUSED;
+        }
+    }
     getPlayerYVel() {
         return this.player.getYVel();
     }
@@ -39,14 +44,6 @@ export default class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
-        if (this.isMist) {
-            if (!this.vanishMist()) {
-                if (this.currentMist <= 0.85)
-                    this.currentMist += Math.min(elapsed / 1000, 0.004);
-            }
-            else
-                this.currentMist -= Math.min(elapsed / 400, 0.01);
-        }
         if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
@@ -55,6 +52,9 @@ export default class Situation extends Scene {
             this.handleStaminaDepletion();
         else
             gameOver = true;
+        if (this.isPaused()) {
+            return Situation.PAUSED;
+        }
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
     vanishMist() {
@@ -115,3 +115,4 @@ export default class Situation extends Scene {
 Situation.NOT_DONE = 0;
 Situation.GAME_OVER = 1;
 Situation.FINISHED = 2;
+Situation.PAUSED = 3;
