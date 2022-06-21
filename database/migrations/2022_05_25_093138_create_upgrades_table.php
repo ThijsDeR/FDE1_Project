@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('player_id');
             $table->integer('stamina_resistance')->default(1);
             $table->integer('stamina_gain')->default(1);
+            $table->integer('lamp_power')->default(1);
             $table->timestamps(); 
 
             $table->foreign('player_id')->references('id')->on('players')->cascadeOnDelete();

@@ -6,7 +6,7 @@ import UserData from "../UserData.js";
 
 export default class OncomingCyclist extends Situation {
 
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
         super(canvas, userData, upgrades)
 

@@ -15,8 +15,8 @@
         </ul>
 
         <div id="shops">
-            <a href="{{route('upgrades')}}" id="upgrades">Upgrades</a>
-            <a href="{{route('skins')}}" id="skins">Skins</a>
+            <a href="{{route('upgrades')}}" class="nice-button buttons" id="upgrades">Upgrades</a>
+            <a href="{{route('skins')}}" class = "nice-button buttons" id="skins">Skins</a>
         </div>
     </div>
 @endsection

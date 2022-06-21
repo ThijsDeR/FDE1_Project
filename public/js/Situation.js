@@ -9,7 +9,8 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
+        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        this.currentMist = 0;
     }
     render() {
         this.background.draw(this.ctx);
@@ -17,9 +18,10 @@ export default class Situation extends Scene {
             prop.draw(this.ctx);
         });
         this.player.draw(this.ctx);
-        if (this.mist) {
-            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
-            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight());
+        if (this.isMist) {
+            const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 1000), 0) + 0.05;
+            this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
+            this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10);
         }
     }
     processInput() {
@@ -54,6 +56,9 @@ export default class Situation extends Scene {
         }
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
+    vanishMist() {
+        return this.player.getYPos() < this.background.getYPos() - (this.background.getHeight() / 2);
+    }
     finishedCheck() {
         return this.player.getYPos() < this.background.getYPos() - this.background.getHeight();
     }
@@ -82,7 +87,6 @@ export default class Situation extends Scene {
     handleCollission(prop, propIndex, elapsed) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
-            console.log('gay');
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex);
             }

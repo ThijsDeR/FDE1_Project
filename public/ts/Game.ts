@@ -45,7 +45,7 @@ export default class Game {
 
   private gameOver: boolean;
 
-  private upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
+  private upgrades: Upgrades;
 
   private cutScene: CutScene | null;
 
@@ -54,7 +54,7 @@ export default class Game {
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+  public constructor(canvas: HTMLElement, upgrades: Upgrades) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -115,7 +115,11 @@ export default class Game {
 
   private newSituation(stamina: number): Situation {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+<<<<<<< HEAD
     const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades]
+=======
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades]
+>>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
     switch (Game.randomInteger(0, 10)) {
       case 0:
         return new CyclingPathIncomingTraffic(...data)
