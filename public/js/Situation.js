@@ -9,9 +9,11 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
     }
     render() {
         this.background.draw(this.ctx);
@@ -97,6 +99,7 @@ export default class Situation extends Scene {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.handleStaminaChange(prop, propIndex);
             }
             else {
