@@ -9,7 +9,7 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
     }
@@ -39,11 +39,16 @@ export default class Situation extends Scene {
     getPlayerStamina() {
         return this.player.getStamina();
     }
+    getScoreTick() {
+        return this.scoreTick;
+    }
     update(elapsed) {
+        this.scoreTick = 0;
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
+        this.scoreTick += (this.player.getYVel() * elapsed) / 10;
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85)
@@ -100,6 +105,7 @@ export default class Situation extends Scene {
                 this.handleStaminaChange(prop, propIndex);
             }
             else {
+                this.scoreTick -= 200;
                 this.crashSound.play();
                 gameOver = true;
             }

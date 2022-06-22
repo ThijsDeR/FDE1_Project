@@ -45,6 +45,8 @@ export default class CrossroadStopSign extends Situation {
                 }
             }
             else {
+                this.scoreTick -= 100;
+                this.crashSound.play();
                 gameOver = true;
             }
         }
@@ -58,6 +60,7 @@ export default class CrossroadStopSign extends Situation {
                 this.props.splice(propIndex, 1);
             }
             else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
+                this.scoreTick -= 50;
                 gameOver = true;
             }
         }
