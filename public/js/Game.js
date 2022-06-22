@@ -44,8 +44,8 @@ export default class Game {
         this.gameOver = false;
         this.upgrades = upgrades;
         this.skins = skins;
-        // this.situation = this.specificSituation(100)
-        this.situation = this.newSituation(100);
+        this.situation = this.specificSituation(100);
+        // this.situation = this.newSituation(100)
         this.cutScene = null;
     }
     restart() {
@@ -97,7 +97,7 @@ export default class Game {
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        return new TractorIncoming(...data);
+        return new SchoolStreet(...data);
     }
     /**
      * Handles any user input that has happened since the last call

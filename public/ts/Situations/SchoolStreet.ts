@@ -45,8 +45,8 @@ export default class SchoolStreet extends Situation {
                 },
             ],
                 // Properties of personWalkingLeft image
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
+                this.background.getWidth() / 20,
+                this.background.getHeight() / 10,
                 './assets/img/players/character_maleAdventurer_walk0.png',
                 false
             )
@@ -62,8 +62,8 @@ export default class SchoolStreet extends Situation {
                 },
             ],
                 // Properties of personWalkingLeft image
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
+                this.background.getWidth() / 20,
+                this.background.getHeight() / 10,
                 './assets/img/players/character_maleAdventurer_walk0.png',
                 false
             )
