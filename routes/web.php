@@ -40,6 +40,7 @@ Route::get('/highscores', [PlayerController::class, 'highscores'])->name('highsc
 Route::get('/players/{token}', [PlayerController::class, 'info'])->name('playerInfo');
 Route::put('/players/{token}', [PlayerController::class, 'update'])->name('update');
 Route::put('/players/addVP/{token}', [PlayerController::class, 'addVP'])->name('player.addVP');
+Route::get('/players/addVP/{token}', [PlayerController::class, 'addVP'])->name('player.addVP');
 
 Route::put('/profile/upgrade/{token}', [PlayerController::class, 'upgrade'])->name('player.upgrade');
 Route::get('/profile/getUpgrade/{name}/{token}', [PlayerController::class, 'getUpgrade'])->name('player.getUpgrade');
