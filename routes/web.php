@@ -31,6 +31,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::put('/login/edit', [AuthController::class, 'edit'])->name('loginEdit');
+
 
 Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/profile/skins', [PlayerController::class, 'skins'])->name('skins')->middleware('auth');

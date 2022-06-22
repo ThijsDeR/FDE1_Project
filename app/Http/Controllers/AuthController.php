@@ -54,7 +54,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            
+
         } catch (Exception $e){
             return redirect()->back()->withErrors(['username' => $e]);
         }
@@ -71,10 +71,34 @@ class AuthController extends Controller
         $skins = PlayerSkin::create([
             'player_id' => $player->id,
         ]);
-        
+
+
 
         $this->login($request);
 
+
+
         return redirect('./localstorage?token=' . auth()->user()->player->token);
     }
+    public function edit(User $user)
+    {
+        return view('login-edit', ['user' => $user]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $user->update($request->validate([
+            "username" => "required",
+            "password" => "required",
+        ]));
+        return redirect(route('login.show', $user));
+    }
+    public function destroy(User $user)
+    {
+        $user->username = request('username');
+        $user->password = request('password');
+        $user->delete();
+        return redirect(route('login.show', $user));
+    }
+
 }
