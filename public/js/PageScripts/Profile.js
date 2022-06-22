@@ -13,10 +13,8 @@ const userdata = new UserData();
 skins.forEach((skin) => __awaiter(void 0, void 0, void 0, function* () {
     const skinBtns = skin.querySelectorAll('button');
     const skinType = skin.getAttribute('type');
-    console.log(skinType);
     const skinImage = skin.querySelector('img');
     skinBtns.forEach((skinBtn) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log('sheesh');
         const btnType = skinBtn.getAttribute('type');
         skinBtn.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
             let skinBtn_data;
@@ -24,11 +22,9 @@ skins.forEach((skin) => __awaiter(void 0, void 0, void 0, function* () {
                 skinBtn_data = yield userdata.changeSkin(skinType, -1);
             else if (btnType === 'next')
                 skinBtn_data = yield userdata.changeSkin(skinType, 1);
-            console.log(skinBtn_data.status);
             if (skinBtn_data.status === 200) {
                 // worked
                 const skinData = yield userdata.getSkin(skinType);
-                console.log(skinData);
                 skinImage.src = skinData.src;
             }
             else if (skinBtn_data.status === 400) {

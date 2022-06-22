@@ -67,9 +67,6 @@ export default class UserData {
                 },
                 body: JSON.stringify({ vp: vp })
             });
-            console.log(response);
-            console.log(response.text);
-            console.log(response.statusText);
             return response;
         });
     }
@@ -77,7 +74,6 @@ export default class UserData {
         this.getPlayerData().then((data) => {
             if (highscore > data.highscore) {
                 this.setHighscore({ highscore: highscore }).then((data) => {
-                    console.log(data);
                 });
             }
             else {
