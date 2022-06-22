@@ -1,13 +1,18 @@
 import ImageProp from "../Props/ImageProp.js";
 import Situation from "../Situation.js";
-import Player from "../Player.js";
 import TrackProp from "../Props/TrackProp.js";
 import Game from "../Game.js";
 export default class CarDriveway extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+        super(canvas, userData, playerData, upgrades);
         // Situation background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Oprit.png');
+        // Define the left boundary of the playing field
+        this.leftBoundary = this.background.getWidth() * 1.18;
+        // Define the right boundary of the playing field
+        this.rightBoundary = this.background.getWidth() * 1.384;
+        // Create player
+        this.player = this.createPlayer();
         // Define possibilities for driver
         const carVectors = [];
         Game.randomInteger(0, 1) === 0 ? carVectors.push(
@@ -60,19 +65,5 @@ export default class CarDriveway extends Situation {
             // Create car
             new TrackProp(carVectors, canvas.width / 15, canvas.height / 7, './assets/img/objects/car.png'),
         ];
-        let xPos;
-        if (playerData.xPos)
-            xPos = playerData.xPos;
-        else
-            xPos = this.background.getXPos() + this.background.getWidth() / 2;
-        if (xPos < this.background.getWidth() * 1.18)
-            xPos = this.background.getWidth() * 1.18;
-        else if (xPos > (this.background.getWidth() * 1.384))
-            xPos = (this.background.getWidth() * 1.384);
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
-    }
-    // Set boundaries to the player's movements
-    processInput() {
-        this.player.processInput(this.canvas, this.background.getWidth() * 1.18, this.background.getWidth() * 1.384);
     }
 }

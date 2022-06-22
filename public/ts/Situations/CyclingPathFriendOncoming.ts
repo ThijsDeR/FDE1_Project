@@ -7,14 +7,9 @@ import UserData from "../UserData.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 
 export default class CyclingPathFriendOncoming extends Situation {
-    public constructor(
-        canvas: HTMLCanvasElement,
-        userData: UserData,
-        stamina: number,
-        upgrades: Upgrades
-    ) {
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, playerData, upgrades)
 
         // Situation background properties
         this.background = new ImageProp(
@@ -228,7 +223,7 @@ export default class CyclingPathFriendOncoming extends Situation {
             0,
             canvas.width / 20,
             canvas.height / 8,
-            stamina
+            playerData.stamina
         )
     }
 

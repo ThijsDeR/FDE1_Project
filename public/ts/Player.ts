@@ -1,9 +1,6 @@
-import Animator from './Animator.js';
 import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 import AnimatedProp from './Props/AnimatedProp.js';
-import ImageProp from './Props/ImageProp.js';
-import LandbouwVoertuig from './Situations/TractorIncoming.js';
 
 export default class Player extends AnimatedProp {
   public static readonly MAX_SPEED = 0.6;

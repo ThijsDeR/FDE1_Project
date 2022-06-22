@@ -5,8 +5,8 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 export default class CyclingPathFriendOncoming extends Situation {
-    constructor(canvas, userData, stamina, upgrades) {
-        super(canvas, userData, upgrades);
+    constructor(canvas, userData, playerData, upgrades) {
+        super(canvas, userData, playerData, upgrades);
         // Situation background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png');
         // Create possible scenarios
@@ -163,7 +163,7 @@ export default class CyclingPathFriendOncoming extends Situation {
             new Frikandelbroodje(this.background.getWidth() * 1.13, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
         ];
         // Create player
-        this.player = new Player(canvas.width / 1.70, canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, stamina);
+        this.player = new Player(canvas.width / 1.70, canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, playerData.stamina);
     }
     // Set boundaries to the player's movements
     processInput() {

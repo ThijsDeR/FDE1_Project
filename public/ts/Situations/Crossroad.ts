@@ -7,9 +7,23 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class Crossroad extends Situation {
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
-        super(canvas, userData, upgrades)
+    public constructor(
+        canvas: HTMLCanvasElement,
+        userData: UserData,
+        playerData:
+            {
+                xPos: number | null,
+                stamina: number
+            },
+        upgrades: Upgrades
+    ) {
+        super(
+            canvas,
+            userData,
+            playerData,
+            upgrades
+        )
 
         // Background properties
         this.background = new ImageProp(
@@ -48,8 +62,8 @@ export default class Crossroad extends Situation {
             )
         ]
 
-         // Create props in situation
-         this.props = [
+        // Create props in situation
+        this.props = [
             // Add car
             new ImageProp(
                 this.background.getXPos() + (this.background.getWidth() / 3),
@@ -119,17 +133,14 @@ export default class Crossroad extends Situation {
             ? this.props.push(badCycle)
             : this.props.push(goodCycle)
 
-<<<<<<< HEAD
-=======
-            
+
         // Create player
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
         let xPos
         if (playerData.xPos) xPos = playerData.xPos
         else xPos = this.background.getXPos() + this.background.getWidth() / 2
         if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
         else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20,this.background.getHeight() / 8, playerData.stamina)
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
 
     }
 

@@ -20,32 +20,53 @@ export default abstract class Situation extends Scene {
 
     protected player: Player;
 
+    protected playerData:
+        {
+            xPos: number | null,
+            stamina: number
+        }
+
     protected props: ImageProp[];
 
     protected background: ImageProp;
 
-<<<<<<< HEAD
-    protected upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
-=======
     protected upgrades: Upgrades;
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
 
     protected isMist: boolean
 
-<<<<<<< HEAD
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
-=======
     protected currentMist: number;
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades) {
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
+    protected leftBoundary: number;
+
+    protected rightBoundary: number;
+
+    protected playerHeight: number;
+
+    protected playerWidth: number;
+
+    public constructor(
+        canvas: HTMLCanvasElement,
+        userData: UserData,
+        playerData:
+            {
+                xPos: number | null,
+                stamina: number
+            },
+        upgrades: Upgrades,
+    ) {
         super(canvas, userData)
         this.upgrades = upgrades;
+        this.playerData = playerData;
         this.crashSound = new Audio('./audio/bike_crash.mp3')
         this.crashSound.volume = 0.7
         Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0
 
+        // // Define the width of the player
+        // this.playerWidth = this.background.getWidth() / 20
+
+        // // Define the height of the player
+        // this.playerHeight = this.background.getHeight() / 8
     }
 
     public render() {
@@ -60,10 +81,6 @@ export default abstract class Situation extends Scene {
             this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
             this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10)
         }
-    }
-
-    public processInput() {
-        this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
 
     public isPaused() {
@@ -85,14 +102,11 @@ export default abstract class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed)
         this.background.scroll(elapsed, this.player.getYVel())
-<<<<<<< HEAD
-=======
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85) this.currentMist += Math.min(elapsed / 1000, 0.004)
             } else this.currentMist -= Math.min(elapsed / 400, 0.01)
         }
->>>>>>> 21c68bf0b2fd73f5d6c856939f11218dae04ae1f
 
         if (this.finishedCheck()) {
             return Situation.FINISHED;
@@ -175,5 +189,51 @@ export default abstract class Situation extends Scene {
 
     public getPlayer() {
         return this.player;
+    }
+
+    // Set boundaries to the player's movements
+    public processInput() {
+        this.player.processInput(
+            // The canvas upon which the game is rendered
+            this.canvas,
+            // The left side of the playing field
+            this.leftBoundary,
+            // The right side of the playing field
+            this.rightBoundary
+        )
+    }
+
+    protected checkPlayerPosition() {
+        // Create the xPos variable
+        let xPos
+        // If previous data exists, use said data
+        if (this.playerData.xPos) xPos = this.playerData.xPos
+        // If no data exists, use the right boundary minus the player's width
+        else xPos = this.rightBoundary - (this.background.getWidth() / 20)
+        // If the position is less than the left boundary, reset player to within the boundary
+        if (xPos < this.leftBoundary) xPos = this.leftBoundary
+        // If the position is more than the right boundary, reset player to within the boundary
+        else if (xPos > this.rightBoundary) xPos = this.rightBoundary
+        // Return the value to the player
+        return xPos
+    }
+
+    protected createPlayer(): Player {
+        return new Player(
+            // xPos
+            this.checkPlayerPosition(),
+            // yPos
+            this.background.getHeight() / 1.2,
+            // xVel (Handled in player.ts)
+            0,
+            // yVel (Handled in player.ts)
+            0,
+            // Width
+            this.background.getWidth() / 20,
+            // Height
+            this.background.getHeight() / 8,
+            // Stamina
+            this.playerData.stamina
+        );
     }
 }

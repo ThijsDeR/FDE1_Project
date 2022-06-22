@@ -6,7 +6,7 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class CyclingPathIncomingTraffic extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+        super(canvas, userData, playerData, upgrades);
         // Situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/MainRoadFixed.png', false);
         // Add props to situation

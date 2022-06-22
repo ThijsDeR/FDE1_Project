@@ -5,7 +5,7 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class PrioritySameRoad extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+        super(canvas, userData, playerData, upgrades);
         // Create situation background
         this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png', false);
         // Create props in situation

@@ -6,7 +6,7 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class Crossroad extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+        super(canvas, userData, playerData, upgrades);
         // Background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
         // Create new props
@@ -56,6 +56,7 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle);
+        // Create player
         let xPos;
         if (playerData.xPos)
             xPos = playerData.xPos;

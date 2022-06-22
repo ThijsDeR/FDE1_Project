@@ -12,7 +12,7 @@ export default class CrossroadStopSign extends Situation {
 
     public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, playerData, upgrades)
 
         // Create situation background
         this.background = new ImageProp(

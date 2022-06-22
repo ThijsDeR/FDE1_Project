@@ -10,7 +10,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
 
     public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, playerData, upgrades)
 
         // Situation background
         this.background = new ImageProp(

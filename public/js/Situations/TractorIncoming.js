@@ -5,7 +5,7 @@ import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
     constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, upgrades);
+        super(canvas, userData, playerData, upgrades);
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
         // Create props in situation

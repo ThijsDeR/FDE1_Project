@@ -1,16 +1,22 @@
 import Game from "./Game.js";
+import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
 import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
 export default class Situation extends Scene {
-    constructor(canvas, userData, upgrades) {
+    constructor(canvas, userData, playerData, upgrades) {
         super(canvas, userData);
         this.upgrades = upgrades;
+        this.playerData = playerData;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
         Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
+        // // Define the width of the player
+        // this.playerWidth = this.background.getWidth() / 20
+        // // Define the height of the player
+        // this.playerHeight = this.background.getHeight() / 8
     }
     render() {
         this.background.draw(this.ctx);
@@ -23,9 +29,6 @@ export default class Situation extends Scene {
             this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
             this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10);
         }
-    }
-    processInput() {
-        this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
     }
     isPaused() {
         if (this.player.isPausing() === true) {
@@ -43,6 +46,14 @@ export default class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
+        if (this.isMist) {
+            if (!this.vanishMist()) {
+                if (this.currentMist <= 0.85)
+                    this.currentMist += Math.min(elapsed / 1000, 0.004);
+            }
+            else
+                this.currentMist -= Math.min(elapsed / 400, 0.01);
+        }
         if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
@@ -109,6 +120,51 @@ export default class Situation extends Scene {
     }
     getPlayer() {
         return this.player;
+    }
+    // Set boundaries to the player's movements
+    processInput() {
+        this.player.processInput(
+        // The canvas upon which the game is rendered
+        this.canvas, 
+        // The left side of the playing field
+        this.leftBoundary, 
+        // The right side of the playing field
+        this.rightBoundary);
+    }
+    checkPlayerPosition() {
+        // Create the xPos variable
+        let xPos;
+        // If previous data exists, use said data
+        if (this.playerData.xPos)
+            xPos = this.playerData.xPos;
+        // If no data exists, use the right boundary minus the player's width
+        else
+            xPos = this.rightBoundary - (this.background.getWidth() / 20);
+        // If the position is less than the left boundary, reset player to within the boundary
+        if (xPos < this.leftBoundary)
+            xPos = this.leftBoundary;
+        // If the position is more than the right boundary, reset player to within the boundary
+        else if (xPos > this.rightBoundary)
+            xPos = this.rightBoundary;
+        // Return the value to the player
+        return xPos;
+    }
+    createPlayer() {
+        return new Player(
+        // xPos
+        this.checkPlayerPosition(), 
+        // yPos
+        this.background.getHeight() / 1.2, 
+        // xVel (Handled in player.ts)
+        0, 
+        // yVel (Handled in player.ts)
+        0, 
+        // Width
+        this.background.getWidth() / 20, 
+        // Height
+        this.background.getHeight() / 8, 
+        // Stamina
+        this.playerData.stamina);
     }
 }
 Situation.NOT_DONE = 0;

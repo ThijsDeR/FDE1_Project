@@ -8,7 +8,7 @@ import UserData from "../UserData.js";
 export default class ParkingSpotCar extends Situation {
     public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, playerData, upgrades)
 
         // Situation background parameters
         this.background = new ImageProp(
