@@ -2,9 +2,10 @@ import CutScene from "./CutScene.js";
 import Button from "./Props/Button.js";
 import Scene from "./Scene.js";
 export default class GameOverScene extends CutScene {
-    constructor(canvas, userData) {
+    constructor(canvas, userData, score) {
         super(canvas, userData);
         this.update = (elapsed) => this.completed;
+        this.score = score;
         const buttonWidth = (this.canvas.width / 4);
         const buttonHeight = (this.canvas.height / 6);
         const betweenButtonHeight = (this.canvas.height / 10);
@@ -47,6 +48,7 @@ export default class GameOverScene extends CutScene {
             prop.draw(this.ctx);
         });
         Scene.writeTextToCanvas(this.ctx, 'Game Over!', this.canvas.width / 2, this.canvas.height / 8, 30);
+        Scene.writeTextToCanvas(this.ctx, `Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 6, 30);
     }
     processInput() {
     }

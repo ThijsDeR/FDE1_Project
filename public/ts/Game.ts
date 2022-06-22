@@ -150,7 +150,7 @@ export default class Game {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
 
-    return new CrossroadStopSign(...data);
+    return new TractorIncoming(...data);
   }
 
   /**
@@ -181,18 +181,19 @@ export default class Game {
     }
 
     if (!this.cutScene) {
-      this.totalScore += this.situation.getPlayerYVel()
-
+      
       this.scrollBackground(elapsed);
       const result = this.situation.update(elapsed);
+      this.totalScore += this.situation.getScoreTick()
       if (result === Situation.GAME_OVER) {
-        this.userData.changeHighScore(this.totalScore);
+        const gameScore = Math.max(0, Math.round(this.totalScore))
+        this.userData.changeHighScore(gameScore);
         this.userData.addVP(this.totalScore);
-        this.cutScene = new GameOverScene(this.canvas, this.userData)
+        this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore)
         this.gameOver = true;
       }
       if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
-
+      
       if (result === Situation.PAUSED) {
         this.cutScene = new PauseScene(this.canvas, this.userData)
       }
