@@ -69,7 +69,6 @@ class PlayerController extends Controller
     }
 
     public function addVP(Request $request, $token) {
-        $token = "E7Lzb2md84P8qt8mi0uHLu3DWL2rCsmsrEKlGdaATJRMKZ3C";
         try {
             $player = Player::where('token', $token)->first();
             $player->vp += $request->vp;
