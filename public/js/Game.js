@@ -132,7 +132,7 @@ export default class Game {
             if (result === Situation.GAME_OVER) {
                 const gameScore = Math.max(0, Math.round(this.totalScore));
                 this.userData.changeHighScore(gameScore);
-                this.userData.addVP(this.totalScore);
+                this.userData.addVP(gameScore);
                 this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore);
                 this.gameOver = true;
             }
