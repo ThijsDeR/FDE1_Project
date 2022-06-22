@@ -46,7 +46,6 @@ export default class UserData {
       body: JSON.stringify(data)
     })
 
-    console.log(response)
     return response;
   }
 
@@ -60,7 +59,9 @@ export default class UserData {
       },
       body: JSON.stringify({vp: vp})
     })
-
+    console.log(response)
+    console.log(response.text)
+    console.log(response.statusText)
     return response;
   }
 
