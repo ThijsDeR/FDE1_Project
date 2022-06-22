@@ -52,13 +52,13 @@ main {
   font-family: "Google Sans", Roboto, Arial, sans-serif;
   font-size: calc(0.8vw + 0.8vh);
   font-weight: 500;
-  height: 48px;
+  height: 5.0vh;
   justify-content: center;
   letter-spacing: .25px;
   line-height: normal;
   max-width: 100%;
   overflow: visible;
-  padding: 2px 24px;
+  padding: 20px 24px;
   position: relative;
   text-align: center;
   text-transform: none;
@@ -73,8 +73,8 @@ main {
 }
 
 .nice-button:hover {
-  background: #F6F9FE;
-  color: green;
+  background: aquamarine;
+  color: darkslategrey;
 }
 
 .nice-button:active {
