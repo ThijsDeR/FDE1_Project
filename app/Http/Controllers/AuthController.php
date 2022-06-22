@@ -44,7 +44,7 @@ class AuthController extends Controller
 
     public function register(Request $request) {
         validator($request->all(), [
-            'username' => ['required'],
+            'username' => ['required', 'profanity'],
             'password' => ['required'],
         ])->validate();
 
@@ -56,7 +56,7 @@ class AuthController extends Controller
 
             
         } catch (Exception $e){
-            return redirect()->back()->withErrors(['username' => 'Already In Use']);
+            return redirect()->back()->withErrors(['username' => $e]);
         }
 
         $player = Player::create([
