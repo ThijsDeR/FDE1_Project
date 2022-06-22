@@ -35,7 +35,7 @@
             </div>
         </div>
         <div id="back-vp">
-            <a href="{{route('profile')}}" id="backButton">Back</a>
+            <a href="{{route('profile')}}" id="backButton" class="nice-button">Back</a>
             
             <p>Verkeers Punten: <strong><span id="vp">{{$user->player->vp}}</span></strong></p>
             

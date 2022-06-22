@@ -70,14 +70,14 @@ div#skins {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
-#back-vp p {
+/* #back-vp p {
     margin-left: 2.5vh;
-}
+} */
 
 
 #backButton {
     text-decoration: none;
+    margin: 1vw;
 }
