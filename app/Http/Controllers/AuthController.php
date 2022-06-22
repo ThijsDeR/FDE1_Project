@@ -80,25 +80,25 @@ class AuthController extends Controller
 
         return redirect('./localstorage?token=' . auth()->user()->player->token);
     }
-    public function edit(User $user)
+    public function edit()
     {
-        return view('login-edit', ['user' => $user]);
+        return view('auth.login-edit', ['user' => auth()->user()]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
+
     {
+        $user=User::where('id', auth()->user()->id);
         $user->update($request->validate([
-            "username" => "required",
-            "password" => "required",
+            "username" => "required"
         ]));
-        return redirect(route('login.show', $user));
+        return redirect(route('profile'));
     }
     public function destroy(User $user)
     {
-        $user->username = request('username');
-        $user->password = request('password');
+        $user=User::where('id', auth()->user()->id);
         $user->delete();
-        return redirect(route('login.show', $user));
+        return redirect(route('home'));
     }
 
 }
