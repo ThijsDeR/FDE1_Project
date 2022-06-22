@@ -1,12 +1,20 @@
 import Game from "../Game.js";
-import Player from "../Player.js";
 import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class ParkingSpotCar extends Situation {
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, playerData: {xPos: number | null, stamina: number}, upgrades: Upgrades) {
+    public constructor(
+        canvas: HTMLCanvasElement,
+        userData: UserData,
+        playerData:
+            {
+                xPos: number | null,
+                stamina: number
+            },
+        upgrades: Upgrades
+    ) {
 
         super(canvas, userData, playerData, upgrades)
 
@@ -19,6 +27,16 @@ export default class ParkingSpotCar extends Situation {
             canvas.height, './assets/img/objects/KruispuntZebraPad.png',
             false
         )
+
+        // Define the left boundary of the playing field
+        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
+
+        // Define the right boundary of the playing field
+        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
+
+        // Create player
+        this.player = this.createPlayer()
+
         this.props = []
 
         const carVectors = [
@@ -47,7 +65,9 @@ export default class ParkingSpotCar extends Situation {
             }
         ]
 
-        Game.randomInteger(0, 1) === 1 ? carVectors.push(
+        Game.randomInteger(0, 1) === 1 
+        ? carVectors.push(
+
             {
                 // Additional movement for the car, if it exists
                 // Starting location
@@ -73,24 +93,15 @@ export default class ParkingSpotCar extends Situation {
             },
         ) : ''
 
-        const car = new TrackProp(carVectors, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png')
-        Game.randomInteger(0, 5) === 1 ? '' : this.props.push(car)
+        const car = new TrackProp(
+            carVectors,
+            this.background.getWidth() / 10,
+            this.background.getHeight() / 5,
+            './assets/img/objects/car.png'
+        )
 
-        let xPos
-        if (playerData.xPos) xPos = playerData.xPos
-        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
-        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
-        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20,this.background.getHeight() / 8, playerData.stamina)
-
-
-    }
-
-    // Set boundaries to the player's movements
-    public processInput() {
-        this.player.processInput(
-            this.canvas,
-            this.background.getXPos() + this.background.getWidth() / 3,
-            this.background.getXPos() + (this.background.getWidth() / 3) * 2);
+        Game.randomInteger(0, 5) === 1 
+        ? '' 
+        : this.props.push(car)
     }
 }

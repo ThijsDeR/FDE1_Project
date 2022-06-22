@@ -40,10 +40,6 @@ export default abstract class Situation extends Scene {
 
     protected rightBoundary: number;
 
-    protected playerHeight: number;
-
-    protected playerWidth: number;
-
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,

@@ -12,6 +12,7 @@ export default class OncomingCyclist extends Situation {
         this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2);
         // Create player
         this.player = this.createPlayer();
+        // TODO: Re-align bicycles
         // Create props in situation
         this.props = [
             // Create bicyclist

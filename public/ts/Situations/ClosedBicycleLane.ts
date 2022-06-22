@@ -17,12 +17,7 @@ export default class ClosedBicycleLane extends Situation {
             },
         upgrades: Upgrades
     ) {
-        super(
-            canvas,
-            userData,
-            playerData,
-            upgrades
-        )
+        super(canvas, userData, playerData, upgrades)
 
         this.background = new ImageProp(
             canvas.width / 3,
@@ -66,7 +61,8 @@ export default class ClosedBicycleLane extends Situation {
                 './assets/img/objects/WegAfzetting.png'
             ),
         ]
-        Game.randomInteger(0, 1) === 1 ? this.props.push(
+        Game.randomInteger(0, 1) === 1 
+        ? this.props.push(
             // TODO: Auto van voren
             // new ImageProp(
             //     this.background.getXPos() + this.background.getWidth() / 2,

@@ -43,7 +43,7 @@ export default class OncomingCyclist extends Situation {
         // Create player
         this.player = this.createPlayer()
 
-
+        // TODO: Re-align bicycles
         // Create props in situation
         this.props = [
             // Create bicyclist

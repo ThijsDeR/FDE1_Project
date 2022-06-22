@@ -18,17 +18,18 @@ export default class ClosedBicycleLane extends Situation {
             // TODO: Meer obstakels rond werkzaamheden
             new BlockedCyclePathSign(this.background.getXPos() + (this.background.getWidth() / 1.65), this.background.getYPos() + (this.background.getHeight() / 2.25), 0, 0, this.background.getWidth() / 8, this.background.getHeight() / 5, './assets/img/objects/WegAfzetting.png'),
         ];
-        Game.randomInteger(0, 1) === 1 ? this.props.push(
-        // TODO: Auto van voren
-        // new ImageProp(
-        //     this.background.getXPos() + this.background.getWidth() / 2,
-        //     this.background.getYPos() + (this.background.getHeight() * 2),
-        //     0,
-        //     -0.25,
-        //     this.background.getWidth() / 14,
-        //     this.background.getHeight() / 9,
-        //     './assets/img/objects/car.png'
-        // ),
-        new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.10, this.background.getWidth() / 14, this.background.getHeight() / 9, './assets/img/objects/car.png')) : '';
+        Game.randomInteger(0, 1) === 1
+            ? this.props.push(
+            // TODO: Auto van voren
+            // new ImageProp(
+            //     this.background.getXPos() + this.background.getWidth() / 2,
+            //     this.background.getYPos() + (this.background.getHeight() * 2),
+            //     0,
+            //     -0.25,
+            //     this.background.getWidth() / 14,
+            //     this.background.getHeight() / 9,
+            //     './assets/img/objects/car.png'
+            // ),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.7), this.background.getYPos(), 0, 0.10, this.background.getWidth() / 14, this.background.getHeight() / 9, './assets/img/objects/car.png')) : '';
     }
 }

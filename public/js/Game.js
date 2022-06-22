@@ -3,7 +3,20 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
+// Import situations
+import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 import Crossroad from './Situations/Crossroad.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
+import CrossroadStopSign from './Situations/CrossroadStopSign.js';
+import TractorIncoming from './Situations/TractorIncoming.js';
+import CarDriveway from './Situations/CarDriveway.js';
+import PrioritySameRoad from './Situations/PrioritySameRoad.js';
+import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
+import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
+import ParkingSpotCar from './Situations/ParkingSpotCar.js';
+import SchoolStreet from './Situations/SchoolStreet.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
+import TrainRails from './Situations/TrainRails.js';
 import PauseScene from './PauseScene.js';
 /**
  * Main class of this Game.
@@ -58,35 +71,35 @@ export default class Game {
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades];
-        switch (Game.randomInteger(0, 11)) {
-            // case 0:
-            //   return new CyclingPathIncomingTraffic(...data)
-            // case 1:
-            //   return new Crossroad(...data)
-            // case 2:
-            //   return new CarDriveway(...data)
-            // case 3:
-            //   return new CrossroadStopSign(...data)
-            // case 4:
-            //   return new TractorIncoming(...data)
-            // case 5:
-            //   return new PrioritySameRoad(...data)
-            // case 6:
-            //   return new ParkingSpotCar(...data)
-            // case 7:
-            //   return new PedestrianCrossingVan(...data)
-            // case 8:
-            //   return new SchoolStreet(...data)
-            // case 9:
-            //   return new TrainRails(...data)
-            // case 10:
-            //   return new OncomingCyclist(...data)
-            // case 11:
-            //   return new CyclingPathFriendOncoming(...data)
-            // case 12: 
-            //   return new ClosedBicycleLane(...data)
-            default:
+        switch (Game.randomInteger(0, 12)) {
+            case 0:
+                return new CyclingPathIncomingTraffic(...data);
+            case 1:
                 return new Crossroad(...data);
+            case 2:
+                return new CarDriveway(...data);
+            case 3:
+                return new CrossroadStopSign(...data);
+            case 4:
+                return new TractorIncoming(...data);
+            case 5:
+                return new PrioritySameRoad(...data);
+            case 6:
+                return new ParkingSpotCar(...data);
+            case 7:
+                return new PedestrianCrossingVan(...data);
+            case 8:
+                return new SchoolStreet(...data);
+            case 9:
+                return new TrainRails(...data);
+            case 10:
+                return new OncomingCyclist(...data);
+            case 11:
+                return new CyclingPathFriendOncoming(...data);
+            case 12:
+                return new ClosedBicycleLane(...data);
+            default:
+                return new PedestrianCrossingVan(...data);
         }
     }
     /**

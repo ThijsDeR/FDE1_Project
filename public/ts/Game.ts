@@ -49,8 +49,6 @@ export default class Game {
 
   private cutScene: CutScene | null;
 
-  private player: Player
-
   /**
    * Construct a new Game
    *
@@ -118,35 +116,35 @@ export default class Game {
   private newSituation(stamina: number): Situation {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades]
-    switch (Game.randomInteger(0, 11)) {
-      // case 0:
-      //   return new CyclingPathIncomingTraffic(...data)
-      // case 1:
-      //   return new Crossroad(...data)
-      // case 2:
-      //   return new CarDriveway(...data)
-      // case 3:
-      //   return new CrossroadStopSign(...data)
-      // case 4:
-      //   return new TractorIncoming(...data)
-      // case 5:
-      //   return new PrioritySameRoad(...data)
-      // case 6:
-      //   return new ParkingSpotCar(...data)
-      // case 7:
-      //   return new PedestrianCrossingVan(...data)
-      // case 8:
-      //   return new SchoolStreet(...data)
-      // case 9:
-      //   return new TrainRails(...data)
-      // case 10:
-      //   return new OncomingCyclist(...data)
-      // case 11:
-      //   return new CyclingPathFriendOncoming(...data)
-      // case 12: 
-      //   return new ClosedBicycleLane(...data)
-      default:
+    switch (Game.randomInteger(0, 12)) {
+      case 0:
+        return new CyclingPathIncomingTraffic(...data)
+      case 1:
         return new Crossroad(...data)
+      case 2:
+        return new CarDriveway(...data)
+      case 3:
+        return new CrossroadStopSign(...data)
+      case 4:
+        return new TractorIncoming(...data)
+      case 5:
+        return new PrioritySameRoad(...data)
+      case 6:
+        return new ParkingSpotCar(...data)
+      case 7:
+        return new PedestrianCrossingVan(...data)
+      case 8:
+        return new SchoolStreet(...data)
+      case 9:
+        return new TrainRails(...data)
+      case 10:
+        return new OncomingCyclist(...data)
+      case 11:
+        return new CyclingPathFriendOncoming(...data)
+      case 12: 
+        return new ClosedBicycleLane(...data)
+      default:
+        return new PedestrianCrossingVan(...data)
     }
   }
 

@@ -12,6 +12,10 @@
     },
     "include": [
       "public/ts/**/*", 
-    ]  // Frontend paths pattern
+    ],  // Frontend paths pattern
+
+    "exclude": [
+      "public/ts/Situations/SITUATIONEXAMPLE.ts"
+    ]
   }
 
