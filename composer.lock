@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06a87601e54cd2137ddb3d111753e20e",
+    "content-hash": "bd64aef6ebf1c2797b5dd8f4a20894ba",
     "packages": [
+        {
+            "name": "askedio/laravel5-profanity-filter",
+            "version": "1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Askedio/laravel-profanity-filter.git",
+                "reference": "34bec8cd92e998015e73a90d888ef981b0ed749a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Askedio/laravel-profanity-filter/zipball/34bec8cd92e998015e73a90d888ef981b0ed749a",
+                "reference": "34bec8cd92e998015e73a90d888ef981b0ed749a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.*",
+                "phpunit/phpunit": "~5.0",
+                "symfony/css-selector": "3.1.*",
+                "symfony/dom-crawler": "3.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Askedio\\Laravel5ProfanityFilter\\Providers\\ProfanityFilterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Askedio\\Laravel5ProfanityFilter\\": "app/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "A Vendor Package Example",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/Askedio/laravel-profanity-filter/issues",
+                "source": "https://github.com/Askedio/laravel-profanity-filter/tree/1.10"
+            },
+            "time": "2018-10-19T16:07:02+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -7766,5 +7816,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
