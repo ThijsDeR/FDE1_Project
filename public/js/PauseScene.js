@@ -30,6 +30,7 @@ export default class PauseScene extends CutScene {
                     if (prop.isHovered({ x: event.x, y: event.y })) {
                         if (prop.getId() === 'continue') {
                             this.paused = false;
+                            removeFunctions();
                         }
                         else if (prop.getId() === 'menu') {
                             window.location.href = '/';
