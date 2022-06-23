@@ -18,6 +18,7 @@ import TrainRails from './Situations/TrainRails.js';
 import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
 import Obstacles from './Situations/Obstacles.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 /**
  * Main class of this Game.
  */
@@ -104,6 +105,8 @@ export default class Game {
                 return new StoplichtOranje(...data);
             case 12:
                 return new Obstacles(...data);
+            case 13:
+                return new ClosedBicycleLane(...data);
             default:
                 return new TrainRails(...data);
         }
