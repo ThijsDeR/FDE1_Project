@@ -47,6 +47,11 @@ export default class Game {
         this.situation = this.specificSituation(100);
         // this.situation = this.newSituation(100)
         this.cutScene = null;
+        // Music
+        this.music = new Audio('./audio/Game-Music.mp3');
+        this.music.volume = 0.1;
+        this.music.play();
+        this.music.loop = true;
     }
     restart() {
         // Resize the canvas so it looks more like a Runner game

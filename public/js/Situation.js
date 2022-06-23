@@ -12,6 +12,8 @@ export default class Situation extends Scene {
         Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
     }
     render() {
         this.background.draw(this.ctx);
@@ -102,6 +104,7 @@ export default class Situation extends Scene {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.handleStaminaChange(prop, propIndex);
             }
             else {

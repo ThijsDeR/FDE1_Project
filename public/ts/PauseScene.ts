@@ -12,6 +12,8 @@ export default class PauseScene extends CutScene {
 
     private paused: boolean;
 
+    private clickSound: HTMLAudioElement;
+
     public constructor(canvas: HTMLCanvasElement, userData: UserData) {
         super(canvas, userData)
 
@@ -19,6 +21,7 @@ export default class PauseScene extends CutScene {
         const buttonHeight = (this.canvas.height / 6);
         const betweenButtonHeight = (this.canvas.height / 10);
 
+        this.clickSound = new Audio('./audio/UI_click.wav');
         this.paused = true; 
 
         this.props = [
@@ -36,18 +39,20 @@ export default class PauseScene extends CutScene {
           };
       
         const clickFunction = (event: MouseEvent) => {
-            const removeFunctions = () => {
-                this.canvas.removeEventListener('click', clickFunction);
-                this.canvas.removeEventListener('mousemove', hoverFunction);
-            }
-
-            this.props.forEach((prop) => {
-              if (prop instanceof Button) {
-                if (prop.isHovered({ x: event.x, y: event.y })) {
-                  if (prop.getId() === 'continue') {
+          const removeFunctions = () => {
+            this.canvas.removeEventListener('click', clickFunction);
+            this.canvas.removeEventListener('mousemove', hoverFunction);
+          }
+          
+          this.props.forEach((prop) => {
+            if (prop instanceof Button) {
+              if (prop.isHovered({ x: event.x, y: event.y })) {
+                if (prop.getId() === 'continue') {
+                    this.clickSound.play();
                     this.paused = false
                     removeFunctions()
                   } else if (prop.getId() === 'menu') {
+                    this.clickSound.play();
                     window.location.href = '/'
                   }
                 }
