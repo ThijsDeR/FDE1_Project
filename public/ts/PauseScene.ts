@@ -50,6 +50,7 @@ export default class PauseScene extends CutScene {
                 if (prop.getId() === 'continue') {
                     this.clickSound.play();
                     this.paused = false
+                    removeFunctions()
                   } else if (prop.getId() === 'menu') {
                     this.clickSound.play();
                     window.location.href = '/'

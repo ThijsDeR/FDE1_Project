@@ -46,7 +46,6 @@ export default class UserData {
       body: JSON.stringify(data)
     })
 
-    console.log(response)
     return response;
   }
 
@@ -68,7 +67,6 @@ export default class UserData {
     this.getPlayerData().then((data: any) => {
       if (highscore > data.highscore) {
         this.setHighscore({highscore: highscore}).then((data) => {
-          console.log(data)
         });
       }
       else {

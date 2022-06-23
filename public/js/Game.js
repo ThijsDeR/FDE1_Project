@@ -44,8 +44,8 @@ export default class Game {
         this.gameOver = false;
         this.upgrades = upgrades;
         this.skins = skins;
-        // this.situation = this.specificSituation(100)
-        this.situation = this.newSituation(100);
+        this.situation = this.specificSituation(100);
+        // this.situation = this.newSituation(100)
         this.cutScene = null;
         // Music
         this.music = new Audio('./audio/Game-Music.mp3');
@@ -102,7 +102,7 @@ export default class Game {
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        return new CrossroadStopSign(...data);
+        return new SchoolStreet(...data);
     }
     /**
      * Handles any user input that has happened since the last call
@@ -131,13 +131,14 @@ export default class Game {
             return false;
         }
         if (!this.cutScene) {
-            this.totalScore += this.situation.getPlayerYVel();
             this.scrollBackground(elapsed);
             const result = this.situation.update(elapsed);
+            this.totalScore += this.situation.getScoreTick();
             if (result === Situation.GAME_OVER) {
-                this.userData.changeHighScore(this.totalScore);
-                this.userData.addVP(this.totalScore);
-                this.cutScene = new GameOverScene(this.canvas, this.userData);
+                const gameScore = Math.max(0, Math.round(this.totalScore));
+                this.userData.changeHighScore(gameScore);
+                this.userData.addVP(gameScore);
+                this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore);
                 this.gameOver = true;
             }
             if (result === Situation.FINISHED)

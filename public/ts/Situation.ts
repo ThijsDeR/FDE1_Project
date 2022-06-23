@@ -34,6 +34,9 @@ export default abstract class Situation extends Scene {
 
     protected pickupSound: HTMLAudioElement
 
+    protected scoreTick: number;
+
+
     public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades, skins: Skins) {
 
         super(canvas, userData)
@@ -80,11 +83,18 @@ export default abstract class Situation extends Scene {
         return this.player.getStamina();
     }
 
+    public getScoreTick() {
+        return this.scoreTick;
+    }
+
     public update(elapsed: number): number {
+        this.scoreTick = 0
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
         this.background.scroll(elapsed, this.player.getYVel())
+    
+        this.scoreTick += (this.player.getYVel() * elapsed) / 10
 
         if (this.isMist) {
             if (!this.vanishMist()) {
@@ -152,6 +162,7 @@ export default abstract class Situation extends Scene {
                 this.handleStaminaChange(prop, propIndex)
 
             } else {
+                this.scoreTick -= 200
                 this.crashSound.play()
                 gameOver = true;
             }
