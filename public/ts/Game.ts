@@ -133,7 +133,7 @@ export default class Game {
 
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
-    switch (Game.randomInteger(0, 10)) {
+    switch (Game.randomInteger(0, 13)) {
       case 0:
         return new CyclingPathIncomingTraffic(...data)
       case 1:
@@ -153,14 +153,13 @@ export default class Game {
       case 8:
         return new SchoolStreet(...data)
       case 9:
-        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
+        return new TrainRails(...data)
       case 10:
-        return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
+        return new CyclingPathFriendOncoming(...data)
       case 11:
-        return new StoplichtOranje(this.canvas, this.userData, stamina, this.upgrades)
+        return new StoplichtOranje(...data)
       case 12:
         return new Obstacles(...data)
-
       default:
         return new TrainRails(...data)
     }
