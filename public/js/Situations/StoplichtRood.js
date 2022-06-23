@@ -1,17 +1,18 @@
 import Game from "../Game.js";
 import Player from "../Player.js";
+import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
-import StopSign from "../Props/StopSign.js";
 import Situation from "../Situation.js";
-export default class CrossroadStopSign extends Situation {
+import Stoplicht from "../Props/Stoplicht.js";
+export default class StoplichtRood extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, upgrades, skins);
         // Sound
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;
         // Create situation background
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt_2.png', false);
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/KruispuntGeenZebrapad_1.png', false);
         // Create situation props
         this.props = [
             // Cyclist
@@ -19,20 +20,12 @@ export default class CrossroadStopSign extends Situation {
             // Car
             new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
             // Stamina booster
-            new StaminaBooster(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina)),
-            // Stop sign
-            new StopSign(this.background.getXPos() + this.background.getWidth() / 1.9, this.background.getYPos() + (this.background.getHeight() / 1.1), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/stopbord.png', false)
+            new Frikandelbroodje(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10),
+            //Stoplicht
+            new Stoplicht(this.background.getXPos() + this.background.getWidth() / 1.4, this.background.getYPos() + (this.background.getHeight() / 1.1), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/StoplichtRood.png', false)
         ];
-        let xPos;
-        if (playerData.xPos)
-            xPos = playerData.xPos;
-        else
-            xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2);
-        if (xPos < this.background.getXPos() + this.background.getWidth() / 3)
-            xPos = this.background.getXPos() + this.background.getWidth() / 3;
-        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
-            xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
+        // Create player
+        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
     }
     // Handle collisions
     handleCollission(prop, propIndex, elapsed) {
@@ -43,15 +36,16 @@ export default class CrossroadStopSign extends Situation {
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
             }
-            else if (prop instanceof StopSign) {
+            else {
+                gameOver = true;
+            }
+        }
+        if (prop instanceof Stoplicht) {
+            if (prop.getYPos() < this.player.getYPos() + this.player.getHeight()
+                && prop.getYPos() + prop.getHeight() > this.player.getYPos()) {
                 if (this.player.isStopped()) {
                     prop.advance(elapsed);
                 }
-            }
-            else {
-                this.scoreTick -= 100;
-                this.crashSound.play();
-                gameOver = true;
             }
         }
         return gameOver;
@@ -59,12 +53,11 @@ export default class CrossroadStopSign extends Situation {
     // Additional prop processing
     extraPropHandling(prop, propIndex) {
         let gameOver = false;
-        if (prop instanceof StopSign) {
+        if (prop instanceof Stoplicht) {
             if (prop.isActive()) {
-                this.props.splice(propIndex, 1);
+                prop.changeImageSource('./assets/img/StoplichtGroen.png');
             }
             else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
-                this.scoreTick -= 50;
                 gameOver = true;
             }
         }

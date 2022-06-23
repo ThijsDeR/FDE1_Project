@@ -10,11 +10,14 @@ import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
 import PrioritySameRoad from './Situations/PrioritySameRoad.js';
+import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
+import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
+import Obstacles from './Situations/Obstacles.js';
 /**
  * Main class of this Game.
  */
@@ -74,7 +77,7 @@ export default class Game {
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        switch (Game.randomInteger(0, 10)) {
+        switch (Game.randomInteger(0, 13)) {
             case 0:
                 return new CyclingPathIncomingTraffic(...data);
             case 1:
@@ -95,6 +98,12 @@ export default class Game {
                 return new SchoolStreet(...data);
             case 9:
                 return new TrainRails(...data);
+            case 10:
+                return new CyclingPathFriendOncoming(...data);
+            case 11:
+                return new StoplichtOranje(...data);
+            case 12:
+                return new Obstacles(...data);
             default:
                 return new TrainRails(...data);
         }
@@ -102,7 +111,7 @@ export default class Game {
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        return new SchoolStreet(...data);
+        return new StoplichtOranje(...data);
     }
     /**
      * Handles any user input that has happened since the last call

@@ -39,6 +39,19 @@
     color: black;
     background-color: rgb(109, 218, 181);
 }
+#tos-button {
+    margin-top: 2vh;
+    text-decoration: none;
+    background-color: aquamarine;
+    margin-bottom: 100vh;
+}
+
+#tos-button:hover {
+    padding-right: 2vw;
+    padding-left: 2vw;
+    color: black;
+    background-color: rgb(109, 218, 181);
+}
 
 #username {
     font-family: "Google Sans", Roboto, Arial, sans-serif;
@@ -57,6 +70,8 @@
     display: grid;
 }
 
+
 .buttons {
     margin: 1vh 1vw 1vh 1vw;
 }
+
