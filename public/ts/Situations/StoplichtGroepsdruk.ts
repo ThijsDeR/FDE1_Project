@@ -10,19 +10,12 @@ export default class StoplichtGroepsdruk extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            },
-            stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, upgrades, skins)
 
         // Situation background properties
         this.background = new ImageProp(
@@ -236,7 +229,7 @@ export default class StoplichtGroepsdruk extends Situation {
             0,
             canvas.width / 20,
             canvas.height / 8,
-            stamina
+            playerData.stamina
         )
     }
 
