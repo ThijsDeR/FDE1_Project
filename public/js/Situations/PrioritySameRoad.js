@@ -7,11 +7,11 @@ export default class PrioritySameRoad extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, upgrades, skins);
         // Create situation background
-        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png', false);
+        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit_1.png', false);
         // Create props in situation
         this.props = [
             // Create car
-            new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car.png'),
+            new ImageProp(this.background.getXPos() + this.background.getWidth() / 3, this.background.getYPos(), 0, 0.05, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/car2.png'),
             // Create dynamic bicycle
             new TrackProp([
                 {
