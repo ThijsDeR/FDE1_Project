@@ -51,6 +51,9 @@ export default class Game {
 
   private cutScene: CutScene | null;
 
+  // Music
+  private music: HTMLAudioElement;
+
   /**
    * Construct a new Game
    *
@@ -89,6 +92,12 @@ export default class Game {
 
 
     this.cutScene = null;
+
+    // Music
+    this.music = new Audio('./audio/Game-Music.mp3');
+    this.music.volume = 0.1;
+    this.music.play();
+    this.music.loop = true;
   }
 
   private restart() {

@@ -8,6 +8,7 @@ export default class PauseScene extends CutScene {
         const buttonWidth = (this.canvas.width / 4);
         const buttonHeight = (this.canvas.height / 6);
         const betweenButtonHeight = (this.canvas.height / 10);
+        this.clickSound = new Audio('./audio/UI_click.wav');
         this.paused = true;
         this.props = [
             new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight), buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Continue', this.canvas.height / 20, 'fill', 'continue'),
@@ -29,10 +30,12 @@ export default class PauseScene extends CutScene {
                 if (prop instanceof Button) {
                     if (prop.isHovered({ x: event.x, y: event.y })) {
                         if (prop.getId() === 'continue') {
+                            this.clickSound.play();
                             this.paused = false;
                             removeFunctions();
                         }
                         else if (prop.getId() === 'menu') {
+                            this.clickSound.play();
                             window.location.href = '/';
                         }
                     }
