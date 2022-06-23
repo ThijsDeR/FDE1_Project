@@ -111,7 +111,7 @@ export default class Game {
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        return new SchoolStreet(...data);
+        return new StoplichtOranje(...data);
     }
     /**
      * Handles any user input that has happened since the last call

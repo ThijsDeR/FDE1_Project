@@ -8,6 +8,9 @@ import Stoplicht from "../Props/Stoplicht.js";
 export default class StoplichtRood extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, upgrades, skins);
+        // Sound
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/KruispuntGeenZebrapad_1.png', false);
         // Create situation props
@@ -29,6 +32,7 @@ export default class StoplichtRood extends Situation {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
             }
