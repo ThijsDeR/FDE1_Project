@@ -9,7 +9,7 @@ export default class Situation extends Scene {
         this.upgrades = upgrades;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
     }
