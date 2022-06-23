@@ -7,7 +7,9 @@
 
 @section('content')
     <div id="profile-container">
-        <h2>{{$user->username}}</h2>
+        <h2>
+            <a href="/login/edit" id="username">{{$user->username}}</a>
+        </h2>
         <hr/>
         <ul>
             <li>Verkeers Punten: <strong><span id="vp">{{$user->player->vp}}</span></strong></li>
