@@ -169,7 +169,7 @@ export default class Game {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
 
-    return new SchoolStreet(...data);
+    return new StoplichtOranje(...data);
   }
 
   /**
@@ -200,7 +200,7 @@ export default class Game {
     }
 
     if (!this.cutScene) {
-      
+
       this.scrollBackground(elapsed);
       const result = this.situation.update(elapsed);
       this.totalScore += this.situation.getScoreTick()
@@ -212,7 +212,7 @@ export default class Game {
         this.gameOver = true;
       }
       if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
-      
+
       if (result === Situation.PAUSED) {
         this.cutScene = new PauseScene(this.canvas, this.userData)
       }

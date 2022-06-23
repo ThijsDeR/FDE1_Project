@@ -9,7 +9,7 @@ import UserData from "../UserData.js";
 import Stoplicht from "../Props/Stoplicht.js";
 
 export default class StoplichtRood extends Situation {
-
+    protected pickupSound: HTMLAudioElement
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
@@ -20,6 +20,10 @@ export default class StoplichtRood extends Situation {
     ) {
 
         super(canvas, userData, upgrades, skins)
+
+        // Sound
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
 
 
         // Create situation background
@@ -102,6 +106,7 @@ export default class StoplichtRood extends Situation {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
             } else {
