@@ -8,6 +8,8 @@
     background-color: white;
     border-radius: 50px;
     padding: 1vh 1vw;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 #shop-container h2{
@@ -23,29 +25,59 @@ button.buy.bought {
     background-color: green
 }
 
-div#upgrades {
-    margin-top: 5vh;
+div#skins {
     display: grid;
-    grid-template-columns: 33% 34% 33%;
+    grid-template-columns: 50% 50%;
     justify-items: center;
+    height: 80%;
+    margin: 5% 0;
 }
 
-button, #backButton {
-    background-color: blue;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+#backButton {
+    background-color: aquamarine;
+}
+
+#backButton:hover {
+    color: black;
+    background-color: rgb(109, 218, 181);
+}
+
+
+
+#skins #rightskins, #skins #leftskins {
+    height: 100%;
+    overflow-y: auto;
+}
+
+
+.skin {
+    border: 3px solid gray;
     border-radius: 10px;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin: 2vh 2vw;
+    padding: 1vh 1vw;
 }
 
-div#upgrades img {
+.skin img{
     width: 10vw;
     height: 20vh;
 }
 
-#backButton {
+#back-vp{
     position: absolute;
     bottom: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* #back-vp p {
+    margin-left: 2.5vh;
+} */
+
+
+#backButton {
     text-decoration: none;
+    margin: 1vw;
 }

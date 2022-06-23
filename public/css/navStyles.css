@@ -12,6 +12,8 @@ nav#navbar {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: calc(0.8vw + 0.8vh);
 }
 
 nav#navbar h2 {
@@ -56,11 +58,12 @@ nav#navbar ul {
 }
 
 nav#navbar ul li {
-    padding: 0px 2%;
+    padding: 1.0vh 1.0vw;
     display: inline;
 }
 
 nav#navbar a {
+    padding: 1.0vh 1.5vw;
     text-decoration: none;
     color: black;
 }

@@ -5,24 +5,18 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 
 export default class CyclingPathFriendOncoming extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            },
-            stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
 
-        super(canvas, userData, upgrades)
+        super(canvas, userData, upgrades, skins)
 
         // Situation background properties
         this.background = new ImageProp(
@@ -216,15 +210,15 @@ export default class CyclingPathFriendOncoming extends Situation {
                 './assets/img/players/fiets1.png'
             ),
             // Create stamina boost
-            new Frikandelbroodje(
+            new StaminaBooster(
                 this.background.getWidth() * 1.13,
                 this.background.getYPos() + (this.background.getHeight() / 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/frikandelbroodje.png',
-                10
+                this.skins.staminaSkin.src,
+                parseInt(this.skins.staminaSkin.baseStamina)
             )
         ]
 
@@ -236,7 +230,7 @@ export default class CyclingPathFriendOncoming extends Situation {
             0,
             canvas.width / 20,
             canvas.height / 8,
-            stamina
+            playerData.stamina,
         )
     }
 

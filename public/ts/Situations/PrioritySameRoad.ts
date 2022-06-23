@@ -1,24 +1,20 @@
 import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class PrioritySameRoad extends Situation {
-    public constructor(canvas: HTMLCanvasElement,
+    public constructor(
+        canvas: HTMLCanvasElement,
         userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            }, stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
-        super(canvas, userData, upgrades)
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
+
+        super(canvas, userData, upgrades, skins)
 
         // Create situation background
         this.background = new ImageProp(
@@ -75,28 +71,24 @@ export default class PrioritySameRoad extends Situation {
                 './assets/img/players/fiets1.png'
             ),
             // Create stamina booster
-            new Frikandelbroodje(
+            new StaminaBooster(
                 this.background.getXPos() + this.background.getWidth() / 2,
                 this.background.getYPos() + (this.background.getHeight() / 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/frikandelbroodje.png',
-                10
+                this.skins.staminaSkin.src,
+                parseInt(this.skins.staminaSkin.baseStamina)
             )
         ]
+        let xPos
+        if (playerData.xPos) xPos = playerData.xPos
+        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
+        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
+        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
+        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
 
-        // Create player
-        this.player = new Player(
-            this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2),
-            this.background.getHeight() / 1.2,
-            0,
-            0,
-            this.background.getWidth() / 20,
-            this.background.getHeight() / 8,
-            stamina
-        )
     }
 
     // Set boundaries to the player's movements

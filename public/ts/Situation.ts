@@ -14,24 +14,41 @@ export default abstract class Situation extends Scene {
 
     public static readonly FINISHED: number = 2;
 
+    public static readonly PAUSED: number = 3;
+
     protected crashSound: HTMLAudioElement;
 
     protected player: Player;
-    
+
     protected props: ImageProp[];
 
     protected background: ImageProp;
 
-    protected upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}};
+    protected upgrades: Upgrades;
 
-    protected mist: boolean
+    protected skins: Skins;
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: {stamina_resistance: {level: number, price: number}, stamina_gain: {level: number, price: number}}) {
+    protected isMist: boolean
+
+    protected currentMist: number;
+
+    protected pickupSound: HTMLAudioElement
+
+    protected scoreTick: number;
+
+
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, upgrades: Upgrades, skins: Skins) {
+
         super(canvas, userData)
         this.upgrades = upgrades;
-        this.crashSound = new Audio('./audio/bike_crash.mp3')
-        this.crashSound.volume = 0.7
-        Game.randomInteger(0, 10) === 1 ? this.mist = true : this.mist = false;
+        this.crashSound = new Audio('./audio/bike_crash.mp3');
+        this.crashSound.volume = 0.7;
+        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
+        this.currentMist = 0;
+        this.skins = skins;
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
+
     }
 
     public render() {
@@ -41,14 +58,21 @@ export default abstract class Situation extends Scene {
         })
         this.player.draw(this.ctx);
 
-        if (this.mist) {
-            this.ctx.fillStyle = 'rgba(168, 168, 168, 0.9)';
-            this.ctx.fillRect(this.background.getXPos(), this.background.getYPos(), this.background.getWidth(), this.background.getHeight())
+        if (this.isMist) {
+            const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 1000), 0) + 0.05
+            this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
+            this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10)
         }
     }
 
     public processInput() {
         this.player.processInput(this.canvas, this.background.getXPos(), this.background.getXPos() + this.background.getWidth());
+    }
+
+    public isPaused() {
+        if (this.player.isPausing() === true) {
+            return Situation.PAUSED;
+        }
     }
 
     public getPlayerYVel() {
@@ -59,11 +83,24 @@ export default abstract class Situation extends Scene {
         return this.player.getStamina();
     }
 
+    public getScoreTick() {
+        return this.scoreTick;
+    }
+
     public update(elapsed: number): number {
+        this.scoreTick = 0
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed)
-        this.background.scroll(elapsed, this.player.getYVel())     
+        this.background.scroll(elapsed, this.player.getYVel())
+    
+        this.scoreTick += (this.player.getYVel() * elapsed) / 10
+
+        if (this.isMist) {
+            if (!this.vanishMist()) {
+                if (this.currentMist <= 0.85) this.currentMist += Math.min(elapsed / 1000, 0.004)
+            } else this.currentMist -= Math.min(elapsed / 400, 0.01)
+        }
 
         if (this.finishedCheck()) {
             return Situation.FINISHED;
@@ -71,10 +108,18 @@ export default abstract class Situation extends Scene {
 
         let gameOver = this.handleProps(elapsed)
 
-        if(this.player.getStamina() >= 0) this.handleStaminaDepletion()
+        if (this.player.getStamina() >= 0) this.handleStaminaDepletion(elapsed)
         else gameOver = true;
 
+        if (this.isPaused()) {
+            return Situation.PAUSED;
+        }
+
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
+    }
+
+    protected vanishMist() {
+        return this.player.getYPos() < this.background.getYPos() - (this.background.getHeight() / 2)
     }
 
     protected finishedCheck() {
@@ -96,7 +141,7 @@ export default abstract class Situation extends Scene {
             let propCollission = this.handleCollission(prop, propIndex, elapsed)
             if (propCollission) gameOver = true;
 
-            
+
 
             let extraPropHandling = this.extraPropHandling(prop, propIndex)
             if (extraPropHandling) gameOver = true
@@ -112,10 +157,12 @@ export default abstract class Situation extends Scene {
     protected handleCollission(prop: ImageProp, propIndex: number, elapsed: number) {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
-            console.log('gay')
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play()
                 this.handleStaminaChange(prop, propIndex)
+
             } else {
+                this.scoreTick -= 200
                 this.crashSound.play()
                 gameOver = true;
             }
@@ -129,11 +176,15 @@ export default abstract class Situation extends Scene {
         this.props.splice(propIndex, 1);
     }
 
-    protected handleStaminaDepletion() {
-        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    protected handleStaminaDepletion(elapsed: number) {
+        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
 
     protected extraPropHandling(prop: Prop, propIndex: number) {
         return false;
+    }
+
+    public getPlayer() {
+        return this.player;
     }
 }

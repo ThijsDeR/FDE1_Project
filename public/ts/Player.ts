@@ -10,6 +10,8 @@ export default class Player extends AnimatedProp {
 
   public static readonly MAX_SPEED_X = 0.4;
 
+  public static readonly SPEED_STATIC = 0.15;
+
   private keyListener: KeyListener;
 
   private stamina: number;
@@ -22,8 +24,8 @@ export default class Player extends AnimatedProp {
    */
   public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number) {
     super(xPos, yPos, xVel, yVel, width, height, [
-      {image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200},
-      {image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200},
+      { image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200 },
+      { image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200 },
     ])
 
     this.keyListener = new KeyListener();
@@ -40,7 +42,7 @@ export default class Player extends AnimatedProp {
    *
    * @returns stamina
    */
-  public getStamina(): number{
+  public getStamina(): number {
     return this.stamina;
   }
 
@@ -64,14 +66,14 @@ export default class Player extends AnimatedProp {
    *
    * @param stamina stamina number input
    */
-  public setStamina(stamina: number): void{
-      this.stamina = stamina;
+  public setStamina(stamina: number): void {
+    this.stamina = stamina;
   }
 
   /**
    * Moves the player
    */
-   public processInput(canvas: HTMLCanvasElement, minX: number, maxX: number): void {
+  public processInput(canvas: HTMLCanvasElement, minX: number, maxX: number): void {
     // Set the limit values
     const maximX = maxX - this.width;
     const spacebarPressed = this.keyListener.isKeyDown(KeyListener.KEY_SPACE)
@@ -85,9 +87,9 @@ export default class Player extends AnimatedProp {
 
     if (spacebarPressed) {
       this.yVel = 0
-    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W))) {
       this.yVel = Player.MAX_SPEED_X;
-    } else this.yVel = Player.MAX_SPEED / 4;
+    } else this.yVel = Player.SPEED_STATIC;
   }
 
   public move(elapsed: number) {
@@ -100,6 +102,10 @@ export default class Player extends AnimatedProp {
   }
 
   public isStopped() {
-      return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+    return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+  }
+
+  public isPausing() {
+    return this.keyListener.isKeyDown(KeyListener.KEY_ESC);
   }
 }

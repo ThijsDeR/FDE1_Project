@@ -2,6 +2,7 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
+import Player from './Player.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -21,6 +22,9 @@ import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
 import StoplichtOranje from './Situations/StoplichtRood.js';
 import StoplichtRood from './Situations/StoplichtRood.js';
+import PauseScene from './PauseScene.js';
+import Obstacles from './Situations/Obstacles.js';
+
 
 /**
  * Main class of this Game.
@@ -44,16 +48,21 @@ export default class Game {
 
   private gameOver: boolean;
 
-  private upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } };
+  private upgrades: Upgrades;
+
+  private skins: Skins;
 
   private cutScene: CutScene | null;
+
+  // Music
+  private music: HTMLAudioElement;
 
   /**
    * Construct a new Game
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
+  public constructor(canvas: HTMLElement, upgrades: Upgrades, skins: Skins) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -78,11 +87,21 @@ export default class Game {
     this.gameOver = false;
 
     this.upgrades = upgrades;
-    this.situation = new StoplichtRood(this.canvas, this.userData, 100, this.upgrades)
+
+    this.skins = skins;
+
+    this.situation = this.specificSituation(100)
+
     // this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
+
+    // Music
+    this.music = new Audio('./audio/Game-Music.mp3');
+    this.music.volume = 0.1;
+    this.music.play();
+    this.music.loop = true;
   }
 
   private restart() {
@@ -111,34 +130,47 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
-    switch (Game.randomInteger(0, 2)) {
+
+    const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+    switch (Game.randomInteger(0, 10)) {
       case 0:
-        return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades)
+        return new CyclingPathIncomingTraffic(...data)
       case 1:
-        return new Crossroad(this.canvas, this.userData, stamina, this.upgrades)
+        return new Crossroad(...data)
       case 2:
-        return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades)
+        return new CarDriveway(...data)
       case 3:
-        return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades)
+        return new CrossroadStopSign(...data)
       case 4:
-        return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades)
+        return new TractorIncoming(...data)
       case 5:
-        return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades)
+        return new PrioritySameRoad(...data)
       case 6:
-        return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades)
+        return new ParkingSpotCar(...data)
       case 7:
-        return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades)
+        return new PedestrianCrossingVan(...data)
       case 8:
-        return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades)
+        return new SchoolStreet(...data)
       case 9:
         return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
       case 10:
         return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades)
       case 11:
         return new StoplichtOranje(this.canvas, this.userData, stamina, this.upgrades)
+      case 12:
+        return new Obstacles(...data)
+
       default:
-        return new TrainRails(this.canvas, this.userData, stamina, this.upgrades)
+        return new TrainRails(...data)
     }
+  }
+
+  private specificSituation(stamina: number) {
+    const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+
+    return new SchoolStreet(...data);
   }
 
   /**
@@ -147,6 +179,8 @@ export default class Game {
   public processInput(): void {
     // Move player
     this.situation.processInput()
+    // Pause game if esc is pressed
+    this.situation.isPaused()
   }
 
   /**
@@ -166,20 +200,27 @@ export default class Game {
       return false;
     }
 
-    this.totalScore += this.situation.getPlayerYVel()
-    // Spawn a new scoring object every 45 frames
-
-    this.scrollBackground(elapsed);
-
-
-    const result = this.situation.update(elapsed);
-    if (result === Situation.GAME_OVER) {
-      this.userData.changeHighScore(this.totalScore);
-      this.userData.addVP(this.totalScore);
-      this.cutScene = new GameOverScene(this.canvas, this.userData)
-      this.gameOver = true;
+    if (!this.cutScene) {
+      
+      this.scrollBackground(elapsed);
+      const result = this.situation.update(elapsed);
+      this.totalScore += this.situation.getScoreTick()
+      if (result === Situation.GAME_OVER) {
+        const gameScore = Math.max(0, Math.round(this.totalScore))
+        this.userData.changeHighScore(gameScore);
+        this.userData.addVP(gameScore);
+        this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore)
+        this.gameOver = true;
+      }
+      if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
+      
+      if (result === Situation.PAUSED) {
+        this.cutScene = new PauseScene(this.canvas, this.userData)
+      }
+    } else {
+      const paused = this.cutScene.update(elapsed)
+      if (!paused) this.cutScene = null
     }
-    if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())
 
 
     return false;
@@ -199,18 +240,18 @@ export default class Game {
     // create an image element
     const img = new Image(this.canvas.height, this.canvas.height);
 
-     // specify the image source relative to the html or js file
-     // when the image is in the same directory as the file
-     // only the file name is required:
+    // specify the image source relative to the html or js file
+    // when the image is in the same directory as the file
+    // only the file name is required:
 
-     img.src = "./assets/img/objects/MainRoadFixed.png";
-     img.classList.add("backgroundImage");
+    img.src = "./assets/img/objects/MainRoadFixed.png";
+    img.classList.add("backgroundImage");
 
-     // draw image 1
+    // draw image 1
 
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight, this.canvas.width / 2, this.canvas.height);
-     // draw image 2
-     ctx.drawImage(img, this.canvas.width / 3 , this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
+    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 2, this.canvas.height);
+    // draw image 2
+    ctx.drawImage(img, this.canvas.width / 3, this.imgHeight - this.canvas.height, this.canvas.width / 2, this.canvas.height);
 
     // if (this.situation) {
     //   this.situation.draw(ctx)
@@ -343,5 +384,4 @@ export default class Game {
     img.src = source;
     return img;
   }
-}
-;
+};

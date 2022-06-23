@@ -69,11 +69,11 @@ export default class Player extends AnimatedProp {
         if (spacebarPressed) {
             this.yVel = 0;
         }
-        else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+        else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W))) {
             this.yVel = Player.MAX_SPEED_X;
         }
         else
-            this.yVel = Player.MAX_SPEED / 4;
+            this.yVel = Player.SPEED_STATIC;
     }
     move(elapsed) {
         this.xPos += this.xVel * elapsed;
@@ -85,6 +85,10 @@ export default class Player extends AnimatedProp {
     isStopped() {
         return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
     }
+    isPausing() {
+        return this.keyListener.isKeyDown(KeyListener.KEY_ESC);
+    }
 }
 Player.MAX_SPEED = 0.6;
 Player.MAX_SPEED_X = 0.4;
+Player.SPEED_STATIC = 0.15;

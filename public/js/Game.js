@@ -10,13 +10,16 @@ import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
 import PrioritySameRoad from './Situations/PrioritySameRoad.js';
-import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js';
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
 import StoplichtOranje from './Situations/StoplichtRood.js';
 import StoplichtRood from './Situations/StoplichtRood.js';
+
+import PauseScene from './PauseScene.js';
+import Obstacles from './Situations/Obstacles.js';
+
 /**
  * Main class of this Game.
  */
@@ -26,7 +29,7 @@ export default class Game {
      *
      * @param canvas The canvas HTML element to render on
      */
-    constructor(canvas, upgrades) {
+    constructor(canvas, upgrades, skins) {
         this.canvas = canvas;
         // Resize the canvas so it looks more like a Runner game
         this.canvas.width = window.innerWidth;
@@ -45,9 +48,16 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
-        this.situation = new StoplichtRood(this.canvas, this.userData, 100, this.upgrades);
+
+        this.skins = skins;
+        this.situation = this.specificSituation(100);
         // this.situation = this.newSituation(100)
         this.cutScene = null;
+        // Music
+        this.music = new Audio('./audio/Game-Music.mp3');
+        this.music.volume = 0.1;
+        this.music.play();
+        this.music.loop = true;
     }
     restart() {
         // Resize the canvas so it looks more like a Runner game
@@ -68,34 +78,44 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
-        switch (Game.randomInteger(0, 2)) {
+
+        const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
+        switch (Game.randomInteger(0, 10)) {
             case 0:
-                return new CyclingPathIncomingTraffic(this.canvas, this.userData, stamina, this.upgrades);
+                return new CyclingPathIncomingTraffic(...data);
             case 1:
-                return new Crossroad(this.canvas, this.userData, stamina, this.upgrades);
+                return new Crossroad(...data);
             case 2:
-                return new CarDriveway(this.canvas, this.userData, stamina, this.upgrades);
+                return new CarDriveway(...data);
             case 3:
-                return new CrossroadStopSign(this.canvas, this.userData, stamina, this.upgrades);
+                return new CrossroadStopSign(...data);
             case 4:
-                return new TractorIncoming(this.canvas, this.userData, stamina, this.upgrades);
+                return new TractorIncoming(...data);
             case 5:
-                return new PrioritySameRoad(this.canvas, this.userData, stamina, this.upgrades);
+                return new PrioritySameRoad(...data);
             case 6:
-                return new ParkingSpotCar(this.canvas, this.userData, stamina, this.upgrades);
+                return new ParkingSpotCar(...data);
             case 7:
-                return new PedestrianCrossingVan(this.canvas, this.userData, stamina, this.upgrades);
+                return new PedestrianCrossingVan(...data);
             case 8:
-                return new SchoolStreet(this.canvas, this.userData, stamina, this.upgrades);
+                return new SchoolStreet(...data);
             case 9:
                 return new TrainRails(this.canvas, this.userData, stamina, this.upgrades);
             case 10:
                 return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades);
             case 11:
                 return new StoplichtOranje(this.canvas, this.userData, stamina, this.upgrades);
+            case 12:
+                return new Obstacles(...data);
             default:
-                return new TrainRails(this.canvas, this.userData, stamina, this.upgrades);
+                return new TrainRails(...data);
         }
+    }
+    specificSituation(stamina) {
+        const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
+        return new SchoolStreet(...data);
     }
     /**
      * Handles any user input that has happened since the last call
@@ -103,6 +123,8 @@ export default class Game {
     processInput() {
         // Move player
         this.situation.processInput();
+        // Pause game if esc is pressed
+        this.situation.isPaused();
     }
     /**
      * Advances the game simulation one step. It may run AI and physics (usually
@@ -121,18 +143,28 @@ export default class Game {
             }
             return false;
         }
-        this.totalScore += this.situation.getPlayerYVel();
-        // Spawn a new scoring object every 45 frames
-        this.scrollBackground(elapsed);
-        const result = this.situation.update(elapsed);
-        if (result === Situation.GAME_OVER) {
-            this.userData.changeHighScore(this.totalScore);
-            this.userData.addVP(this.totalScore);
-            this.cutScene = new GameOverScene(this.canvas, this.userData);
-            this.gameOver = true;
+        if (!this.cutScene) {
+            this.scrollBackground(elapsed);
+            const result = this.situation.update(elapsed);
+            this.totalScore += this.situation.getScoreTick();
+            if (result === Situation.GAME_OVER) {
+                const gameScore = Math.max(0, Math.round(this.totalScore));
+                this.userData.changeHighScore(gameScore);
+                this.userData.addVP(gameScore);
+                this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore);
+                this.gameOver = true;
+            }
+            if (result === Situation.FINISHED)
+                this.situation = this.newSituation(this.situation.getPlayerStamina());
+            if (result === Situation.PAUSED) {
+                this.cutScene = new PauseScene(this.canvas, this.userData);
+            }
         }
-        if (result === Situation.FINISHED)
-            this.situation = this.newSituation(this.situation.getPlayerStamina());
+        else {
+            const paused = this.cutScene.update(elapsed);
+            if (!paused)
+                this.cutScene = null;
+        }
         return false;
     }
     /**

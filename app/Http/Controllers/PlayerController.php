@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BicycleSkin;
 use App\Models\Player;
+use App\Models\StaminaSkin;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -33,14 +36,47 @@ class PlayerController extends Controller
 
     public function skins()
     {
-        return view('players.skins');
+        $bicycleSkins = BicycleSkin::all();
+        $staminaSkins = StaminaSkin::all();
+        $user = auth()->user();
+        return view('players.skins', compact('user', 'bicycleSkins', 'staminaSkins'));
+    }
+
+
+    public function buySkin(Request $request, $token) {
+        $result = Player::where('token', $token)->first()->skins->buy_skin($request->skin_type, $request->skin_id);
+        return $result;
+    }
+
+    public function getSkin($type, $token) {
+        $player = Player::where('token', $token)->first();
+        if ($type === 'bicycle') {
+            return $player->skins->getCurrentBicycleSkin();
+        } 
+        if ($type === 'stamina') {
+            return $player->skins->getCurrentStaminaSkin();
+        }
+    }
+
+    public function changeSkin(Request $request, $type, $token) {
+        $player = Player::where('token', $token)->first();
+        if ($type === 'bicycle') {
+            $player->skins->changeCurrentBicycleSkin($request->amount);
+        } 
+        if ($type === 'stamina') {
+            $player->skins->changeCurrentStaminaSkin($request->amount);
+        }
     }
 
     public function addVP(Request $request, $token) {
-        $player = Player::where('token', $token)->first();
-        $player->vp += $request->vp;
-        $player->save();
-        return response('Succesfull update', 200);
+        try {
+            $player = Player::where('token', $token)->first();
+            $player->vp += $request->vp;
+            $player->save();
+            return response('Succesfull update', 200);
+        } catch (Exception $e) {
+            return response($e, 400);
+        }
     }
 
     public function update(Request $request, $token) {
