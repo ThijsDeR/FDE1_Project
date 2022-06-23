@@ -108,7 +108,7 @@ export default abstract class Situation extends Scene {
 
         let gameOver = this.handleProps(elapsed)
 
-        if (this.player.getStamina() >= 0) this.handleStaminaDepletion()
+        if (this.player.getStamina() >= 0) this.handleStaminaDepletion(elapsed)
         else gameOver = true;
 
         if (this.isPaused()) {
@@ -176,8 +176,8 @@ export default abstract class Situation extends Scene {
         this.props.splice(propIndex, 1);
     }
 
-    protected handleStaminaDepletion() {
-        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    protected handleStaminaDepletion(elapsed: number) {
+        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
 
     protected extraPropHandling(prop: Prop, propIndex: number) {
