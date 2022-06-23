@@ -10,8 +10,12 @@
 
 .big-button-container a {
     position: relative;
-    top: 30%;
-    left: 50%;
+    border-radius: 24px;
+    border-style: inset;
+    border-color: aquamarine;
+    border-width: 0.8vw;
+    top: 30vh;
+    left: 48vw;
     margin: 5vh;
     transform: translate(-50%, -50%);
     font-size: calc(2.5vw + 2.5vh);
@@ -20,11 +24,15 @@
     display: block;
 }
 
+.big-button-container a:hover {
+    border-color: rgb(109, 218, 181);
+}
+
 .container {
     position: absolute;
     width: 82vw;
     height: 82vh;
-    margin: 7vh 10vw 7vh 10vw;
+    margin: 7vh 10vw 7vh 8.5vw;
     background: linear-gradient(90deg, rgb(255, 255, 255), rgb(245, 245, 245) );
     border-radius: 15px;
 }

@@ -19,15 +19,15 @@
             <div class="skin" id="bicycleSkin" type="bicycle">
                 <img id="bicycleSkinImage" src="{{$user->player->skins->getCurrentBicycleSkin()->src}}" alt="">
                 <div class="buttons">
-                    <button type="previous" class="nice-button">Previous</button>
-                    <button type="next" class="nice-button">Next</button>
+                    <button type="previous" class="nice-button">Vorige</button>
+                    <button type="next" class="nice-button">Volgende</button>
                 </div>
             </div>
             <div class="skin" id="staminaSkin" type="stamina">
                 <img id="staminaSkinImage" src="{{$user->player->skins->getCurrentStaminaSkin()->src}}" alt="">
                 <div class="buttons">
-                    <button type="previous" class="nice-button">Previous</button>
-                    <button type="next" class="nice-button">Next</button>
+                    <button type="previous" class="nice-button">Vorige</button>
+                    <button type="next" class="nice-button">Volgende</button>
                 </div>
             </div>
         </div>

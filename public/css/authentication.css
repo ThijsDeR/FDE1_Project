@@ -15,11 +15,12 @@
     flex-direction: column;
     justify-content: center;
     padding: 1vh 1vw;
-    margin: 1vh;
+    margin: 1.5vh;
 }
 
 #input-container input {
     height: 5vh;
+    padding: 0.5vw;
 }
 
 /* #submit-container {
@@ -59,5 +60,4 @@
 .buttons {
     margin: 1vh 1vw 1vh 1vw;
 }
-
 

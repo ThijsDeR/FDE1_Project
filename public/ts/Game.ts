@@ -51,6 +51,9 @@ export default class Game {
 
   private cutScene: CutScene | null;
 
+  // Music
+  private music: HTMLAudioElement;
+
   /**
    * Construct a new Game
    *
@@ -83,12 +86,18 @@ export default class Game {
     this.upgrades = upgrades;
     this.skins = skins;
 
-    // this.situation = this.specificSituation(100)
+    this.situation = this.specificSituation(100)
 
-    this.situation = this.newSituation(100)
+    // this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
+
+    // Music
+    this.music = new Audio('./audio/Game-Music.mp3');
+    this.music.volume = 0.1;
+    this.music.play();
+    this.music.loop = true;
   }
 
   private restart() {
@@ -150,7 +159,7 @@ export default class Game {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
 
-    return new TractorIncoming(...data);
+    return new SchoolStreet(...data);
   }
 
   /**
@@ -188,7 +197,7 @@ export default class Game {
       if (result === Situation.GAME_OVER) {
         const gameScore = Math.max(0, Math.round(this.totalScore))
         this.userData.changeHighScore(gameScore);
-        this.userData.addVP(this.totalScore);
+        this.userData.addVP(gameScore);
         this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore)
         this.gameOver = true;
       }

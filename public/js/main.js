@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import Game from './Game.js';
 import UserData from './UserData.js';
-console.log('Javascript is working!, not');
 const userData = new UserData();
 // Add EventListener to load the game whenever the browser is ready
 window.addEventListener('load', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -20,6 +19,5 @@ window.addEventListener('load', () => __awaiter(void 0, void 0, void 0, function
     const staminaSkin = yield userData.getSkin('stamina');
     const upgrades = { stamina_resistance: stamina_resistance, stamina_gain: stamina_gain, lamp_power: lamp_power };
     const skins = { bicycleSkin: bicycleSkin, staminaSkin: staminaSkin };
-    console.log(skins);
     new Game(document.getElementById('game-canvas'), upgrades, skins);
 }));

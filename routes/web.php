@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Route::get('/localstorage', [GameController::class, 'localstorage'])->name('localstorage')->middleware('auth');
 Route::get('/game', [GameController::class, 'game'])->name('game')->middleware('auth');
-Route::get('/explanation', [ExplanationController::class, 'explanation'])->name('explantion')->middleware('auth');
+Route::get('/explanation', [ExplanationController::class, 'explanation'])->name('explanation')->middleware('auth');
 
 Route::get('/login', [AuthController::class, 'show'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');

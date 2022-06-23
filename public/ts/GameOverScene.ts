@@ -46,6 +46,7 @@ export default class GameOverScene extends CutScene {
                 if (prop.isHovered({ x: event.x, y: event.y })) {
                   if (prop.getId() === 'restart') {
                       this.completed = true;
+                      removeFunctions()
                   } else if (prop.getId() === 'menu') {
                     window.location.href = '/'
                   }

@@ -14,7 +14,6 @@ skins.forEach((skin) => __awaiter(void 0, void 0, void 0, function* () {
     const type = skin.getAttribute('type');
     const buyBtn = skin.querySelector('button.buy');
     skin.querySelector('button').addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(type, skin.id);
         const skin_data = yield userdata.buySkin(type, skin.id);
         if (skin_data.status === 200) {
             // worked

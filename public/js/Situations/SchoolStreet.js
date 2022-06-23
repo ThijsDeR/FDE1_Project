@@ -25,7 +25,7 @@ export default class SchoolStreet extends Situation {
                 },
             ], 
             // Properties of personWalkingLeft image
-            this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+            this.background.getWidth() / 20, this.background.getHeight() / 10, './assets/img/players/character_maleAdventurer_walk0.png', false);
             // Pedestrian walking towards the right
             const personWalkingRight = new TrackProp([
                 {
@@ -38,7 +38,7 @@ export default class SchoolStreet extends Situation {
                 },
             ], 
             // Properties of personWalkingLeft image
-            this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/players/character_maleAdventurer_walk0.png', false);
+            this.background.getWidth() / 20, this.background.getHeight() / 10, './assets/img/players/character_maleAdventurer_walk0.png', false);
             // Decide which props to create
             switch (Game.randomInteger(0, 1)) {
                 case 0:

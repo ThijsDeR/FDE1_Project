@@ -12,6 +12,8 @@ export default class Situation extends Scene {
         Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
     }
     render() {
         this.background.draw(this.ctx);
@@ -62,7 +64,7 @@ export default class Situation extends Scene {
         }
         let gameOver = this.handleProps(elapsed);
         if (this.player.getStamina() >= 0)
-            this.handleStaminaDepletion();
+            this.handleStaminaDepletion(elapsed);
         else
             gameOver = true;
         if (this.isPaused()) {
@@ -102,6 +104,7 @@ export default class Situation extends Scene {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.handleStaminaChange(prop, propIndex);
             }
             else {
@@ -116,8 +119,8 @@ export default class Situation extends Scene {
         this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
         this.props.splice(propIndex, 1);
     }
-    handleStaminaDepletion() {
-        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    handleStaminaDepletion(elapsed) {
+        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
     extraPropHandling(prop, propIndex) {
         return false;
