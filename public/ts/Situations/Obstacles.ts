@@ -16,7 +16,7 @@ export default class Obstacles extends Situation {
         skins: Skins
     ) {
         super(canvas, userData, upgrades, skins)
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png');
 
 
         this.props = [

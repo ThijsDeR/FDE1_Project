@@ -24,7 +24,7 @@ export default class PedestrianCrossingVan extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntZebraPad.png',
+            './assets/img/objects/Kruispunt.png',
             false
         )
 

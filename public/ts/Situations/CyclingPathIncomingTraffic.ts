@@ -26,7 +26,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             0,
             0, canvas.width / 2,
             canvas.height,
-            './assets/img/MainRoadFixed.png',
+            './assets/img/MainRoadFixed_2.png',
             false
         )
 

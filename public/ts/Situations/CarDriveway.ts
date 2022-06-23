@@ -24,7 +24,7 @@ export default class CarDriveway extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/Oprit.png'
+            './assets/img/objects/Oprit_1.png'
         )
 
         // Define possibilities for driver

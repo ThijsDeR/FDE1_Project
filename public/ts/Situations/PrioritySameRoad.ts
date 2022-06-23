@@ -23,10 +23,10 @@ export default class PrioritySameRoad extends Situation {
             0,
             0, this.canvas.width / 2,
             canvas.height,
-            './assets/img/Oprit.png',
+            './assets/img/Oprit_1.png',
             false
         )
-        
+
         // Create props in situation
         this.props = [
             // Create car
@@ -37,7 +37,7 @@ export default class PrioritySameRoad extends Situation {
                 0.05,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/car.png'
+                './assets/img/objects/car2.png'
             ),
             // Create dynamic bicycle
             new TrackProp(

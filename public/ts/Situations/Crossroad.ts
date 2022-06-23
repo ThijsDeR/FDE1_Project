@@ -26,7 +26,7 @@ export default class Crossroad extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntZebraPad.png',
+            './assets/img/objects/Kruispunt.png',
             false
         )
 
@@ -40,7 +40,7 @@ export default class Crossroad extends Situation {
                 0.05,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/car.png'
+                './assets/img/objects/car3.png'
             ),
             // Add stamina booster
             new StaminaBooster(
@@ -101,7 +101,7 @@ export default class Crossroad extends Situation {
             ? this.props.push(badCycle)
             : this.props.push(goodCycle)
 
-            
+
         // Create player
         let xPos
         if (playerData.xPos) xPos = playerData.xPos

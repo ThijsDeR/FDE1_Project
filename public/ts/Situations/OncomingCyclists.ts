@@ -24,7 +24,7 @@ export default class OncomingCyclist extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntGeenZebrapad.png',
+            './assets/img/objects/Kruispunt.png',
             false
         )
 
@@ -73,7 +73,7 @@ export default class OncomingCyclist extends Situation {
                 './assets/img/players/fiets1.png'
             ),
         ]
-          
+
         let xPos
         if (playerData.xPos) xPos = playerData.xPos
         else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
