@@ -10,8 +10,12 @@ export default class GameOverScene extends CutScene {
 
     private completed: boolean;
 
-    public constructor(canvas: HTMLCanvasElement, userData: UserData) {
+    private score: number;
+
+    public constructor(canvas: HTMLCanvasElement, userData: UserData, score: number) {
         super(canvas, userData)
+
+        this.score = score;
 
         const buttonWidth = (this.canvas.width / 4);
         const buttonHeight = (this.canvas.height / 6);
@@ -42,6 +46,7 @@ export default class GameOverScene extends CutScene {
                 if (prop.isHovered({ x: event.x, y: event.y })) {
                   if (prop.getId() === 'restart') {
                       this.completed = true;
+                      removeFunctions()
                   } else if (prop.getId() === 'menu') {
                     window.location.href = '/'
                   }
@@ -71,6 +76,14 @@ export default class GameOverScene extends CutScene {
             this.canvas.height / 8,
             30
         )
+
+        Scene.writeTextToCanvas(
+          this.ctx,
+          `Score: ${this.score}`,
+          this.canvas.width / 2,
+          this.canvas.height / 6,
+          30
+      )
 
     }
 

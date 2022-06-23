@@ -25,14 +25,20 @@ Route::get('/', function () {
 
 Route::get('/localstorage', [GameController::class, 'localstorage'])->name('localstorage')->middleware('auth');
 Route::get('/game', [GameController::class, 'game'])->name('game')->middleware('auth');
+
 Route::get('/explanation', [ExplanationController::class, 'explanation'])->name('explantion')->middleware('auth');
 Route::get('/terms_of_service', [ToSController::class, 'terms_of_service'])->name('terms_of_service');
+
 
 Route::get('/login', [AuthController::class, 'show'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'registerView'])->name('registerView');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+Route::get('/login/edit', [AuthController::class, 'edit'])->name('loginEdit')->middleware('auth');
+Route::put('login/update', [AuthController::class, 'update'])->name('loginUpdate')->middleware('auth');
+Route::delete('login/delete', [AuthController::class, 'destroy'])->name('loginDelete')->middleware('auth');
+
 
 Route::get('/profile', [PlayerController::class, 'profile'])->name('profile')->middleware('auth');
 Route::get('/profile/skins', [PlayerController::class, 'skins'])->name('skins')->middleware('auth');

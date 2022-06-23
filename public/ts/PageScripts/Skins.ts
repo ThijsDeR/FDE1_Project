@@ -9,7 +9,6 @@ skins.forEach(async (skin) => {
     const type = skin.getAttribute('type')!;
     const buyBtn = skin.querySelector('button.buy')!
     skin.querySelector('button')!.addEventListener('click', async () => {
-        console.log(type, skin.id)
         const skin_data = await userdata.buySkin(type, skin.id)
         if (skin_data.status === 200) {
             // worked

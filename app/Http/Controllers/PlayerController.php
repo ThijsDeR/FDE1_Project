@@ -6,6 +6,7 @@ use App\Models\BicycleSkin;
 use App\Models\Player;
 use App\Models\StaminaSkin;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class PlayerController extends Controller
@@ -68,10 +69,14 @@ class PlayerController extends Controller
     }
 
     public function addVP(Request $request, $token) {
-        $player = Player::where('token', $token)->first();
-        $player->vp += $request->vp;
-        $player->save();
-        return response('Succesfull update', 200);
+        try {
+            $player = Player::where('token', $token)->first();
+            $player->vp += $request->vp;
+            $player->save();
+            return response('Succesfull update', 200);
+        } catch (Exception $e) {
+            return response($e, 400);
+        }
     }
 
     public function update(Request $request, $token) {

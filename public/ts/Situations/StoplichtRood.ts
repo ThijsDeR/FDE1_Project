@@ -13,18 +13,14 @@ export default class StoplichtRood extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        stamina: number,
-        upgrades: {
-            stamina_resistance: {
-                level: number,
-                price: number
-            }, stamina_gain: {
-                level: number,
-                price: number
-            }
-        }) {
 
-        super(canvas, userData, upgrades)
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
+
+        super(canvas, userData, upgrades, skins)
+
 
         // Create situation background
         this.background = new ImageProp(
@@ -93,7 +89,7 @@ export default class StoplichtRood extends Situation {
             0,
             this.background.getWidth() / 20,
             this.background.getHeight() / 8,
-            stamina
+            playerData.stamina
         )
     }
 
