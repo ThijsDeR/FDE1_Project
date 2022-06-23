@@ -2,7 +2,6 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import Player from './Player.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -21,10 +20,9 @@ import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
 import StoplichtOranje from './Situations/StoplichtRood.js';
-import StoplichtRood from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
-import Obstacles from './Situations/Obstacles.js';
 import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
+import Obstacles from './Situations/Obstacles.js';
 
 
 /**
@@ -164,7 +162,7 @@ export default class Game {
       case 13:
         return new ClosedBicycleLane(...data)
       default:
-        return new TrainRails(...data)
+        return new PedestrianCrossingVan(...data)
     }
   }
 

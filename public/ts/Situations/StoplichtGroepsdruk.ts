@@ -10,12 +10,12 @@ export default class StoplichtGroepsdruk extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData: {xPos: number | null, stamina: number},
+        playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins
     ) {
 
-        super(canvas, userData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Situation background properties
         this.background = new ImageProp(
@@ -26,6 +26,12 @@ export default class StoplichtGroepsdruk extends Situation {
             canvas.width / 2,
             canvas.height,
             './assets/img/Polderweg.png')
+
+        this.leftBoundary = this.background.getWidth() * 1.117
+
+        this.rightBoundary = this.background.getWidth() * 1.329
+
+        this.player = this.createPlayer()
 
         // Create possible scenarios
         // Friend
@@ -220,25 +226,5 @@ export default class StoplichtGroepsdruk extends Situation {
                 10
             )
         ]
-
-        // Create player
-        this.player = new Player(
-            canvas.width / 1.70,
-            canvas.height / 1.2,
-            0,
-            0,
-            canvas.width / 20,
-            canvas.height / 8,
-            playerData.stamina
-        )
-    }
-
-    // Set boundaries to the player's movements
-    public processInput() {
-        this.player.processInput(
-            this.canvas,
-            this.background.getWidth() * 1.117,
-            this.background.getWidth() * 1.329
-        )
     }
 }

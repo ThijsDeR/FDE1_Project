@@ -1,4 +1,3 @@
-import Player from "../Player.js";
 import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
@@ -9,12 +8,12 @@ export default class OncomingCyclist extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData: {xPos: number | null, stamina: number},
+        playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins
     ) {
 
-        super(canvas, userData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Create situation background
         this.background = new ImageProp(
@@ -28,6 +27,16 @@ export default class OncomingCyclist extends Situation {
             false
         )
 
+        // Define the left boundary of the playing field
+        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
+
+        // Define the right boundary of the playing field
+        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
+
+        // Create player
+        this.player = this.createPlayer()
+
+        // TODO: Re-align bicycles
         // Create props in situation
         this.props = [
             // Create bicyclist
@@ -71,24 +80,7 @@ export default class OncomingCyclist extends Situation {
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 5,
                 './assets/img/players/fiets1.png'
-            ),
+            )
         ]
-
-        let xPos
-        if (playerData.xPos) xPos = playerData.xPos
-        else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
-        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
-        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
-
-    }
-
-    // Set boundaries to the player's movements
-    public processInput() {
-        this.player.processInput(
-            this.canvas,
-            this.background.getXPos() + (this.background.getWidth() / 3),
-            this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
-        )
     }
 }

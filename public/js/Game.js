@@ -17,8 +17,8 @@ import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
 import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
-import Obstacles from './Situations/Obstacles.js';
 import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
+import Obstacles from './Situations/Obstacles.js';
 /**
  * Main class of this Game.
  */
@@ -108,7 +108,7 @@ export default class Game {
             case 13:
                 return new ClosedBicycleLane(...data);
             default:
-                return new TrainRails(...data);
+                return new PedestrianCrossingVan(...data);
         }
     }
     specificSituation(stamina) {

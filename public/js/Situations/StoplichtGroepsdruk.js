@@ -6,9 +6,12 @@ import Situation from "../Situation.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 export default class StoplichtGroepsdruk extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
-        super(canvas, userData, upgrades, skins);
+        super(canvas, userData, playerData, upgrades, skins);
         // Situation background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png');
+        this.leftBoundary = this.background.getWidth() * 1.117;
+        this.rightBoundary = this.background.getWidth() * 1.329;
+        this.player = this.createPlayer();
         // Create possible scenarios
         // Friend
         const friendPossibilities = [];
@@ -162,11 +165,5 @@ export default class StoplichtGroepsdruk extends Situation {
             // Create stamina boost
             new Frikandelbroodje(this.background.getWidth() * 1.13, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
         ];
-        // Create player
-        this.player = new Player(canvas.width / 1.70, canvas.height / 1.2, 0, 0, canvas.width / 20, canvas.height / 8, playerData.stamina);
-    }
-    // Set boundaries to the player's movements
-    processInput() {
-        this.player.processInput(this.canvas, this.background.getWidth() * 1.117, this.background.getWidth() * 1.329);
     }
 }

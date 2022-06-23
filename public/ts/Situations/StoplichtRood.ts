@@ -1,5 +1,4 @@
 import Game from "../Game.js";
-import Player from "../Player.js";
 import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import Prop from "../Props/Prop.js";
@@ -13,18 +12,16 @@ export default class StoplichtRood extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-
-        playerData: {xPos: number | null, stamina: number},
+        playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins
     ) {
 
-        super(canvas, userData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Sound
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;
-
 
         // Create situation background
         this.background = new ImageProp(
@@ -37,6 +34,12 @@ export default class StoplichtRood extends Situation {
             './assets/img/KruispuntGeenZebrapad_1.png',
             false
         )
+
+        this.leftBoundary = this.background.getXPos() + this.background.getWidth() / 3
+
+        this.rightBoundary = this.background.getXPos() + (this.background.getWidth() / 3) * 2
+
+        this.player = this.createPlayer()
 
         // Create situation props
         this.props = [
@@ -84,17 +87,6 @@ export default class StoplichtRood extends Situation {
                 false
             )
         ]
-
-        // Create player
-        this.player = new Player(
-            this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2),
-            this.background.getHeight() / 1.2,
-            0,
-            0,
-            this.background.getWidth() / 20,
-            this.background.getHeight() / 8,
-            playerData.stamina
-        )
     }
 
     // Handle collisions
@@ -138,15 +130,6 @@ export default class StoplichtRood extends Situation {
                 gameOver = true;
             }
         }
-
         return gameOver
-    }
-
-    // Set boundaries to the player's movements
-    public processInput() {
-        this.player.processInput(this.canvas,
-            this.background.getXPos() + this.background.getWidth() / 3,
-            this.background.getXPos() + (this.background.getWidth() / 3) * 2
-        )
     }
 }

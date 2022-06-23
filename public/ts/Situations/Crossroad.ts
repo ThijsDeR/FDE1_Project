@@ -1,6 +1,4 @@
 import Game from "../Game.js";
-import Player from "../Player.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
@@ -8,15 +6,15 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class Crossroad extends Situation {
+
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData: {xPos: number | null, stamina: number},
+        playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins
     ) {
-
-        super(canvas, userData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Background properties
         this.background = new ImageProp(
@@ -30,7 +28,16 @@ export default class Crossroad extends Situation {
             false
         )
 
-        // Create new props
+        // Define the left boundary of the playing field
+        this.leftBoundary = this.background.getXPos() + this.background.getWidth() / 3
+
+        // Define the right boundary of the playing field
+        this.rightBoundary = this.background.getXPos() + (this.background.getWidth() / 3) * 2
+
+        // Create player
+        this.player = this.createPlayer()
+
+        // Create props in situation
         this.props = [
             // Add car
             new ImageProp(
@@ -42,6 +49,7 @@ export default class Crossroad extends Situation {
                 this.background.getHeight() / 9,
                 './assets/img/objects/car3.png'
             ),
+
             // Add stamina booster
             new StaminaBooster(
                 this.background.getXPos() + (this.background.getWidth() / 2),
@@ -65,6 +73,7 @@ export default class Crossroad extends Situation {
             this.background.getHeight() / 9,
             './assets/img/players/fiets1.png'
         )
+
         // Cyclist who does give you the right of way
         const goodCycle = new TrackProp([
             {
@@ -100,6 +109,8 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle)
+<<<<<<< HEAD
+=======
 
 
         // Create player
@@ -118,5 +129,6 @@ export default class Crossroad extends Situation {
             this.canvas,
             this.background.getXPos() + this.background.getWidth() / 3,
             this.background.getXPos() + (this.background.getWidth() / 3) * 2);
+>>>>>>> 879b3b77fddce856895253235f9e1ffac2d7f4e9
     }
 }

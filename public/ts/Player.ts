@@ -1,9 +1,6 @@
-import Animator from './Animator.js';
 import Game from './Game.js';
 import KeyListener from './KeyListener.js';
 import AnimatedProp from './Props/AnimatedProp.js';
-import ImageProp from './Props/ImageProp.js';
-import LandbouwVoertuig from './Situations/TractorIncoming.js';
 
 export default class Player extends AnimatedProp {
   public static readonly MAX_SPEED = 0.6;
@@ -26,7 +23,7 @@ export default class Player extends AnimatedProp {
     super(xPos, yPos, xVel, yVel, width, height, [
       { image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200 },
       { image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200 },
-    ])
+    ], false)
 
     this.keyListener = new KeyListener();
 
