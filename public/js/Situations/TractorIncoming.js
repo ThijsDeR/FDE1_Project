@@ -4,8 +4,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, playerData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, playerData, upgrades, skins);
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
         // Define the left boundary of the playing field
@@ -28,16 +28,21 @@ export default class TractorIncoming extends Situation {
                 this.handleStaminaChange(prop, propIndex);
             }
             else {
+                this.scoreTick -= 100;
                 this.crashSound.play();
                 gameOver = true;
             }
         }
         // Fail player if speeding past tractor
         if (prop instanceof Tractor) {
-            if (this.player.getYVel() === Player.MAX_SPEED_X &&
-                this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
+            if (this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
                 this.player.getYPos() <= prop.getYPos()) {
-                gameOver = true;
+                if (this.player.getYVel() === Player.MAX_SPEED_X) {
+                    gameOver = true;
+                }
+                else if (this.player.getYVel() === Player.SPEED_STATIC) {
+                    this.scoreTick -= 1;
+                }
             }
         }
         return gameOver;

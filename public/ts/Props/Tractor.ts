@@ -2,11 +2,11 @@ import ImageProp from "./ImageProp.js";
 
 export class Tractor extends ImageProp {
     public constructor(
-        xPos: number, 
-        yPos: number, 
-        xVel: number, 
-        yVel: number, 
-        width: number, 
+        xPos: number,
+        yPos: number,
+        xVel: number,
+        yVel: number,
+        width: number,
         height: number
         ) {
         super(
@@ -16,7 +16,7 @@ export class Tractor extends ImageProp {
             yVel,
             width,
             height,
-            './assets/img/objects/car.png'
+            './assets/img/objects/tractor_1.png'
         )
     }
 }

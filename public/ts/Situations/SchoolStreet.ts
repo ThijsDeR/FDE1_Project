@@ -8,15 +8,12 @@ export default class SchoolStreet extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
 
-        super(canvas, userData, playerData, upgrades)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Situation background parameters
         this.background = new ImageProp(
@@ -56,8 +53,8 @@ export default class SchoolStreet extends Situation {
                 },
             ],
                 // Properties of personWalkingLeft image
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
+                this.background.getWidth() / 20,
+                this.background.getHeight() / 10,
                 './assets/img/players/character_maleAdventurer_walk0.png',
                 false
             )
@@ -73,8 +70,8 @@ export default class SchoolStreet extends Situation {
                 },
             ],
                 // Properties of personWalkingLeft image
-                this.background.getWidth() / 10,
-                this.background.getHeight() / 5,
+                this.background.getWidth() / 20,
+                this.background.getHeight() / 10,
                 './assets/img/players/character_maleAdventurer_walk0.png',
                 false
             )

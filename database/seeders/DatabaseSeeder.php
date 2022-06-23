@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserSeeder::class);
         $this->call(PlayerSeeder::class);
+        $this->call(BicycleSkinSeeder::class);
+        $this->call(StaminaSkinSeeder::class);
     }
 }

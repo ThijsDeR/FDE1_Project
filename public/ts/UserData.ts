@@ -46,7 +46,6 @@ export default class UserData {
       body: JSON.stringify(data)
     })
 
-    console.log(response)
     return response;
   }
 
@@ -68,7 +67,6 @@ export default class UserData {
     this.getPlayerData().then((data: any) => {
       if (highscore > data.highscore) {
         this.setHighscore({highscore: highscore}).then((data) => {
-          console.log(data)
         });
       }
       else {
@@ -79,6 +77,44 @@ export default class UserData {
 
   }
 
+  public async buySkin(skin_type: string, skin_id: string) {
+    const response = await fetch(`/profile/skins/${this.token}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({skin_type: skin_type, skin_id: skin_id})
+    })
+
+    return response;
+  }
+
+  public async getSkin(skin_type: string) {
+    const rawResponse = await fetch(`/profile/getSkin/${skin_type}/${this.token}`, {
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      }
+    })
+    const response = await rawResponse.json();
+    return response
+
+  }
+
+  public async changeSkin(skin_type: string, amount: number) {
+    const response = await fetch(`/profile/changeSkin/${skin_type}/${this.token}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
+      },
+      body: JSON.stringify({amount: amount})
+    })
+
+    return response;
+  }
 
 
   public async getUpgrade(upgrade: string) {

@@ -1,5 +1,4 @@
 import Game from "../Game.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
 import Prop from "../Props/Prop.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
@@ -8,18 +7,20 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class CrossroadStopSign extends Situation {
+    protected pickupSound: HTMLAudioElement
 
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
-        super(canvas, userData, playerData, upgrades)
+
+        super(canvas, userData, playerData, upgrades, skins)
+        // Sound
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
 
         // Create situation background
         this.background = new ImageProp(
@@ -67,15 +68,15 @@ export default class CrossroadStopSign extends Situation {
             ),
 
             // Stamina booster
-            new Frikandelbroodje(
+            new StaminaBooster(
                 this.background.getXPos() + this.background.getWidth() / 2,
                 this.background.getYPos() + (this.background.getHeight() / 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/frikandelbroodje.png',
-                10
+                this.skins.staminaSkin.src,
+                parseInt(this.skins.staminaSkin.baseStamina)
             ),
 
             // Stop sign
@@ -101,6 +102,7 @@ export default class CrossroadStopSign extends Situation {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play()
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
             } else if (prop instanceof StopSign) {
@@ -108,6 +110,7 @@ export default class CrossroadStopSign extends Situation {
                     prop.advance(elapsed)
                 }
             } else {
+                this.scoreTick -= 100
                 this.crashSound.play()
                 gameOver = true;
             }
@@ -121,7 +124,9 @@ export default class CrossroadStopSign extends Situation {
         if (prop instanceof StopSign) {
             if (prop.isActive()) {
                 this.props.splice(propIndex, 1);
-            } else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
+            }
+            else if (prop.getYPos() > this.player.getYPos() + this.player.getHeight()) {
+                this.scoreTick -= 50
                 gameOver = true;
             }
         }

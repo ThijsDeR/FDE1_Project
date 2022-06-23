@@ -15,11 +15,12 @@
     flex-direction: column;
     justify-content: center;
     padding: 1vh 1vw;
-    margin: 1vh;
+    margin: 1.5vh;
 }
 
 #input-container input {
     height: 5vh;
+    padding: 0.5vw;
 }
 
 /* #submit-container {
@@ -33,6 +34,19 @@
 }
 
 #register-button:hover {
+    padding-right: 2vw;
+    padding-left: 2vw;
+    color: black;
+    background-color: rgb(109, 218, 181);
+}
+#tos-button {
+    margin-top: 2vh;
+    text-decoration: none;
+    background-color: aquamarine;
+    margin-bottom: 100vh;
+}
+
+#tos-button:hover {
     padding-right: 2vw;
     padding-left: 2vw;
     color: black;
@@ -56,6 +70,8 @@
     display: grid;
 }
 
+
 .buttons {
     margin: 1vh 1vw 1vh 1vw;
 }
+

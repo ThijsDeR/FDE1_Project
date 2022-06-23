@@ -5,18 +5,15 @@ import Game from "../Game.js";
 import UserData from "../UserData.js";
 
 export default class CarDriveway extends Situation {
-
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
-        super(canvas, userData, playerData, upgrades)
+
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Situation background properties
         this.background = new ImageProp(

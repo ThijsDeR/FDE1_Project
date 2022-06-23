@@ -1,10 +1,10 @@
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class PrioritySameRoad extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, playerData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, playerData, upgrades, skins);
         // Create situation background
         this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit.png', false);
         // Define the left boundary of the playing field
@@ -45,7 +45,7 @@ export default class PrioritySameRoad extends Situation {
             // Prop image properties
             this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
             // Create stamina booster
-            new Frikandelbroodje(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
+            new StaminaBooster(this.background.getXPos() + this.background.getWidth() / 2, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))
         ];
     }
 }

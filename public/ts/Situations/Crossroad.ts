@@ -1,6 +1,6 @@
 import Game from "../Game.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
@@ -10,14 +10,11 @@ export default class Crossroad extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
-        super(canvas, userData, playerData, upgrades)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Background properties
         this.background = new ImageProp(
@@ -53,16 +50,16 @@ export default class Crossroad extends Situation {
                 './assets/img/objects/car.png'
             ),
 
-            // Add booster
-            new Frikandelbroodje(
+            // Add stamina booster
+            new StaminaBooster(
                 this.background.getXPos() + (this.background.getWidth() / 2),
                 this.background.getYPos() + (this.background.getHeight() / 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 9,
-                './assets/img/objects/frikandelbroodje.png',
-                10
+                this.skins.staminaSkin.src,
+                parseInt(this.skins.staminaSkin.baseStamina)
             )
         ]
 

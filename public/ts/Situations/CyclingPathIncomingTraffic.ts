@@ -1,6 +1,6 @@
 import Game from "../Game.js";
-import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
@@ -10,14 +10,12 @@ export default class CyclingPathIncomingTraffic extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
-        super(canvas, userData, playerData, upgrades)
+
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Situation background
         this.background = new ImageProp(
@@ -52,15 +50,15 @@ export default class CyclingPathIncomingTraffic extends Situation {
                 './assets/img/players/fiets1.png'
             ),
             // Stamina booster
-            new Frikandelbroodje(
+            new StaminaBooster(
                 (this.background.getWidth() / 2) + (canvas.width / 3),
                 this.background.getYPos() + (this.background.getHeight()),
                 0,
                 0,
                 canvas.width / 15,
                 canvas.height / 8,
-                './assets/img/objects/frikandelbroodje.png',
-                10
+                this.skins.staminaSkin.src,
+                parseInt(this.skins.staminaSkin.baseStamina)
             )
         ]
         // Dynamic overtaking cyclist
@@ -108,8 +106,8 @@ export default class CyclingPathIncomingTraffic extends Situation {
         )
 
         // Choose whether to add the overtaking cyclist or not
-        Game.randomInteger(0, 1) === 1 
-        ? this.props.push(cycle) 
-        : '';
+        Game.randomInteger(0, 1) === 1
+            ? this.props.push(cycle)
+            : '';
     }
 }

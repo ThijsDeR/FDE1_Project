@@ -8,15 +8,12 @@ export default class ParkingSpotCar extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
 
-        super(canvas, userData, playerData, upgrades)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Situation background parameters
         this.background = new ImageProp(
@@ -65,33 +62,32 @@ export default class ParkingSpotCar extends Situation {
             }
         ]
 
-        Game.randomInteger(0, 1) === 1 
-        ? carVectors.push(
-
-            {
-                // Additional movement for the car, if it exists
-                // Starting location
-                xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 3.1,
-                yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.8,
-                // Target position
-                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
-                yPos2: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
-                // Velocities between start and target position
-                xVel: -0.04,
-                yVel: -0.04
-            },
-            {
-                // Starting location
-                xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
-                yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
-                // Target position
-                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
-                yPos2: this.background.getYPos() - this.background.getHeight() * 4,
-                // Velocities between start and target position
-                xVel: 0,
-                yVel: -1
-            },
-        ) : ''
+        Game.randomInteger(0, 1) === 1
+            ? carVectors.push(
+                {
+                    // Additional movement for the car, if it exists
+                    // Starting location
+                    xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 3.1,
+                    yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.8,
+                    // Target position
+                    xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
+                    yPos2: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
+                    // Velocities between start and target position
+                    xVel: -0.04,
+                    yVel: -0.04
+                },
+                {
+                    // Starting location
+                    xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
+                    yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
+                    // Target position
+                    xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
+                    yPos2: this.background.getYPos() - this.background.getHeight() * 4,
+                    // Velocities between start and target position
+                    xVel: 0,
+                    yVel: -1
+                },
+            ) : ''
 
         const car = new TrackProp(
             carVectors,
@@ -100,8 +96,8 @@ export default class ParkingSpotCar extends Situation {
             './assets/img/objects/car.png'
         )
 
-        Game.randomInteger(0, 5) === 1 
-        ? '' 
-        : this.props.push(car)
+        Game.randomInteger(0, 5) === 1
+            ? ''
+            : this.props.push(car)
     }
 }

@@ -2,7 +2,6 @@ import GameLoop from './GameLoop.js';
 import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
-import Player from './Player.js';
 
 import CutScene from './CutScene.js';
 import GameOverScene from './GameOverScene.js';
@@ -19,9 +18,12 @@ import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
-import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
+import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
+import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
+import Obstacles from './Situations/Obstacles.js';
+
 
 /**
  * Main class of this Game.
@@ -47,14 +49,19 @@ export default class Game {
 
   private upgrades: Upgrades;
 
+  private skins: Skins;
+
   private cutScene: CutScene | null;
+
+  // Music
+  private music: HTMLAudioElement;
 
   /**
    * Construct a new Game
    *
    * @param canvas The canvas HTML element to render on
    */
-  public constructor(canvas: HTMLElement, upgrades: Upgrades) {
+  public constructor(canvas: HTMLElement, upgrades: Upgrades, skins: Skins) {
     this.canvas = <HTMLCanvasElement>canvas;
 
     // Resize the canvas so it looks more like a Runner game
@@ -80,12 +87,20 @@ export default class Game {
 
     this.upgrades = upgrades;
 
-    // this.situation = new TrainRails(this.canvas, this.userData, 100, this.upgrades)
+    this.skins = skins;
 
-    this.situation = this.newSituation(100)
+    this.situation = this.specificSituation(100)
+
+    // this.situation = this.newSituation(100)
 
 
     this.cutScene = null;
+
+    // Music
+    this.music = new Audio('./audio/Game-Music.mp3');
+    this.music.volume = 0.1;
+    this.music.play();
+    this.music.loop = true;
   }
 
   private restart() {
@@ -114,9 +129,10 @@ export default class Game {
   }
 
   private newSituation(stamina: number): Situation {
+
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades]
-    switch (Game.randomInteger(0, 12)) {
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+    switch (Game.randomInteger(0, 13)) {
       case 0:
         return new CyclingPathIncomingTraffic(...data)
       case 1:
@@ -138,14 +154,23 @@ export default class Game {
       case 9:
         return new TrainRails(...data)
       case 10:
-        return new OncomingCyclist(...data)
-      case 11:
         return new CyclingPathFriendOncoming(...data)
-      case 12: 
+      case 11:
+        return new StoplichtOranje(...data)
+      case 12:
+        return new Obstacles(...data)
+      case 13:
         return new ClosedBicycleLane(...data)
       default:
         return new PedestrianCrossingVan(...data)
     }
+  }
+
+  private specificSituation(stamina: number) {
+    const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
+    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+
+    return new StoplichtOranje(...data);
   }
 
   /**
@@ -176,14 +201,15 @@ export default class Game {
     }
 
     if (!this.cutScene) {
-      this.totalScore += this.situation.getPlayerYVel()
 
       this.scrollBackground(elapsed);
       const result = this.situation.update(elapsed);
+      this.totalScore += this.situation.getScoreTick()
       if (result === Situation.GAME_OVER) {
-        this.userData.changeHighScore(this.totalScore);
-        this.userData.addVP(this.totalScore);
-        this.cutScene = new GameOverScene(this.canvas, this.userData)
+        const gameScore = Math.max(0, Math.round(this.totalScore))
+        this.userData.changeHighScore(gameScore);
+        this.userData.addVP(gameScore);
+        this.cutScene = new GameOverScene(this.canvas, this.userData, gameScore)
         this.gameOver = true;
       }
       if (result === Situation.FINISHED) this.situation = this.newSituation(this.situation.getPlayerStamina())

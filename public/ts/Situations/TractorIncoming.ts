@@ -10,15 +10,12 @@ export default class TractorIncoming extends Situation {
     public constructor(
         canvas: HTMLCanvasElement,
         userData: UserData,
-        playerData:
-            {
-                xPos: number | null,
-                stamina: number
-            },
-        upgrades: Upgrades
+        playerData: PlayerData,
+        upgrades: Upgrades,
+        skins: Skins
     ) {
 
-        super(canvas, userData, playerData, upgrades)
+        super(canvas, userData, playerData, upgrades, skins)
 
         // Create situation background
         this.background = new ImageProp(
@@ -61,6 +58,7 @@ export default class TractorIncoming extends Situation {
             if (prop instanceof StaminaBooster) {
                 this.handleStaminaChange(prop, propIndex)
             } else {
+                this.scoreTick -= 100
                 this.crashSound.play()
                 gameOver = true;
             }
@@ -68,10 +66,15 @@ export default class TractorIncoming extends Situation {
 
         // Fail player if speeding past tractor
         if (prop instanceof Tractor) {
-            if (this.player.getYVel() === Player.MAX_SPEED_X &&
+            if (
                 this.player.getYPos() >= prop.getYPos() - prop.getHeight() &&
                 this.player.getYPos() <= prop.getYPos()) {
-                gameOver = true;
+
+                if (this.player.getYVel() === Player.MAX_SPEED_X) {
+                    gameOver = true;
+                } else if (this.player.getYVel() === Player.SPEED_STATIC) {
+                    this.scoreTick -= 1
+                }
             }
         }
         return gameOver

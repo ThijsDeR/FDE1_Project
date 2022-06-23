@@ -5,14 +5,17 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
 export default class Situation extends Scene {
-    constructor(canvas, userData, playerData, upgrades) {
+    constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData);
         this.upgrades = upgrades;
         this.playerData = playerData;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
+        this.skins = skins;
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
         // // Define the width of the player
         // this.playerWidth = this.background.getWidth() / 20
         // // Define the height of the player
@@ -41,11 +44,16 @@ export default class Situation extends Scene {
     getPlayerStamina() {
         return this.player.getStamina();
     }
+    getScoreTick() {
+        return this.scoreTick;
+    }
     update(elapsed) {
+        this.scoreTick = 0;
         this.player.move(elapsed);
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
+        this.scoreTick += (this.player.getYVel() * elapsed) / 10;
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85)
@@ -59,7 +67,7 @@ export default class Situation extends Scene {
         }
         let gameOver = this.handleProps(elapsed);
         if (this.player.getStamina() >= 0)
-            this.handleStaminaDepletion();
+            this.handleStaminaDepletion(elapsed);
         else
             gameOver = true;
         if (this.isPaused()) {
@@ -99,9 +107,11 @@ export default class Situation extends Scene {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play();
                 this.handleStaminaChange(prop, propIndex);
             }
             else {
+                this.scoreTick -= 200;
                 this.crashSound.play();
                 gameOver = true;
             }
@@ -112,8 +122,8 @@ export default class Situation extends Scene {
         this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
         this.props.splice(propIndex, 1);
     }
-    handleStaminaDepletion() {
-        this.player.changeStamina(-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50));
+    handleStaminaDepletion(elapsed) {
+        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
     extraPropHandling(prop, propIndex) {
         return false;

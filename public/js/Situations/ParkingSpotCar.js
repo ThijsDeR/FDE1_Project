@@ -3,8 +3,8 @@ import ImageProp from "../Props/ImageProp.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class ParkingSpotCar extends Situation {
-    constructor(canvas, userData, playerData, upgrades) {
-        super(canvas, userData, playerData, upgrades);
+    constructor(canvas, userData, playerData, upgrades, skins) {
+        super(canvas, userData, playerData, upgrades, skins);
         // Situation background parameters
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntZebraPad.png', false);
         // Define the left boundary of the playing field
@@ -46,17 +46,17 @@ export default class ParkingSpotCar extends Situation {
                 xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 3.1,
                 yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.8,
                 // Target position
-                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
+                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
                 yPos2: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
                 // Velocities between start and target position
                 xVel: -0.04,
                 yVel: -0.04
             }, {
                 // Starting location
-                xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
+                xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
                 yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
                 // Target position
-                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 3,
+                xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
                 yPos2: this.background.getYPos() - this.background.getHeight() * 4,
                 // Velocities between start and target position
                 xVel: 0,

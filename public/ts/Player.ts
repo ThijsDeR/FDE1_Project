@@ -7,6 +7,8 @@ export default class Player extends AnimatedProp {
 
   public static readonly MAX_SPEED_X = 0.4;
 
+  public static readonly SPEED_STATIC = 0.15;
+
   private keyListener: KeyListener;
 
   private stamina: number;
@@ -82,9 +84,9 @@ export default class Player extends AnimatedProp {
 
     if (spacebarPressed) {
       this.yVel = 0
-    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)) && this.yPos > 0) {
+    } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W))) {
       this.yVel = Player.MAX_SPEED_X;
-    } else this.yVel = Player.MAX_SPEED / 4;
+    } else this.yVel = Player.SPEED_STATIC;
   }
 
   public move(elapsed: number) {
