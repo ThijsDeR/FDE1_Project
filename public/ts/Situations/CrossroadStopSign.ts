@@ -8,6 +8,7 @@ import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 
 export default class CrossroadStopSign extends Situation {
+    protected pickupSound: HTMLAudioElement
 
     public constructor(
         canvas: HTMLCanvasElement,
@@ -18,6 +19,9 @@ export default class CrossroadStopSign extends Situation {
     ) {
 
         super(canvas, userData, upgrades, skins)
+        // Sound
+        this.pickupSound = new Audio('./audio/EatingSound.wav');
+        this.pickupSound.volume = 0.5;
 
         // Create situation background
         this.background = new ImageProp(
@@ -75,7 +79,7 @@ export default class CrossroadStopSign extends Situation {
                 './assets/img/objects/stopbord.png',
                 false
             )
-        ]        
+        ]
         let xPos
         if (playerData.xPos) xPos = playerData.xPos
         else xPos = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2)
@@ -94,6 +98,7 @@ export default class CrossroadStopSign extends Situation {
         let gameOver = false;
         if (prop.collidesWithOtherImageProp(this.player)) {
             if (prop instanceof StaminaBooster) {
+                this.pickupSound.play()
                 this.player.changeStamina(prop.getStaminaBoostAmount() * ((50 + this.upgrades.stamina_gain.level) / 50));
                 this.props.splice(propIndex, 1);
             } else if (prop instanceof StopSign) {
