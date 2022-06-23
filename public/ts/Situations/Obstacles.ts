@@ -9,8 +9,13 @@ import Frikandelbroodje from "../Props/Frikandelbroodje.js";
 
 export default class Obstacles extends Situation {
 
-    public constructor(canvas: HTMLCanvasElement, userData: UserData, stamina: number, upgrades: { stamina_resistance: { level: number, price: number }, stamina_gain: { level: number, price: number } }) {
-        super(canvas, userData, upgrades)
+    public constructor(canvas: HTMLCanvasElement,
+        userData: UserData,
+        playerData: {xPos: number | null, stamina: number},
+        upgrades: Upgrades,
+        skins: Skins
+    ) {
+        super(canvas, userData, upgrades, skins)
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png');
 
 
@@ -38,7 +43,7 @@ export default class Obstacles extends Situation {
 
 
 
-        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, stamina)
+        this.player = new Player(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - ((this.background.getWidth() / 8) / 2), this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina)
     }
     // Set boundaries to the player's movements
     public processInput() {
