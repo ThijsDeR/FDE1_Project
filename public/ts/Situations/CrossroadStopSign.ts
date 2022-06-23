@@ -30,7 +30,7 @@ export default class CrossroadStopSign extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/Kruispunt_2.png',
+            './assets/img/objects/Kruispunt.png',
             false
         )
 

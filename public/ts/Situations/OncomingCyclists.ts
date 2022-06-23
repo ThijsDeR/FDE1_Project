@@ -23,7 +23,7 @@ export default class OncomingCyclist extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntGeenZebrapad.png',
+            './assets/img/objects/Kruispunt.png',
             false
         )
 

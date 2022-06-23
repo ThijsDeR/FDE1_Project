@@ -4,7 +4,7 @@ import Situation from "../Situation.js";
 export default class Obstacles extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, playerData, upgrades, skins);
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png');
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png');
         this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3);
         this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2);
         this.player = this.createPlayer();

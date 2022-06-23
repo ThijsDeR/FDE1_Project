@@ -5,7 +5,7 @@ export default class OncomingCyclist extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, playerData, upgrades, skins);
         // Create situation background
-        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/KruispuntGeenZebrapad.png', false);
+        this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png', false);
         // Define the left boundary of the playing field
         this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3);
         // Define the right boundary of the playing field

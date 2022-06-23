@@ -21,7 +21,7 @@ export default class ParkingSpotCar extends Situation {
             0,
             0,
             canvas.width / 2,
-            canvas.height, './assets/img/objects/KruispuntZebraPad.png',
+            canvas.height, './assets/img/objects/Kruispunt.png',
             false
         )
 

@@ -22,7 +22,7 @@ export default class Obstacles extends Situation {
             0,
             canvas.width / 2,
             canvas.height,
-            './assets/img/objects/KruispuntGeenZebrapad.png'
+            './assets/img/objects/Kruispunt.png'
         );
 
         this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
