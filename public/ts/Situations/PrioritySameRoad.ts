@@ -23,7 +23,7 @@ export default class PrioritySameRoad extends Situation {
             0,
             0, this.canvas.width / 2,
             canvas.height,
-            './assets/img/Oprit_1.png',
+            './assets/img/objects/Oprit_1.png',
             false
         )
 

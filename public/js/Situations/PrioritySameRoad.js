@@ -7,7 +7,7 @@ export default class PrioritySameRoad extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, upgrades, skins);
         // Create situation background
-        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/Oprit_1.png', false);
+        this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/objects/Oprit_1.png', false);
         // Create props in situation
         this.props = [
             // Create car
