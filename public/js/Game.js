@@ -14,8 +14,12 @@ import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
+import StoplichtOranje from './Situations/StoplichtRood.js';
+import StoplichtRood from './Situations/StoplichtRood.js';
+
 import PauseScene from './PauseScene.js';
 import Obstacles from './Situations/Obstacles.js';
+
 /**
  * Main class of this Game.
  */
@@ -44,6 +48,7 @@ export default class Game {
         // is divisible by scrollSpeed
         this.gameOver = false;
         this.upgrades = upgrades;
+
         this.skins = skins;
         this.situation = this.specificSituation(100);
         // this.situation = this.newSituation(100)
@@ -73,6 +78,7 @@ export default class Game {
         this.cutScene = null;
     }
     newSituation(stamina) {
+
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
         switch (Game.randomInteger(0, 10)) {
@@ -95,6 +101,12 @@ export default class Game {
             case 8:
                 return new SchoolStreet(...data);
             case 9:
+                return new TrainRails(this.canvas, this.userData, stamina, this.upgrades);
+            case 10:
+                return new CyclingPathFriendOncoming(this.canvas, this.userData, stamina, this.upgrades);
+            case 11:
+                return new StoplichtOranje(this.canvas, this.userData, stamina, this.upgrades);
+            case 12:
                 return new Obstacles(...data);
             default:
                 return new TrainRails(...data);
