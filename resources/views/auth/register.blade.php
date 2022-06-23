@@ -8,7 +8,7 @@
     <div id="form-container">
         <form method="POST" action="{{route('register')}}">
             @csrf
-            
+
             @if($errors->any())
                 <div id="input-container">
                     <ul>
@@ -28,12 +28,13 @@
                 <input type="password" id="password" name="password">
             </div>
 
-            <div id="submit-container"> 
+            <div id="submit-container">
                 <div id="button-container">
-                    <button type="submit" class="nice-button buttons">Registreer</button>
+                    <button type="submit"  class="nice-button buttons">Registreer</button>
+                    <a href="/terms_of_service" id="tos-button" class="nice-button buttons" role="button">Terms of service</a>
                 </div>
             </div>
         </form>
     </div>
-    
+
 @endsection

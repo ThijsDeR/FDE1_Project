@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ExplanationController;
+use App\Http\Controllers\ToSController;
 use App\Models\Player;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,10 @@ Route::get('/', function () {
 
 Route::get('/localstorage', [GameController::class, 'localstorage'])->name('localstorage')->middleware('auth');
 Route::get('/game', [GameController::class, 'game'])->name('game')->middleware('auth');
-Route::get('/explanation', [ExplanationController::class, 'explanation'])->name('explanation')->middleware('auth');
+
+Route::get('/explanation', [ExplanationController::class, 'explanation'])->name('explantion')->middleware('auth');
+Route::get('/terms_of_service', [ToSController::class, 'terms_of_service'])->name('terms_of_service');
+
 
 Route::get('/login', [AuthController::class, 'show'])->name('loginView');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
