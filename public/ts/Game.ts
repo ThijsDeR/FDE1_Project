@@ -19,9 +19,9 @@ import CyclingPathFriendOncoming from './Situations/CyclingPathFriendOncoming.js
 import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
-import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import TrainRails from './Situations/TrainRails.js';
 import PauseScene from './PauseScene.js';
+import Obstacles from './Situations/Obstacles.js';
 
 /**
  * Main class of this Game.
@@ -149,7 +149,7 @@ export default class Game {
       case 8:
         return new SchoolStreet(...data)
       case 9:
-        return new TrainRails(...data)
+        return new Obstacles(...data)
       default:
         return new TrainRails(...data)
     }
