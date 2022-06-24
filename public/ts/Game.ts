@@ -161,6 +161,8 @@ export default class Game {
         return new Obstacles(...data)
       case 13:
         return new ClosedBicycleLane(...data)
+      case 14:
+        return new OncomingCyclist(...data)
       default:
         return new PedestrianCrossingVan(...data)
     }

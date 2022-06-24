@@ -4,6 +4,7 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
+import Player from "../Player.js";
 
 export default class Crossroad extends Situation {
 
