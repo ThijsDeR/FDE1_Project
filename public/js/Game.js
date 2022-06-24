@@ -19,6 +19,7 @@ import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
 import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import Obstacles from './Situations/Obstacles.js';
+import SlippyRoad from './Situations/SlippyRoad.js';
 /**
  * Main class of this Game.
  */
@@ -114,7 +115,7 @@ export default class Game {
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        return new StoplichtOranje(...data);
+        return new SlippyRoad(...data);
     }
     /**
      * Handles any user input that has happened since the last call

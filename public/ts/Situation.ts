@@ -34,11 +34,11 @@ export default abstract class Situation extends Scene {
 
     protected skins: Skins;
 
-    protected isMist: boolean
+    protected isMist: boolean;
 
     protected currentMist: number;
 
-    protected pickupSound: HTMLAudioElement
+    protected pickupSound: HTMLAudioElement;
 
     protected scoreTick: number;
 
