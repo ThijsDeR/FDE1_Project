@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('player_id');
             $table->string('ownedBicycleSkins', 4000)->default('[
-                {"id": "1", "name": "normal bicycle", "src": "/assets/img/players/fiets1.png"}
+                {"id": "1", "name": "normal bicycle", "src": "/assets/img/players/cycles/fiets1normal.png"}
 
             ]');
             $table->string('ownedStaminaSkins', 4000)->default('[
