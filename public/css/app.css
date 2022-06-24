@@ -88,8 +88,6 @@ main {
 
 }
 
-.button.is-primary,
-.button.is-warning,
 button.is-light {
   color: green;
   border: 2px solid green;
@@ -98,6 +96,10 @@ button.is-light {
   margin-right: auto;
   padding: 1rem;
   width: 10%;
+}
+
+.is-danger {
+  border: 0.2vh solid red !important;
 }
 
 input[type=text], input[type=password], select {
