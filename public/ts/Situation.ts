@@ -102,6 +102,12 @@ export default abstract class Situation extends Scene {
         this.background.move(elapsed)
         this.background.scroll(elapsed, this.player.getYVel())
     
+        
+        let gameOver = this.handleProps(elapsed)
+        
+        if (this.player.getStamina() >= 0) this.handleStaminaDepletion(elapsed)
+        else gameOver = true;
+        
         this.scoreTick += (this.player.getYVel() * elapsed) / 10
 
         if (this.isMist) {
@@ -114,10 +120,7 @@ export default abstract class Situation extends Scene {
             return Situation.FINISHED;
         }
 
-        let gameOver = this.handleProps(elapsed)
 
-        if (this.player.getStamina() >= 0) this.handleStaminaDepletion(elapsed)
-        else gameOver = true;
 
         if (this.isPaused()) {
             return Situation.PAUSED;
