@@ -47,13 +47,13 @@ export default class OncomingCyclist extends Situation {
             new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(),
                 //velocity
                 0, 0.32,
-                //position of player
+                //position
                 this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png')
             //position of obstacle
             , new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3), this.background.getYPos(),
                 //velocity
                 0, 0.32,
-                //position of player
+                //position 
                 this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             // Stamina booster
             new StaminaBooster(
