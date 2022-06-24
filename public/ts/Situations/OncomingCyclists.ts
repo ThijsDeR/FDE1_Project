@@ -48,13 +48,13 @@ export default class OncomingCyclist extends Situation {
                 //velocity
                 0, 0.32,
                 //position of player
-                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png')
+                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png')
             //position of obstacle
             , new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3), this.background.getYPos(),
                 //velocity
                 0, 0.32,
                 //position of player
-                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             // Stamina booster
             new StaminaBooster(
                 this.background.getXPos() + this.background.getWidth() / 2,
@@ -97,9 +97,9 @@ export default class OncomingCyclist extends Situation {
                 ],
 
                 //creates player
-                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+                this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             // cycles that goes straight ahead
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.32, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.32, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             // Stamina booster
             new StaminaBooster(
                 this.background.getXPos() + this.background.getWidth() / 2,

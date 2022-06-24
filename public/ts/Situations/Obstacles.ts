@@ -100,7 +100,7 @@ export default class Obstacles extends Situation {
                 0.105,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
             new ImageProp(
                 this.background.getXPos() + (this.background.getWidth() / 2),
