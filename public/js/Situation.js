@@ -53,6 +53,11 @@ export default class Situation extends Scene {
         this.player.update(elapsed);
         this.background.move(elapsed);
         this.background.scroll(elapsed, this.player.getYVel());
+        let gameOver = this.handleProps(elapsed);
+        if (this.player.getStamina() >= 0)
+            this.handleStaminaDepletion(elapsed);
+        else
+            gameOver = true;
         this.scoreTick += (this.player.getYVel() * elapsed) / 10;
         if (this.isMist) {
             if (!this.vanishMist()) {
@@ -65,11 +70,6 @@ export default class Situation extends Scene {
         if (this.finishedCheck()) {
             return Situation.FINISHED;
         }
-        let gameOver = this.handleProps(elapsed);
-        if (this.player.getStamina() >= 0)
-            this.handleStaminaDepletion(elapsed);
-        else
-            gameOver = true;
         if (this.isPaused()) {
             return Situation.PAUSED;
         }

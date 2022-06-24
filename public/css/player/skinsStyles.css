@@ -1,10 +1,37 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track:hover {
+    background: #dcdcdc; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
 #shop-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50vw;
-    height: 50vh;
+    width: 75vw;
+    height: 75vh;
     background-color: white;
     border-radius: 50px;
     padding: 1vh 1vw;
@@ -29,7 +56,7 @@ div#skins {
     display: grid;
     grid-template-columns: 50% 50%;
     justify-items: center;
-    height: 80%;
+    height: 60%;
     margin: 5% 0;
 }
 
@@ -42,13 +69,12 @@ div#skins {
     background-color: rgb(109, 218, 181);
 }
 
-
-
 #skins #rightskins, #skins #leftskins {
     height: 100%;
     overflow-y: auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
-
 
 .skin {
     border: 3px solid gray;
@@ -57,11 +83,17 @@ div#skins {
     flex-direction: column;
     margin: 2vh 2vw;
     padding: 1vh 1vw;
+    justify-content: space-between;
+    height: 40vh;
 }
 
 .skin img{
     width: 10vw;
     height: 20vh;
+}
+
+.skin button {
+    background-color: aquamarine;
 }
 
 #back-vp{

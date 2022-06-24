@@ -110,23 +110,5 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle)
-
-
-        // Create player
-        let xPos
-        if (playerData.xPos) xPos = playerData.xPos
-        else xPos = this.background.getXPos() + this.background.getWidth() / 2
-        if (xPos < this.background.getXPos() + this.background.getWidth() / 3) xPos = this.background.getXPos() + this.background.getWidth() / 3
-        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2) xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20,this.background.getHeight() / 8, playerData.stamina)
-
-    }
-
-    // Set boundaries to the player's movements
-    public processInput() {
-        this.player.processInput(
-            this.canvas,
-            this.background.getXPos() + this.background.getWidth() / 3,
-            this.background.getXPos() + (this.background.getWidth() / 3) * 2);
     }
 }

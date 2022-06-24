@@ -16,18 +16,26 @@ class StaminaSkinSeeder extends Seeder
     {
         \App\Models\StaminaSkin::create([
             'id' => '2',
-            'name' => 'apple',
+            'name' => 'Apple',
             'src' => '/assets/img/objects/apple_1.png',
-            'price' => 10000,
-            'baseStamina' => 10
+            'price' => 5000,
+            'baseStamina' => 15
         ]);
 
         \App\Models\StaminaSkin::create([
             'id' => '3',
-            'name' => 'energy',
+            'name' => 'Energy Drink',
             'src' => '/assets/img/objects/energy_drink_1.png',
             'price' => 10000,
-            'baseStamina' => 10
+            'baseStamina' => 20
+        ]);
+
+        \App\Models\StaminaSkin::create([
+            'id' => '4',
+            'name' => 'Burger',
+            'src' => '/assets/img/objects/AmongUsBurger.png',
+            'price' => 100000,
+            'baseStamina' => 50
         ]);
     }
 }
