@@ -85,6 +85,7 @@ div#skins {
     padding: 1vh 1vw;
     justify-content: space-between;
     height: 40vh;
+    width: 15vw;
 }
 
 .skin img{
