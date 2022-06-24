@@ -4,6 +4,7 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
+import Player from "../Player.js";
 
 export default class Crossroad extends Situation {
 
@@ -109,8 +110,6 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle)
-<<<<<<< HEAD
-=======
 
 
         // Create player
@@ -129,6 +128,5 @@ export default class Crossroad extends Situation {
             this.canvas,
             this.background.getXPos() + this.background.getWidth() / 3,
             this.background.getXPos() + (this.background.getWidth() / 3) * 2);
->>>>>>> 879b3b77fddce856895253235f9e1ffac2d7f4e9
     }
 }

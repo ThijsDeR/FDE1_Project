@@ -3,9 +3,8 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
-// Import situations
-import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 import Crossroad from './Situations/Crossroad.js';
+import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
 import TractorIncoming from './Situations/TractorIncoming.js';
 import CarDriveway from './Situations/CarDriveway.js';
@@ -78,9 +77,9 @@ export default class Game {
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        switch (Game.randomInteger(0, 13)) {
+        switch (Game.randomInteger(0, 0)) {
             case 0:
-                return new CyclingPathIncomingTraffic(...data);
+                return new OncomingCyclist(...data);
             case 1:
                 return new Crossroad(...data);
             case 2:

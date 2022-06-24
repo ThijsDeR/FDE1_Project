@@ -134,7 +134,7 @@ export default class Game {
     const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
     switch (Game.randomInteger(0, 13)) {
       case 0:
-        return new CyclingPathIncomingTraffic(...data)
+        return new OncomingCyclist(...data)
       case 1:
         return new Crossroad(...data)
       case 2:
