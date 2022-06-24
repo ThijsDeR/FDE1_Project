@@ -3,7 +3,6 @@ import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
-import Player from "../Player.js";
 export default class Crossroad extends Situation {
     constructor(canvas, userData, playerData, upgrades, skins) {
         super(canvas, userData, playerData, upgrades, skins);
@@ -55,20 +54,5 @@ export default class Crossroad extends Situation {
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)
             : this.props.push(goodCycle);
-        // Create player
-        let xPos;
-        if (playerData.xPos)
-            xPos = playerData.xPos;
-        else
-            xPos = this.background.getXPos() + this.background.getWidth() / 2;
-        if (xPos < this.background.getXPos() + this.background.getWidth() / 3)
-            xPos = this.background.getXPos() + this.background.getWidth() / 3;
-        else if (xPos > this.background.getXPos() + (this.background.getWidth() / 3) * 2)
-            xPos = this.background.getXPos() + (this.background.getWidth() / 3) * 2;
-        this.player = new Player(xPos, this.background.getHeight() / 1.2, 0, 0, this.background.getWidth() / 20, this.background.getHeight() / 8, playerData.stamina);
-    }
-    // Set boundaries to the player's movements
-    processInput() {
-        this.player.processInput(this.canvas, this.background.getXPos() + this.background.getWidth() / 3, this.background.getXPos() + (this.background.getWidth() / 3) * 2);
     }
 }

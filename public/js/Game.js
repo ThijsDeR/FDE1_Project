@@ -3,6 +3,8 @@ import Staminabar from './Staminabar.js';
 import UserData from './UserData.js';
 import Situation from './Situation.js';
 import GameOverScene from './GameOverScene.js';
+// Import situations
+import CyclingPathIncomingTraffic from './Situations/CyclingPathIncomingTraffic.js';
 import Crossroad from './Situations/Crossroad.js';
 import OncomingCyclist from './Situations/OncomingCyclists.js';
 import CrossroadStopSign from './Situations/CrossroadStopSign.js';
@@ -77,9 +79,9 @@ export default class Game {
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
         const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins];
-        switch (Game.randomInteger(0, 0)) {
+        switch (Game.randomInteger(0, 13)) {
             case 0:
-                return new OncomingCyclist(...data);
+                return new CyclingPathIncomingTraffic(...data);
             case 1:
                 return new Crossroad(...data);
             case 2:
@@ -106,6 +108,8 @@ export default class Game {
                 return new Obstacles(...data);
             case 13:
                 return new ClosedBicycleLane(...data);
+            case 14:
+                return new OncomingCyclist(...data);
             default:
                 return new PedestrianCrossingVan(...data);
         }
