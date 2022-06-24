@@ -55,4 +55,8 @@ export default class Crossroad extends Situation {
             ? this.props.push(badCycle)
             : this.props.push(goodCycle);
     }
+    // Set boundaries to the player's movements
+    processInput() {
+        this.player.processInput(this.canvas, this.background.getXPos() + this.background.getWidth() / 3, this.background.getXPos() + (this.background.getWidth() / 3) * 2);
+    }
 }
