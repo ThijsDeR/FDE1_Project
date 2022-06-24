@@ -77,7 +77,7 @@ export default class PrioritySameRoad extends Situation {
                 // Prop image properties
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Create stamina booster

@@ -9,7 +9,7 @@ export default class Obstacles extends Situation {
         this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2);
         this.player = this.createPlayer();
         this.props = [
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.39, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.39, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             //    new ImageProp(this.background.getXPos() + (this.background.getWidth() / 2.4), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png'),
             //    new ImageProp(this.background.getXPos() + (this.background.getWidth() / 1.7), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png'),
         ];

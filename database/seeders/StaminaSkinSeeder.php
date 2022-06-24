@@ -16,7 +16,7 @@ class StaminaSkinSeeder extends Seeder
     {
         \App\Models\StaminaSkin::create([
             'id' => '2',
-            'name' => 'Apple',
+            'name' => 'Appel',
             'src' => '/assets/img/objects/apple_1.png',
             'price' => 5000,
             'baseStamina' => 15
@@ -32,7 +32,7 @@ class StaminaSkinSeeder extends Seeder
 
         \App\Models\StaminaSkin::create([
             'id' => '4',
-            'name' => 'Burger',
+            'name' => 'Hamburger',
             'src' => '/assets/img/objects/AmongUsBurger.png',
             'price' => 100000,
             'baseStamina' => 50

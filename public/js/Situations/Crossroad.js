@@ -22,7 +22,7 @@ export default class Crossroad extends Situation {
             new StaminaBooster(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))
         ];
         // Cyclist who does not give you the right of way
-        const badCycle = new ImageProp(this.background.getXPos() - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), 0.3, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png');
+        const badCycle = new ImageProp(this.background.getXPos() - (this.background.getWidth() / 10), this.background.getYPos() + (this.background.getHeight() / 2), 0.3, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/cycles/fiets1normal.png');
         // Cyclist who does give you the right of way
         const goodCycle = new TrackProp([
             {
@@ -49,7 +49,7 @@ export default class Crossroad extends Situation {
             },
         ], 
         // Bicycle image properties
-        this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/fiets1.png');
+        this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/players/cycles/fiets1normal.png');
         // Choose between good and bad cyclist
         Game.randomInteger(0, 1) === 1
             ? this.props.push(badCycle)

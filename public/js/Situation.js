@@ -28,7 +28,7 @@ export default class Situation extends Scene {
         });
         this.player.draw(this.ctx);
         if (this.isMist) {
-            const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 1000), 0) + 0.05;
+            const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 100), 0) + 0.05;
             this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
             this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10);
         }
@@ -174,7 +174,7 @@ export default class Situation extends Scene {
         // Height
         this.background.getHeight() / 8, 
         // Stamina
-        this.playerData.stamina);
+        this.playerData.stamina, this.skins.bicycleSkin);
     }
 }
 Situation.NOT_DONE = 0;

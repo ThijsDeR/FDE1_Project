@@ -19,10 +19,10 @@ export default class Player extends AnimatedProp {
    *
    * @param canvas the canvas on which the player should exist
    */
-  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number) {
+  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin) {
     super(xPos, yPos, xVel, yVel, width, height, [
-      { image: Game.loadNewImage('./assets/img/players/fiets1.png'), duration: 200 },
-      { image: Game.loadNewImage('./assets/img/players/fiets2.png'), duration: 200 },
+      { image: Game.loadNewImage(skin.src), duration: 200 },
+      { image: Game.loadNewImage(skin.src.replace('1', '2')), duration: 200 },
     ], false)
 
     this.keyListener = new KeyListener();

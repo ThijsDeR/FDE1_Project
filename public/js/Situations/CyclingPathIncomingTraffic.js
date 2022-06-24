@@ -17,7 +17,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
         // Add props to situation
         this.props = [
             // Static cyclist
-            new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
+            new ImageProp((this.background.getWidth() / 4) + (canvas.width / 3), this.background.getYPos(), 0, 0.1, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Stamina booster
             new StaminaBooster((this.background.getWidth() / 2) + (canvas.width / 3), this.background.getYPos() + (this.background.getHeight()), 0, 0, canvas.width / 15, canvas.height / 8, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))
         ];
@@ -59,7 +59,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             },
         ], 
         // Cyclist image properties
-        this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png');
+        this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png');
         // Choose whether to add the overtaking cyclist or not
         Game.randomInteger(0, 1) === 1
             ? this.props.push(cycle)

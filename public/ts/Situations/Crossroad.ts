@@ -71,7 +71,7 @@ export default class Crossroad extends Situation {
             0,
             this.background.getWidth() / 16,
             this.background.getHeight() / 9,
-            './assets/img/players/fiets1.png'
+            './assets/img/players/cycles/fiets1normal.png'
         )
 
         // Cyclist who does give you the right of way
@@ -102,7 +102,7 @@ export default class Crossroad extends Situation {
             // Bicycle image properties
             this.background.getWidth() / 16,
             this.background.getHeight() / 9,
-            './assets/img/players/fiets1.png'
+            './assets/img/players/cycles/fiets1normal.png'
         )
 
         // Choose between good and bad cyclist

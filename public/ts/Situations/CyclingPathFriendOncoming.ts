@@ -206,7 +206,7 @@ export default class CyclingPathFriendOncoming extends Situation {
                 friendPossibilities,
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Oncoming static
@@ -214,7 +214,7 @@ export default class CyclingPathFriendOncoming extends Situation {
                 oncomingStatic,
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Oncoming dynamic
@@ -222,7 +222,7 @@ export default class CyclingPathFriendOncoming extends Situation {
                 oncomingDynamicPossibilities,
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Create stamina boost

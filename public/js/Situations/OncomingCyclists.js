@@ -16,7 +16,7 @@ export default class OncomingCyclist extends Situation {
         // Create props in situation
         this.props = [
             // Create bicyclist
-            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.32, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png'),
+            new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.32, this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png'),
             // Create dynamic bicyclist
             new TrackProp([
                 {
@@ -43,7 +43,7 @@ export default class OncomingCyclist extends Situation {
                 },
             ], 
             // Prop image properties
-            this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/fiets1.png')
+            this.background.getWidth() / 16, this.background.getHeight() / 5, './assets/img/players/cycles/fiets1normal.png')
         ];
     }
 }

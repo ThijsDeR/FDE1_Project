@@ -47,7 +47,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
                 0.1,
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
             // Stamina booster
             new StaminaBooster(
@@ -102,7 +102,7 @@ export default class CyclingPathIncomingTraffic extends Situation {
             // Cyclist image properties
             this.background.getWidth() / 20,
             this.background.getHeight() / 8,
-            './assets/img/players/fiets1.png'
+            './assets/img/players/cycles/fiets1normal.png'
         )
 
         // Choose whether to add the overtaking cyclist or not

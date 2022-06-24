@@ -198,21 +198,21 @@ export default class StoplichtGroepsdruk extends Situation {
                 friendPossibilities,
                 canvas.width / 20,
                 canvas.height / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
             // Oncoming static
             new TrackProp(
                 oncomingStatic,
                 canvas.width / 20,
                 canvas.height / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
             // Oncoming dynamic
             new TrackProp(
                 oncomingDynamicPossibilities,
                 canvas.width / 20,
                 canvas.height / 8,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
             // Create stamina boost
             new Frikandelbroodje(

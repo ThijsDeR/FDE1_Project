@@ -162,11 +162,11 @@ export default class CyclingPathFriendOncoming extends Situation {
         this.props = [
             // Create cyclists
             // Friend
-            new TrackProp(friendPossibilities, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(friendPossibilities, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Oncoming static
-            new TrackProp(oncomingStatic, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(oncomingStatic, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Oncoming dynamic
-            new TrackProp(oncomingDynamicPossibilities, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(oncomingDynamicPossibilities, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Create stamina boost
             new StaminaBooster(this.background.getWidth() * 1.13, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))
         ];

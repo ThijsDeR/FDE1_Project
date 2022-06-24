@@ -47,7 +47,7 @@ export default class OncomingCyclist extends Situation {
                 0.32,
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Create dynamic bicyclist
@@ -79,7 +79,7 @@ export default class OncomingCyclist extends Situation {
                 // Prop image properties
                 this.background.getWidth() / 16,
                 this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             )
         ]
     }

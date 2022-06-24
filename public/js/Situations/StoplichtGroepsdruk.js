@@ -157,11 +157,11 @@ export default class StoplichtGroepsdruk extends Situation {
         this.props = [
             // Create cyclists
             // Friend
-            new TrackProp(friendPossibilities, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(friendPossibilities, canvas.width / 20, canvas.height / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Oncoming static
-            new TrackProp(oncomingStatic, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(oncomingStatic, canvas.width / 20, canvas.height / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Oncoming dynamic
-            new TrackProp(oncomingDynamicPossibilities, canvas.width / 20, canvas.height / 8, './assets/img/players/fiets1.png'),
+            new TrackProp(oncomingDynamicPossibilities, canvas.width / 20, canvas.height / 8, './assets/img/players/cycles/fiets1normal.png'),
             // Create stamina boost
             new Frikandelbroodje(this.background.getWidth() * 1.13, this.background.getYPos() + (this.background.getHeight() / 2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, './assets/img/objects/frikandelbroodje.png', 10)
         ];

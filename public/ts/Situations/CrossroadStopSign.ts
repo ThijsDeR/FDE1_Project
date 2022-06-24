@@ -53,7 +53,7 @@ export default class CrossroadStopSign extends Situation {
                 0,
                 this.background.getWidth() / 10,
                 this.background.getHeight() / 5,
-                './assets/img/players/fiets1.png'
+                './assets/img/players/cycles/fiets1normal.png'
             ),
 
             // Car
