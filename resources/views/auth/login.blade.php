@@ -9,24 +9,23 @@
         <form method="POST" action="{{route('login')}}">
             @csrf
 
-            @if($errors->any())
-                <div id="input-container">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            
             <div id="input-container">
                 <label id="username" for="username">Gebruikersnaam</label>
+                @if($errors->all())
+                <input class="is-danger" type="text" id="username" name="username">
+                @else
                 <input type="text" id="username" name="username">
+                @endif
             </div>
 
             <div id="input-container">
                 <label id="password" for="password">Wachtwoord</label>
+                @if($errors->all())
+                <input class="is-danger" type="password" id="password" name="password">
+                <h3>De gebruikersnaam of het wachtwoord zijn onjuist.</h3>
+                @else
                 <input type="password" id="password" name="password">
+                @endif
             </div>
 
             <div id="submit-container"> 

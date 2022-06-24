@@ -29,7 +29,7 @@ class AuthController extends Controller
             return redirect('./localstorage?token=' . auth()->user()->player->token);
         }
 
-        return redirect()->back()->withErrors(['username' => 'Invalid Credentials']);
+        return redirect()->back()->withErrors(['username' => 'De gebruikersnaam of het wachtwoord klopt niet.']);
     }
 
     public function logout() {
@@ -44,20 +44,16 @@ class AuthController extends Controller
 
     public function register(Request $request) {
         validator($request->all(), [
-            'username' => ['required', 'profanity'],
-            'password' => ['required'],
+            'username' => ['required', 'min:5', 'max:30', 'profanity', 'unique:users'],
+            'password' => ['required', 'min:3', 'max:30'],
         ])->validate();
 
-        try {
-            $user = User::create([
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
-            ]);
 
+        $user = User::create([
+          'username' => $request->username,
+          'password' => Hash::make($request->password),
+        ]);
 
-        } catch (Exception $e){
-            return redirect()->back()->withErrors(['username' => $e]);
-        }
 
         $player = Player::create([
             'user_id' => $user->id,
