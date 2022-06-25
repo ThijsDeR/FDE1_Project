@@ -1,72 +1,23 @@
+import Player from "./Player.js";
 import Game from './Game.js';
 import KeyListener from './KeyListener.js';
-import AnimatedProp from './Props/AnimatedProp.js';
 
-export default class Player extends AnimatedProp {
-  public static readonly MAX_SPEED = 0.6;
-
-  public static readonly MAX_SPEED_X = 0.4;
-
-  public static readonly SPEED_STATIC = 0.15;
-
-  protected keyListener: KeyListener;
-
-  protected stamina: number;
-
-
+export default class SlippyPlayer extends Player{
+ 
   /**
    * Construct a new Player instance
    *
    * @param canvas the canvas on which the player should exist
    */
-  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin) {
-    super(xPos, yPos, xVel, yVel, width, height, [
-      { image: Game.loadNewImage(skin.src), duration: 200 },
-      { image: Game.loadNewImage(skin.src.replace('1', '2')), duration: 200 },
-    ], false)
-
-    this.keyListener = new KeyListener();
-
-    this.stamina = stamina;
+  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number) {
+    super(xPos, yPos, xVel, yVel, width, height, stamina)
   }
 
   public getKeyListener() {
     return this.keyListener;
   }
 
-  /**
-   * Stamina getter
-   *
-   * @returns stamina
-   */
-  public getStamina(): number {
-    return this.stamina;
-  }
-
-  /**
-   * Add stamina
-   *
-   * @param stamina stamina number input
-   */
-
-
-  public changeStamina(stamina: number) {
-    if (this.stamina + stamina > 100) {
-      this.stamina = 100
-    } else {
-      this.stamina += stamina;
-    }
-  }
-
-  /**
-   * Sets stamina
-   *
-   * @param stamina stamina number input
-   */
-  public setStamina(stamina: number): void {
-    this.stamina = stamina;
-  }
-
+  
   /**
    * Moves the player
    */
@@ -76,16 +27,18 @@ export default class Player extends AnimatedProp {
     const spacebarPressed = this.keyListener.isKeyDown(KeyListener.KEY_SPACE)
     if (!spacebarPressed) {
       if ((this.keyListener.isKeyDown(KeyListener.KEY_RIGHT) || this.keyListener.isKeyDown(KeyListener.KEY_D)) && this.xPos < maximX) {
-        this.xVel = Player.MAX_SPEED;
+        this.xVel = Player.MAX_SPEED/(Game.randomInteger(1, 8));
       } else if ((this.keyListener.isKeyDown(KeyListener.KEY_LEFT) || this.keyListener.isKeyDown(KeyListener.KEY_A)) && this.xPos > minX) {
-        this.xVel = -Player.MAX_SPEED;
-      } else this.xVel = 0;
-    } else this.xVel = 0;
+        this.xVel = -Player.MAX_SPEED/(Game.randomInteger(1, 8));
+      } else this.xVel = Game.randomInteger(-2, 2)/10;
+    } else this.xVel = Game.randomInteger(-2, 2)/10;
 
     if (spacebarPressed) {
-      this.yVel = 0
+      this.yVel = Player.SPEED_STATIC;
+      this.xVel = (Game.randomInteger(-2, 1)/10);
     } else if ((this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W))) {
       this.yVel = Player.MAX_SPEED_X;
+      this.xVel = (Game.randomInteger(-3, 2)/10);
     } else this.yVel = Player.SPEED_STATIC;
   }
 
