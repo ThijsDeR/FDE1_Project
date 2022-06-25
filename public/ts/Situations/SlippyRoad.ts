@@ -28,7 +28,7 @@ export default class SlippyRoad extends Situation {
             './assets/img/objects/Kruispunt.png',
             false
         )
-
+       
         // Define the left boundary of the playing field
         this.leftBoundary = this.background.getXPos() + this.background.getWidth() / 3
 
