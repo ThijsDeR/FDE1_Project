@@ -90,9 +90,9 @@ export default class Game {
 
     this.skins = skins;
 
-    this.situation = this.specificSituation(100)
+    // this.situation = this.specificSituation(100)
 
-    // this.situation = this.newSituation(100)
+    this.situation = this.newSituation(100)
 
 
     this.cutScene = null;

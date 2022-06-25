@@ -26,7 +26,7 @@ export default class SlippyRoad extends Situation {
         // Height
         this.background.getHeight() / 8, 
         // Stamina
-        this.playerData.stamina);
+        this.playerData.stamina, this.skins.bicycleSkin);
         // Create props in situation
         this.props = [
             // Add car

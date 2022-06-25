@@ -50,8 +50,8 @@ export default class Game {
         this.gameOver = false;
         this.upgrades = upgrades;
         this.skins = skins;
-        this.situation = this.specificSituation(100);
-        // this.situation = this.newSituation(100)
+        // this.situation = this.specificSituation(100)
+        this.situation = this.newSituation(100);
         this.cutScene = null;
         // Music
         this.music = new Audio('./audio/Game-Music.mp3');
