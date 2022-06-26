@@ -26,6 +26,10 @@ skins.forEach((skin) => __awaiter(void 0, void 0, void 0, function* () {
                 // worked
                 const skinData = yield userdata.getSkin(skinType);
                 skinImage.src = skinData.src;
+                if (skinType === 'stamina') {
+                    const baseStamina = skin.querySelector('#baseStamina');
+                    baseStamina.innerHTML = skinData.baseStamina;
+                }
             }
             else if (skinBtn_data.status === 400) {
             }

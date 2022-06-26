@@ -21,7 +21,7 @@ return new class extends Migration
 
             ]');
             $table->string('ownedStaminaSkins', 4000)->default('[
-                {"id": "1", "name": "frikandelbroodje", "src": "/assets/img/objects/frikandelbroodje.png", "baseStamina": "5"}
+                {"id": "1", "name": "frikandelbroodje", "src": "/assets/img/objects/frikandelbroodje.png", "baseStamina": "2"}
             ]');
             $table->unsignedBigInteger('currentBicycleSkin')->default(1);
             $table->unsignedBigInteger('currentStaminaSkin')->default(1);
