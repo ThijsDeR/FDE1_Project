@@ -74,6 +74,7 @@ div#skins {
     overflow-y: auto;
     display: grid;
     grid-template-columns: 50% 50%;
+    width: 98%
 }
 
 .skin {
