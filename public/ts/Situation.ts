@@ -1,4 +1,5 @@
 import Game from "./Game.js";
+import KeyListener from "./KeyListener.js";
 import Player from "./Player.js";
 import ImageProp from "./Props/ImageProp.js";
 import Prop from "./Props/Prop.js";
@@ -188,7 +189,9 @@ export default abstract class Situation extends Scene {
     }
 
     protected handleStaminaDepletion(elapsed: number) {
-        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        if (this.player.isStopped()) this.player.changeStamina((-0.010 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        else if (this.player.isMaxSpeed()) this.player.changeStamina((-0.04 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        else this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
 
     protected extraPropHandling(prop: Prop, propIndex: number) {
@@ -226,7 +229,7 @@ export default abstract class Situation extends Scene {
         return xPos
     }
 
-    protected createPlayer(): Player {
+    protected createPlayer(keyListener: KeyListener): Player {
         return new Player(
             // xPos
             this.checkPlayerPosition(),
@@ -243,7 +246,9 @@ export default abstract class Situation extends Scene {
             // Stamina
             this.playerData.stamina,
 
-            this.skins.bicycleSkin
+            this.skins.bicycleSkin,
+
+            keyListener
         );
     }
 }

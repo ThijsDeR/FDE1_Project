@@ -63,6 +63,9 @@
     font-size: calc(0.8vw + 0.8vh);
 }
 
+#submit-container button, #deleteBtn {
+    margin: 1vh 1vw;
+}
 
 #button-container {
     width: 100%;
@@ -73,4 +76,28 @@
 
 .buttons {
     margin: 1vh 1vw 1vh 1vw;
+}
+
+#delete-container {
+    display: none;
+}
+
+#delete-container.active {
+    display: inherit;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: whitesmoke;
+    border-radius: 25px;
+    width: 50vw;
+    height: 50vh;
+}
+
+#delete-container form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2vh 2vw;
 }

@@ -1,3 +1,5 @@
+import Game from "../Game.js";
+import KeyListener from "../KeyListener.js";
 import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
@@ -10,7 +12,8 @@ export default class PrioritySameRoad extends Situation {
         userData: UserData,
         playerData: PlayerData,
         upgrades: Upgrades,
-        skins: Skins
+        skins: Skins,
+        keyListener: KeyListener
     ) {
 
         super(canvas, userData, playerData, upgrades, skins)
@@ -28,13 +31,13 @@ export default class PrioritySameRoad extends Situation {
         )
 
         // Define the left boundary of the playing field
-        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
+        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3) - (this.background.getWidth() / 20)
 
         // Define the right boundary of the playing field
-        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
+        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) + (this.background.getWidth() / 20)
 
         // Create player
-        this.player = this.createPlayer()
+        this.player = this.createPlayer(keyListener)
 
         // Create props in situation
         this.props = [
@@ -48,42 +51,50 @@ export default class PrioritySameRoad extends Situation {
                 this.background.getHeight() / 9,
                 './assets/img/objects/car2.png'
             ),
-            // Create dynamic bicycle
+        ]
+
+        const cycleVectors = [
+            {
+                // Starting position
+                xPos1: this.background.getXPos() + this.background.getWidth() / 2,
+                yPos1: (this.background.getHeight() * 2) + this.background.getYPos(),
+                // Target position
+                xPos2: this.background.getXPos() + this.background.getWidth() / 2,
+                yPos2: this.background.getHeight() / 2 + this.background.getYPos(),
+                // Velocities between start and target position
+                xVel: 0,
+                yVel: -1
+            },
+        ]
+
+        Game.randomInteger(0, 1) === 1 ? cycleVectors.push(
+            {
+                // Starting position
+                xPos1: this.background.getXPos() + this.background.getWidth() / 2,
+                yPos1: this.background.getHeight() / 2 + this.background.getYPos(),
+                // Target position
+                xPos2: this.background.getXPos() + this.background.getWidth(),
+                yPos2: this.background.getHeight() / 2 + this.background.getYPos(),
+                // Velocities between start and target position
+                xVel: 0.20,
+                yVel: 0
+            }
+        ) : ''
+
+        Game.randomInteger(0, 5) === 1 ? '' : this.props.push(
             new TrackProp(
-                [
-                    {
-                        // Starting position
-                        xPos1: this.background.getXPos() + this.background.getWidth() / 2,
-                        yPos1: (this.background.getHeight() * 2) + this.background.getYPos(),
-                        // Target position
-                        xPos2: this.background.getXPos() + this.background.getWidth() / 2,
-                        yPos2: this.background.getHeight() / 2 + this.background.getYPos(),
-                        // Velocities between start and target position
-                        xVel: 0,
-                        yVel: -0.5
-                    },
-                    {
-                        // Starting position
-                        xPos1: this.background.getXPos() + this.background.getWidth() / 2,
-                        yPos1: this.background.getHeight() / 2 + this.background.getYPos(),
-                        // Target position
-                        xPos2: this.background.getXPos() + this.background.getWidth(),
-                        yPos2: this.background.getHeight() / 2 + this.background.getYPos(),
-                        // Velocities between start and target position
-                        xVel: 0.20,
-                        yVel: 0
-                    },
-                ],
+                cycleVectors,
                 // Prop image properties
                 this.background.getWidth() / 20,
                 this.background.getHeight() / 8,
                 './assets/img/players/cycles/fiets1normal.png'
             ),
+        )
 
-            // Create stamina booster
+        Game.randomInteger(0, 2) === 1 ? this.props.push(
             new StaminaBooster(
-                this.background.getXPos() + this.background.getWidth() / 2,
-                this.background.getYPos() + (this.background.getHeight() / 2),
+                this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - (this.background.getWidth() / 30),
+                this.background.getYPos() + ((this.background.getHeight() / 3) * 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
@@ -91,6 +102,6 @@ export default class PrioritySameRoad extends Situation {
                 this.skins.staminaSkin.src,
                 parseInt(this.skins.staminaSkin.baseStamina)
             )
-        ]
+        ) : ''
     }
 }

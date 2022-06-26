@@ -9,14 +9,9 @@ export default class SlippyPlayer extends Player{
    *
    * @param canvas the canvas on which the player should exist
    */
-  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin) {
-    super(xPos, yPos, xVel, yVel, width, height, stamina, skin)
+  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin, keyListener: KeyListener) {
+    super(xPos, yPos, xVel, yVel, width, height, stamina, skin, keyListener)
   }
-
-  public getKeyListener() {
-    return this.keyListener;
-  }
-
   
   /**
    * Moves the player

@@ -123,7 +123,12 @@ export default class Situation extends Scene {
         this.props.splice(propIndex, 1);
     }
     handleStaminaDepletion(elapsed) {
-        this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        if (this.player.isStopped())
+            this.player.changeStamina((-0.010 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        else if (this.player.isMaxSpeed())
+            this.player.changeStamina((-0.04 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
+        else
+            this.player.changeStamina((-0.025 / ((50 + this.upgrades.stamina_resistance.level) / 50)) * (elapsed / 10));
     }
     extraPropHandling(prop, propIndex) {
         return false;
@@ -159,7 +164,7 @@ export default class Situation extends Scene {
         // Return the value to the player
         return xPos;
     }
-    createPlayer() {
+    createPlayer(keyListener) {
         return new Player(
         // xPos
         this.checkPlayerPosition(), 
@@ -174,7 +179,7 @@ export default class Situation extends Scene {
         // Height
         this.background.getHeight() / 8, 
         // Stamina
-        this.playerData.stamina, this.skins.bicycleSkin);
+        this.playerData.stamina, this.skins.bicycleSkin, keyListener);
     }
 }
 Situation.NOT_DONE = 0;

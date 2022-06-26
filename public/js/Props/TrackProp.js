@@ -37,13 +37,14 @@ export default class TrackProp extends ImageProp {
         const vector = this.vectors[this.currentVector];
         return ((vector.xPos1 < vector.xPos2 && this.xPos >= vector.xPos2)
             || (vector.xPos1 > vector.xPos2 && this.xPos <= vector.xPos2)
-            || (this.xPos === vector.xPos2));
+            || (this.xPos === vector.xPos2)
+            || (vector.xPos1 === vector.xPos2));
     }
     isDoneYVel() {
         const vector = this.vectors[this.currentVector];
         return ((vector.yPos1 < vector.yPos2 && this.yPos >= vector.yPos2)
             || (vector.yPos1 > vector.yPos2 && this.yPos <= vector.yPos2)
-            || (this.yPos === vector.yPos2));
+            || (vector.yPos1 === vector.yPos2));
     }
     scroll(elapsed, scrollSpeed) {
         this.yPos += (scrollSpeed * elapsed);
@@ -51,5 +52,8 @@ export default class TrackProp extends ImageProp {
             vector.yPos1 += (scrollSpeed * elapsed);
             vector.yPos2 += (scrollSpeed * elapsed);
         });
+    }
+    getCurrentVector() {
+        return this.currentVector;
     }
 }

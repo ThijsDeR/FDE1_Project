@@ -1,5 +1,7 @@
 import Game from "../Game.js";
+import KeyListener from "../KeyListener.js";
 import ImageProp from "../Props/ImageProp.js";
+import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
@@ -10,7 +12,8 @@ export default class ParkingSpotCar extends Situation {
         userData: UserData,
         playerData: PlayerData,
         upgrades: Upgrades,
-        skins: Skins
+        skins: Skins,
+        keyListener: KeyListener
     ) {
 
         super(canvas, userData, playerData, upgrades, skins)
@@ -26,13 +29,13 @@ export default class ParkingSpotCar extends Situation {
         )
 
         // Define the left boundary of the playing field
-        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
+        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3) - (this.background.getWidth() / 20)
 
         // Define the right boundary of the playing field
-        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
+        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) + (this.background.getWidth() / 20)
 
         // Create player
-        this.player = this.createPlayer()
+        this.player = this.createPlayer(keyListener)
 
         this.props = []
 
@@ -62,8 +65,8 @@ export default class ParkingSpotCar extends Situation {
             }
         ]
 
-        Game.randomInteger(0, 1) === 1
-            ? carVectors.push(
+        if (Game.randomInteger(0, 1) === 1) {
+            carVectors.push(
                 {
                     // Additional movement for the car, if it exists
                     // Starting location
@@ -71,7 +74,7 @@ export default class ParkingSpotCar extends Situation {
                     yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.8,
                     // Target position
                     xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
-                    yPos2: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
+                    yPos2: this.background.getYPos() + (this.background.getHeight() / 10) * 7.5,
                     // Velocities between start and target position
                     xVel: -0.04,
                     yVel: -0.04
@@ -79,7 +82,7 @@ export default class ParkingSpotCar extends Situation {
                 {
                     // Starting location
                     xPos1: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
-                    yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 8.5,
+                    yPos1: this.background.getYPos() + (this.background.getHeight() / 10) * 7.5,
                     // Target position
                     xPos2: this.background.getXPos() + (this.background.getWidth() / 5) * 2.5,
                     yPos2: this.background.getYPos() - this.background.getHeight() * 4,
@@ -87,7 +90,35 @@ export default class ParkingSpotCar extends Situation {
                     xVel: 0,
                     yVel: -1
                 },
+            )
+
+            Game.randomInteger(0, 2) === 1 ? this.props.push(
+                new StaminaBooster(
+                    this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - (this.background.getWidth() / 30),
+                    this.background.getYPos() + (this.background.getHeight() * 1.2),
+                    0,
+                    0,
+                    this.background.getWidth() / 16,
+                    this.background.getHeight() / 9,
+                    this.skins.staminaSkin.src,
+                    parseInt(this.skins.staminaSkin.baseStamina)
+                )
             ) : ''
+        } else {
+            Game.randomInteger(0, 2) === 1 ? this.props.push(
+                new StaminaBooster(
+                    this.background.getXPos() + (this.background.getWidth() / 2),
+                    this.background.getYPos() + (this.background.getHeight()) ,
+                    0,
+                    0,
+                    this.background.getWidth() / 16,
+                    this.background.getHeight() / 9,
+                    this.skins.staminaSkin.src,
+                    parseInt(this.skins.staminaSkin.baseStamina)
+                )
+            ) : ''
+        }
+
 
         const car = new TrackProp(
             carVectors,

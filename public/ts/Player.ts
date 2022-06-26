@@ -19,13 +19,13 @@ export default class Player extends AnimatedProp {
    *
    * @param canvas the canvas on which the player should exist
    */
-  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin) {
+  public constructor(xPos: number, yPos: number, xVel: number, yVel: number, width: number, height: number, stamina: number, skin: BicycleSkin, keyListener: KeyListener) {
     super(xPos, yPos, xVel, yVel, width, height, [
       { image: Game.loadNewImage(skin.src), duration: 200 },
       { image: Game.loadNewImage(skin.src.replace('1', '2')), duration: 200 },
     ], false)
 
-    this.keyListener = new KeyListener();
+    this.keyListener = keyListener;
 
     this.stamina = stamina;
   }
@@ -100,6 +100,10 @@ export default class Player extends AnimatedProp {
 
   public isStopped() {
     return this.keyListener.isKeyDown(KeyListener.KEY_SPACE);
+  }
+
+  public isMaxSpeed() {
+    return this.keyListener.isKeyDown(KeyListener.KEY_UP) || this.keyListener.isKeyDown(KeyListener.KEY_W)
   }
 
   public isPausing() {

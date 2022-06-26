@@ -5,6 +5,7 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import UserData from "../UserData.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
+import KeyListener from "../KeyListener.js";
 
 export default class CyclingPathFriendOncoming extends Situation {
 
@@ -13,7 +14,8 @@ export default class CyclingPathFriendOncoming extends Situation {
         userData: UserData,
         playerData: PlayerData,
         upgrades: Upgrades,
-        skins: Skins
+        skins: Skins,
+        keyListener: KeyListener
     ) {
 
         super(canvas, userData, playerData, upgrades, skins)
@@ -36,7 +38,7 @@ export default class CyclingPathFriendOncoming extends Situation {
         this.rightBoundary = this.background.getWidth() * 1.277
 
         // Create player
-        this.player = this.createPlayer()
+        this.player = this.createPlayer(keyListener)
 
         // Create possible scenarios
         // Friend

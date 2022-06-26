@@ -1,4 +1,5 @@
 import Game from "../Game.js";
+import KeyListener from "../KeyListener.js";
 import Player from "../Player.js";
 import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
@@ -11,7 +12,8 @@ export default class TrainRails extends Situation {
         userData: UserData,
         playerData: PlayerData,
         upgrades: Upgrades,
-        skins: Skins
+        skins: Skins,
+        keyListener: KeyListener
     ) {
 
         super(canvas, userData, playerData, upgrades, skins)
@@ -28,20 +30,21 @@ export default class TrainRails extends Situation {
         )
 
         // Define the left boundary of the playing field
-        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3)
+        this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3) - (this.background.getWidth() / 20)
 
         // Define the right boundary of the playing field
-        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2)
+        this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) + (this.background.getWidth() / 20)
 
         // Create player
-        this.player = this.createPlayer()
+        this.player = this.createPlayer(keyListener)
 
         // Add props to the situation
-        this.props = [
-            // Stamina booster
+        this.props = []
+
+        Game.randomInteger(0, 2) === 1 ? this.props.push(
             new StaminaBooster(
-                this.background.getXPos() + (this.background.getWidth() / 1.6),
-                this.background.getYPos() + (this.background.getHeight() / 5),
+                this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - (this.background.getWidth() / 30),
+                this.background.getYPos() + (this.background.getHeight() / 2),
                 0,
                 0,
                 this.background.getWidth() / 16,
@@ -49,7 +52,7 @@ export default class TrainRails extends Situation {
                 this.skins.staminaSkin.src,
                 parseInt(this.skins.staminaSkin.baseStamina)
             )
-        ]
+        ) : ''
 
         // Train prop variables
         const train = new ImageProp(

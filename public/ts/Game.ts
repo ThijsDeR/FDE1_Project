@@ -19,11 +19,12 @@ import PedestrianCrossingVan from './Situations/PedestrianCrossingVan.js';
 import ParkingSpotCar from './Situations/ParkingSpotCar.js';
 import SchoolStreet from './Situations/SchoolStreet.js';
 import TrainRails from './Situations/TrainRails.js';
-import StoplichtOranje from './Situations/StoplichtRood.js';
 import PauseScene from './PauseScene.js';
 import ClosedBicycleLane from './Situations/ClosedBicycleLane.js';
 import Obstacles from './Situations/Obstacles.js';
 import SlippyRoad from './Situations/SlippyRoad.js';
+import KeyListener from './KeyListener.js';
+import StoplichtRood from './Situations/StoplichtRood.js';
 
 
 /**
@@ -38,6 +39,8 @@ export default class Game {
   private gameloop: GameLoop;
 
   private situation: Situation;
+
+  private KeyListener: KeyListener;
 
   // Score
   private totalScore: number;
@@ -75,6 +78,8 @@ export default class Game {
 
     this.staminabar = new Staminabar(this.canvas.width / 6, 300, this.canvas.width / 3, 20);
 
+    this.KeyListener = new KeyListener();
+
     // Start the animation
     this.gameloop = new GameLoop(this);
     this.gameloop.start();
@@ -90,10 +95,9 @@ export default class Game {
 
     this.skins = skins;
 
-    // this.situation = this.specificSituation(100)
+    this.situation = this.specificSituation(100)
 
-    this.situation = this.newSituation(100)
-
+    // this.situation = this.newSituation(100)
 
     this.cutScene = null;
 
@@ -132,48 +136,50 @@ export default class Game {
   private newSituation(stamina: number): Situation {
 
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
-    switch (Game.randomInteger(0, 13)) {
+    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener]
+    switch (Game.randomInteger(0, 16)) {
       case 0:
-        return new CyclingPathIncomingTraffic(...data)
-      case 1:
-        return new Crossroad(...data)
-      case 2:
         return new CarDriveway(...data)
+      case 1:
+        return new ClosedBicycleLane(...data)
+      case 2:
+        return new Crossroad(...data)
       case 3:
         return new CrossroadStopSign(...data)
       case 4:
-        return new TractorIncoming(...data)
-      case 5:
-        return new PrioritySameRoad(...data)
-      case 6:
-        return new ParkingSpotCar(...data)
-      case 7:
-        return new PedestrianCrossingVan(...data)
-      case 8:
-        return new SchoolStreet(...data)
-      case 9:
-        return new TrainRails(...data)
-      case 10:
         return new CyclingPathFriendOncoming(...data)
-      case 11:
-        return new StoplichtOranje(...data)
-      case 12:
+      case 5:
+        return new CyclingPathIncomingTraffic(...data)
+      case 6:
         return new Obstacles(...data)
-      case 13:
-        return new ClosedBicycleLane(...data)
-      case 14:
+      case 7:
         return new OncomingCyclist(...data)
-      default:
+      case 8:
+        return new ParkingSpotCar(...data)
+      case 9:
         return new PedestrianCrossingVan(...data)
+      case 10:
+        return new PrioritySameRoad(...data)
+      case 11:
+        return new SchoolStreet(...data)
+      case 12:
+        return new SlippyRoad(...data)
+      case 13:
+        return new StoplichtRood(...data)
+      case 14:
+        return new TractorIncoming(...data)
+      case 15:
+        return new TrainRails(...data)
+      default:
+        return new CarDriveway(...data)
     }
   }
 
   private specificSituation(stamina: number) {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-    const data: [HTMLCanvasElement, UserData, {xPos: number | null, stamina: number}, Upgrades, Skins] = [this.canvas, this.userData, {xPos: playerXpos, stamina: stamina}, this.upgrades, this.skins]
+    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener]
 
-    return new SlippyRoad(...data);
+    return new TrainRails(...data);
   }
 
   /**

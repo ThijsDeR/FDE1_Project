@@ -11,20 +11,16 @@
 
             <div id="input-container">
                 <label id="username" for="username">Gebruikersnaam</label>
-                @if($errors->all())
-                <input class="is-danger" type="text" id="username" name="username">
-                @else
-                <input type="text" id="username" name="username">
-                @endif
+
+                <input class="@if($errors->all()) is-danger @endif" type="text" id="username" name="username" value="{{old('username')}}">
             </div>
 
             <div id="input-container">
                 <label id="password" for="password">Wachtwoord</label>
+                
+                <input class="@if($errors->all()) is-danger @endif" type="password" id="password" name="password">
                 @if($errors->all())
-                <input class="is-danger" type="password" id="password" name="password">
                 <h3>De gebruikersnaam of het wachtwoord zijn onjuist.</h3>
-                @else
-                <input type="password" id="password" name="password">
                 @endif
             </div>
 

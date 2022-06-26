@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function register(Request $request) {
         validator($request->all(), [
             'username' => ['required', 'min:5', 'max:30', 'profanity', 'unique:users'],
-            'password' => ['required', 'min:3', 'max:30'],
+            'password' => ['required', 'min:6', 'max:30'],
         ])->validate();
 
 
@@ -86,7 +86,7 @@ class AuthController extends Controller
     {
         $user=User::where('id', auth()->user()->id);
         $user->update($request->validate([
-            "username" => "required"
+            "username" => ["required", "min:5", "unique:users"]
         ]));
         return redirect(route('profile'));
     }
