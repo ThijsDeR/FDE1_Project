@@ -22,7 +22,7 @@
             </div>
             <div class="info">
                 <div id="imgContainer">
-                    <img src="/assets/img/players/fiets1.png" alt="Fiets">
+                    <img src="/assets/img/players/cycles/fiets1normal.png" alt="Fiets">
                 </div>
                 <p>Verkeers Punten: <strong><span id="vp">{{auth()->user()->player->vp}}</span></strong></p>
             </div>
