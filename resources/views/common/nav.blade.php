@@ -16,7 +16,7 @@
         <div id="user-container">
             @if (auth()->user())
                 <div id="text-container">
-                    <h2>{{auth()->user()->username}}</h2>
+                    <h2><a href="{{route('profile')}}">{{auth()->user()->username}}</a></h2>
                 </div>
 
                 <div id="button-container">
