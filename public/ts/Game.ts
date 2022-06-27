@@ -183,7 +183,7 @@ export default class Game {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
     const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener]
 
-    return new TrainRails(...data);
+    return new SlippyRoad(...data);
   }
 
   /**

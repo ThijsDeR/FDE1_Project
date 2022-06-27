@@ -39,6 +39,9 @@ export default class SlippyPlayer extends Player {
         }
         else
             this.yVel = Player.SPEED_STATIC;
+        if ((this.xPos > maximX && this.xVel > 0) || (this.xPos < minX && this.xVel < 0)) {
+            this.xVel = 0;
+        }
     }
     move(elapsed) {
         this.xPos += this.xVel * elapsed;

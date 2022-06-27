@@ -28,6 +28,7 @@ export default class SlippyPlayer extends Player{
       } else this.xVel = Game.randomInteger(-2, 2)/10;
     } else this.xVel = Game.randomInteger(-2, 2)/10;
 
+    
     if (spacebarPressed) {
       this.yVel = Player.SPEED_STATIC;
       this.xVel = (Game.randomInteger(-2, 1)/10);
@@ -35,6 +36,10 @@ export default class SlippyPlayer extends Player{
       this.yVel = Player.MAX_SPEED_X;
       this.xVel = (Game.randomInteger(-3, 2)/10);
     } else this.yVel = Player.SPEED_STATIC;
+
+    if ((this.xPos > maximX && this.xVel > 0) || (this.xPos < minX && this.xVel < 0)) {
+      this.xVel = 0
+    }
   }
 
   public move(elapsed: number) {

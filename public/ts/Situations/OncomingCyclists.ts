@@ -42,8 +42,7 @@ export default class OncomingCyclist extends Situation {
 
         // TODO: Re-align bicycles
         // Create props in situation
-        this.props = [
-        ]
+        this.props = []
         const goodCyclist = [
             //position of obstacle
             new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(),
@@ -105,17 +104,6 @@ export default class OncomingCyclist extends Situation {
                 this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
             // cycles that goes straight ahead
             new ImageProp(this.background.getXPos() + (this.background.getWidth() / 3.5), this.background.getYPos(), 0, 0.32, this.background.getWidth() / 20, this.background.getHeight() / 8, './assets/img/players/cycles/fiets1normal.png'),
-            // Stamina booster
-            new StaminaBooster(
-                this.background.getXPos() + this.background.getWidth() / 2,
-                this.background.getYPos() + (this.background.getHeight() / 2),
-                0,
-                0,
-                this.background.getWidth() / 16,
-                this.background.getHeight() / 9,
-                this.skins.staminaSkin.src,
-                parseInt(this.skins.staminaSkin.baseStamina)
-            ),
         ]
         //pushes of of the two situations to the props
         Game.randomInteger(0, 1) === 1 ? goodCyclist.forEach(goodCyclist => {
