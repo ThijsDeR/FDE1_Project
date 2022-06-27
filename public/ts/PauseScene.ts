@@ -76,7 +76,7 @@ export default class PauseScene extends CutScene {
 
         Scene.writeTextToCanvas(
             this.ctx,
-            'De Game is gepauseerd.',
+            'De Game is gepauzeerd.',
             this.canvas.width / 2,
             this.canvas.height / 8,
             30

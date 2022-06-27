@@ -51,7 +51,7 @@ export default class PauseScene extends CutScene {
         this.props.forEach((prop) => {
             prop.draw(this.ctx);
         });
-        Scene.writeTextToCanvas(this.ctx, 'The game is paused.', this.canvas.width / 2, this.canvas.height / 8, 30);
+        Scene.writeTextToCanvas(this.ctx, 'De Game is gepauzeerd.', this.canvas.width / 2, this.canvas.height / 8, 30);
     }
     processInput() {
     }

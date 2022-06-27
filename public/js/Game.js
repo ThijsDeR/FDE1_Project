@@ -60,6 +60,9 @@ export default class Game {
         this.music.volume = 0.1;
         this.music.play();
         this.music.loop = true;
+        document.addEventListener("visibilitychange", () => {
+            this.cutScene = new PauseScene(this.canvas, this.userData);
+        });
     }
     restart() {
         // Resize the canvas so it looks more like a Runner game
