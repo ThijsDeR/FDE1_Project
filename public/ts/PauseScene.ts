@@ -25,7 +25,7 @@ export default class PauseScene extends CutScene {
         this.paused = true; 
 
         this.props = [
-            new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight), buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Continue', this.canvas.height / 20, 'fill','continue'),
+            new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight), buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Doorgaan', this.canvas.height / 20, 'fill','continue'),
             new Button((this.canvas.width / 2) - (buttonWidth / 2), (buttonHeight + betweenButtonHeight) * 2, buttonWidth, buttonHeight, 'white', 'black', 'lightgray', 'Menu', this.canvas.height / 20, 'fill','menu'),
         ];
 
