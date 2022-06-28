@@ -192,7 +192,7 @@ export default class Game {
         // specify the image source relative to the html or js file
         // when the image is in the same directory as the file
         // only the file name is required:
-        img.src = "./assets/img/objects/MainRoadFixed.png";
+        img.src = "./assets/img/objects/MainRoadFixed_2.png";
         img.classList.add("backgroundImage");
         // draw image 1
         ctx.drawImage(img, this.canvas.width / 3, this.imgHeight, this.canvas.width / 2, this.canvas.height);
