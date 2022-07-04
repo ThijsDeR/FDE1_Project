@@ -4,8 +4,9 @@ import Situation from "../Situation.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 export default class Obstacles extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
+        this.leftSideDrawBack = false;
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png');
         this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3) - (this.background.getWidth() / 20);
         this.rightBoundary = this.background.getXPos() + ((this.background.getWidth() / 3) * 2) + (this.background.getWidth() / 20);

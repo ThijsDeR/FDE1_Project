@@ -92,11 +92,13 @@ export default class UserData {
   }
 
   public async getSkin(skin_type: string) {
+    console.log(`/profile/getSkin/${skin_type}/${this.token}`)
     const rawResponse = await fetch(`/profile/getSkin/${skin_type}/${this.token}`, {
       headers: {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')!
       }
     })
+    console.log(rawResponse)
     const response = await rawResponse.json();
     return response
 

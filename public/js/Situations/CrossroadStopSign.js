@@ -4,8 +4,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import StopSign from "../Props/StopSign.js";
 import Situation from "../Situation.js";
 export default class CrossroadStopSign extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Sound
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;

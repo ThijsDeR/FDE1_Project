@@ -16,10 +16,11 @@ export default class CrossroadStopSign extends Situation {
         playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins,
-        keyListener: KeyListener
+        keyListener: KeyListener,
+        allowedMist: boolean
     ) {
 
-        super(canvas, userData, playerData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins, allowedMist)
         // Sound
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;

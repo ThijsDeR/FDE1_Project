@@ -5,17 +5,19 @@ import StaminaBooster from "./Props/StaminaBooster.js";
 import TrackProp from "./Props/TrackProp.js";
 import Scene from "./Scene.js";
 export default class Situation extends Scene {
-    constructor(canvas, userData, playerData, upgrades, skins) {
+    constructor(canvas, userData, playerData, upgrades, skins, allowedMist) {
         super(canvas, userData);
         this.upgrades = upgrades;
         this.playerData = playerData;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;
+        this.allowedMist = allowedMist;
+        this.leftSideDrawBack = true;
         // // Define the width of the player
         // this.playerWidth = this.background.getWidth() / 20
         // // Define the height of the player
@@ -27,7 +29,7 @@ export default class Situation extends Scene {
             prop.draw(this.ctx);
         });
         this.player.draw(this.ctx);
-        if (this.isMist) {
+        if (this.isMist && this.allowedMist) {
             const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 100), 0) + 0.05;
             this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
             this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10);
@@ -59,6 +61,7 @@ export default class Situation extends Scene {
         else
             gameOver = true;
         this.scoreTick += (this.player.getYVel() * elapsed) / 10;
+        this.leftSideCheck(elapsed);
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85)
@@ -180,6 +183,11 @@ export default class Situation extends Scene {
         this.background.getHeight() / 8, 
         // Stamina
         this.playerData.stamina, this.skins.bicycleSkin, keyListener);
+    }
+    leftSideCheck(elapsed) {
+        if (this.leftSideDrawBack && this.player.getXPos() < (this.leftBoundary + ((this.rightBoundary - this.leftBoundary) / 2))) {
+            this.scoreTick -= (this.player.getYVel() * elapsed) / 5;
+        }
     }
 }
 Situation.NOT_DONE = 0;

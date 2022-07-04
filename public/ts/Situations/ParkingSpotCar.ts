@@ -13,10 +13,11 @@ export default class ParkingSpotCar extends Situation {
         playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins,
-        keyListener: KeyListener
+        keyListener: KeyListener,
+        allowedMist: boolean
     ) {
 
-        super(canvas, userData, playerData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins, allowedMist)
 
         // Situation background parameters
         this.background = new ImageProp(
@@ -105,6 +106,7 @@ export default class ParkingSpotCar extends Situation {
                 )
             ) : ''
         } else {
+            this.leftSideDrawBack = false;
             Game.randomInteger(0, 2) === 1 ? this.props.push(
                 new StaminaBooster(
                     this.background.getXPos() + (this.background.getWidth() / 2),

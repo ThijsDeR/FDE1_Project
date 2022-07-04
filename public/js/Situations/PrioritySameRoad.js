@@ -4,8 +4,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class PrioritySameRoad extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Create situation background
         this.background = new ImageProp(this.canvas.width / 3, -this.canvas.height, 0, 0, this.canvas.width / 2, canvas.height, './assets/img/objects/Oprit_1.png', false);
         // Define the left boundary of the playing field

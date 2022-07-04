@@ -140,7 +140,7 @@ export default class Game {
   private newSituation(stamina: number): Situation {
 
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener]
+    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener, boolean] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener, this.totalScore > 1000]
     switch (Game.randomInteger(0, 16)) {
       case 0:
         return new CarDriveway(...data)
@@ -181,7 +181,7 @@ export default class Game {
 
   private specificSituation(stamina: number) {
     const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener]
+    const data: [HTMLCanvasElement, UserData, { xPos: number | null, stamina: number }, Upgrades, Skins, KeyListener, boolean] = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener, this.totalScore > 1000]
 
     return new SlippyRoad(...data);
   }

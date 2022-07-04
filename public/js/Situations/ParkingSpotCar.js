@@ -4,8 +4,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 export default class ParkingSpotCar extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Situation background parameters
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png', false);
         // Define the left boundary of the playing field
@@ -66,6 +66,7 @@ export default class ParkingSpotCar extends Situation {
             Game.randomInteger(0, 2) === 1 ? this.props.push(new StaminaBooster(this.background.getXPos() + ((this.background.getWidth() / 3) * 2) - (this.background.getWidth() / 30), this.background.getYPos() + (this.background.getHeight() * 1.2), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))) : '';
         }
         else {
+            this.leftSideDrawBack = false;
             Game.randomInteger(0, 2) === 1 ? this.props.push(new StaminaBooster(this.background.getXPos() + (this.background.getWidth() / 2), this.background.getYPos() + (this.background.getHeight()), 0, 0, this.background.getWidth() / 16, this.background.getHeight() / 9, this.skins.staminaSkin.src, parseInt(this.skins.staminaSkin.baseStamina))) : '';
         }
         const car = new TrackProp(carVectors, this.background.getWidth() / 10, this.background.getHeight() / 5, './assets/img/objects/car.png');

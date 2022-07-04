@@ -5,8 +5,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import { Tractor } from "../Props/Tractor.js";
 import Situation from "../Situation.js";
 export default class TractorIncoming extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png', false);
         // Define the left boundary of the playing field

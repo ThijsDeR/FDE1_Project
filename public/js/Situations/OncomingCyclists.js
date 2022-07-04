@@ -4,8 +4,8 @@ import Situation from "../Situation.js";
 import Game from "../Game.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 export default class OncomingCyclist extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Create situation background
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/objects/Kruispunt.png', false);
         // Define the left boundary of the playing field

@@ -4,8 +4,8 @@ import StaminaBooster from "../Props/StaminaBooster.js";
 import Situation from "../Situation.js";
 import Stoplicht from "../Props/Stoplicht.js";
 export default class StoplichtRood extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Sound
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;

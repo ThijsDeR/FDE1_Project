@@ -98,11 +98,13 @@ export default class UserData {
     getSkin(skin_type) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(`/profile/getSkin/${skin_type}/${this.token}`);
             const rawResponse = yield fetch(`/profile/getSkin/${skin_type}/${this.token}`, {
                 headers: {
                     'X-CSRF-TOKEN': (_a = document.querySelector('meta[name="csrf-token"]')) === null || _a === void 0 ? void 0 : _a.getAttribute('content')
                 }
             });
+            console.log(rawResponse);
             const response = yield rawResponse.json();
             return response;
         });

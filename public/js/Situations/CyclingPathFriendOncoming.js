@@ -5,8 +5,8 @@ import TrackProp from "../Props/TrackProp.js";
 import Situation from "../Situation.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 export default class CyclingPathFriendOncoming extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Situation background properties
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/Polderweg.png');
         // Define the left boundary of the playing field

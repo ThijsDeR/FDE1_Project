@@ -43,19 +43,24 @@ export default abstract class Situation extends Scene {
 
     protected scoreTick: number;
 
+    protected allowedMist: boolean
 
-    public constructor (canvas: HTMLCanvasElement, userData: UserData, playerData: PlayerData, upgrades: Upgrades, skins: Skins) {
+    protected leftSideDrawBack: boolean;
+
+    public constructor (canvas: HTMLCanvasElement, userData: UserData, playerData: PlayerData, upgrades: Upgrades, skins: Skins, allowedMist: boolean) {
 
         super(canvas, userData)
         this.upgrades = upgrades;
         this.playerData = playerData;
         this.crashSound = new Audio('./audio/bike_crash.mp3');
         this.crashSound.volume = 0.7;
-        Game.randomInteger(0, 10) === 1 ? this.isMist = true : this.isMist = false;
+        Game.randomInteger(0, 1) === 1 ? this.isMist = true : this.isMist = false;
         this.currentMist = 0;
         this.skins = skins;
         this.pickupSound = new Audio('./audio/EatingSound.wav');
         this.pickupSound.volume = 0.5;
+        this.allowedMist = allowedMist
+        this.leftSideDrawBack = true;
 
         // // Define the width of the player
         // this.playerWidth = this.background.getWidth() / 20
@@ -71,7 +76,7 @@ export default abstract class Situation extends Scene {
         })
         this.player.draw(this.ctx);
 
-        if (this.isMist) {
+        if (this.isMist && this.allowedMist) {
             const mistIntensity = Math.max(this.currentMist - (this.upgrades.lamp_power.level / 100), 0) + 0.05
             this.ctx.fillStyle = `rgba(168, 168, 168, ${mistIntensity})`;
             this.ctx.fillRect(this.background.getXPos(), -this.canvas.height, this.background.getWidth(), this.background.getHeight() * 10)
@@ -111,6 +116,8 @@ export default abstract class Situation extends Scene {
         
         this.scoreTick += (this.player.getYVel() * elapsed) / 10
 
+        this.leftSideCheck(elapsed)
+        
         if (this.isMist) {
             if (!this.vanishMist()) {
                 if (this.currentMist <= 0.85) this.currentMist += Math.min(elapsed / 1000, 0.004)
@@ -126,6 +133,7 @@ export default abstract class Situation extends Scene {
         if (this.isPaused()) {
             return Situation.PAUSED;
         }
+
 
         return gameOver ? Situation.GAME_OVER : Situation.NOT_DONE;
     }
@@ -250,5 +258,11 @@ export default abstract class Situation extends Scene {
 
             keyListener
         );
+    }
+
+    protected leftSideCheck(elapsed: number) {
+        if (this.leftSideDrawBack && this.player.getXPos() < (this.leftBoundary + ((this.rightBoundary - this.leftBoundary) / 2))) {
+            this.scoreTick -= (this.player.getYVel() * elapsed) / 5
+        }
     }
 }

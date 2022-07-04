@@ -73,8 +73,8 @@ class PlayerSkin extends Model
     }
 
     public function getCurrentBicycleSkin() {
-        foreach(json_decode($this->ownedBicycleSkins) as $skin) {
-            if (intval($skin->id) === $this->currentBicycleSkin) return $skin;
+        foreach(json_decode($this->ownedBicycleSkins) as $index => $skin) {
+            if ($index + 1 === $this->currentBicycleSkin) return $skin;
         }
     }
 

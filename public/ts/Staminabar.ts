@@ -37,6 +37,6 @@ export default class Staminabar {
         ctx.closePath();
         ctx.fill();
 
-        Game.writeTextToCanvas(ctx, 'Stamina:', this.xPos, this.yPos, 30, undefined, undefined, 'bottom')
+        Game.writeTextToCanvas(ctx, 'Energie:', this.xPos, this.yPos, 30, undefined, undefined, 'bottom')
     };
 }

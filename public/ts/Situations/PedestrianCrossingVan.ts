@@ -13,10 +13,13 @@ export default class PedestrianCrossingVan extends Situation {
         playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins,
-        keyListener: KeyListener
+        keyListener: KeyListener,
+        allowedMist: boolean
     ) {
 
-        super(canvas, userData, playerData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins, allowedMist)
+        
+        this.leftSideDrawBack = false;
 
         // Situation background parameters
         this.background = new ImageProp(

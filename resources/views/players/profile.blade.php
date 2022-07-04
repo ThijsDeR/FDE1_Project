@@ -27,7 +27,7 @@
             </div>
             <div class="skin" id="staminaSkin" type="stamina">
                 <img id="staminaSkinImage" src="{{$user->player->skins->getCurrentStaminaSkin()->src}}" alt="">
-                <p id="staminaSkinStamina">Base Stamina: <span id="baseStamina">{{$user->player->skins->getcurrentStaminaSkin()->baseStamina}}</span></p>
+                <p id="staminaSkinStamina">Basis Energie: <span id="baseStamina">{{$user->player->skins->getcurrentStaminaSkin()->baseStamina}}</span></p>
                 <div class="buttons">
                     <button type="previous" class="nice-button">Vorige</button>
                     <button type="next" class="nice-button">Volgende</button>

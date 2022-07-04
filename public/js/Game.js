@@ -84,7 +84,7 @@ export default class Game {
     }
     newSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener];
+        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener, this.totalScore > 1000];
         switch (Game.randomInteger(0, 16)) {
             case 0:
                 return new CarDriveway(...data);
@@ -124,7 +124,7 @@ export default class Game {
     }
     specificSituation(stamina) {
         const playerXpos = this.situation ? this.situation.getPlayer().getXPos() : null;
-        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener];
+        const data = [this.canvas, this.userData, { xPos: playerXpos, stamina: stamina }, this.upgrades, this.skins, this.KeyListener, this.totalScore > 1000];
         return new SlippyRoad(...data);
     }
     /**

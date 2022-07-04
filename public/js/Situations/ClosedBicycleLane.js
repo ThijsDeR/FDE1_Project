@@ -4,8 +4,9 @@ import BlockedCyclePathSign from "../Props/BlockedCyclePathSign.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import Game from "../Game.js";
 export default class ClosedBicycleLane extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
+        this.leftSideDrawBack = false;
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/OpritBouwverkeer.png');
         // Define the left boundary of the playing field
         this.leftBoundary = this.background.getXPos() + (this.background.getWidth() / 3) - (this.background.getWidth() / 20);

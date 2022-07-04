@@ -3,8 +3,8 @@ import ImageProp from "../Props/ImageProp.js";
 import StaminaBooster from "../Props/StaminaBooster.js";
 import Situation from "../Situation.js";
 export default class TrainRails extends Situation {
-    constructor(canvas, userData, playerData, upgrades, skins, keyListener) {
-        super(canvas, userData, playerData, upgrades, skins);
+    constructor(canvas, userData, playerData, upgrades, skins, keyListener, allowedMist) {
+        super(canvas, userData, playerData, upgrades, skins, allowedMist);
         // Situation background parameters
         this.background = new ImageProp(canvas.width / 3, -canvas.height, 0, 0, canvas.width / 2, canvas.height, './assets/img/TreinSpoor.png');
         // Define the left boundary of the playing field

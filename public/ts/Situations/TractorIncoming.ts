@@ -15,10 +15,11 @@ export default class TractorIncoming extends Situation {
         playerData: PlayerData,
         upgrades: Upgrades,
         skins: Skins,
-        keyListener: KeyListener
+        keyListener: KeyListener,
+        allowedMist: boolean
     ) {
 
-        super(canvas, userData, playerData, upgrades, skins)
+        super(canvas, userData, playerData, upgrades, skins, allowedMist)
 
         // Create situation background
         this.background = new ImageProp(

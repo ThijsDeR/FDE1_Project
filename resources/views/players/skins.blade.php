@@ -28,7 +28,7 @@
                         <div class="skin" id="{{$staminaSkin->id}}" type="stamina">
                             <div class="details">
                                 <p>{{$staminaSkin->name}}: <strong><span class="level"></span></strong></p> 
-                                <p>Base Stamina: {{$staminaSkin->baseStamina}}</p>
+                                <p>Basis Energie: {{$staminaSkin->baseStamina}}</p>
                                 <img src="{{$staminaSkin->src}}" alt="{{$staminaSkin->name}}">
                             </div>
                             <button class="buy nice-button"><span class="price">{{$staminaSkin->price}}</span> VP</button>
