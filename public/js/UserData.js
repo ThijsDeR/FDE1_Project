@@ -15,8 +15,10 @@ export default class UserData {
         if (localStorage.getItem(UserData.TOKEN_OBJECT_NAME)) {
             this.token = localStorage.getItem(UserData.TOKEN_OBJECT_NAME);
         }
-        else
+        else {
+            window.location.href = '/login';
             this.token = null;
+        }
     }
     isValidPlayer() {
         return this.token ? true : false;
