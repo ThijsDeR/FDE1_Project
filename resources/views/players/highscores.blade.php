@@ -29,8 +29,6 @@
         <hr/>
             
         @endforeach
-
-        {{ $players->links() }}
     </div>
 
 @endsection

@@ -16,7 +16,7 @@ export default class UserData {
             this.token = localStorage.getItem(UserData.TOKEN_OBJECT_NAME);
         }
         else {
-            window.location.href = '/login';
+            window.location.href = '/logout';
             this.token = null;
         }
     }
