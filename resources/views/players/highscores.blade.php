@@ -30,7 +30,7 @@
             
         @endforeach
 
-        {{ $players->links()}}
+        {{ $players->links() }}
     </div>
 
 @endsection
